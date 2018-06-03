@@ -1,0 +1,79 @@
+<% include ../_layouts/productHeader %>
+
+    <div class="product-holder">
+        <div class="">
+            <img class="product-image" src="/images/product_images/<%= product.id %>/<%= product.image %>" alt="">
+            <div class="">
+            <ul class="gallery">
+                <% galleryImages.forEach(function(image){ %>
+                    <% if (image != "thumbs") { %>
+                        <li>
+                            <a data-fancybox="Gallery" href="/images/product_images/<%= product.id %>/gallery/<%= image %>">
+                                <img src="/images/product_images/<%= product.id %>/gallery/thumbs/<%= image %>" alt="">
+                            </a>
+                        </li>
+                        <% } %>
+                            <% }) %>
+            </ul>
+        </div>
+        </div>
+        <div class="">
+            <h1 class="product-header">
+                <%= product.title %>
+            </h1>
+            <p class="product-price">
+                $
+                <%= parseFloat(product.price).toFixed(2) %>
+            </p>
+            <% if(printfulPluginExists){ %>
+                <form  method="post" action="/cart/add/<%= product.slug %>" enctype="multipart/form-data">
+                    <div class="color-size-holder">
+                        <% product.color.forEach(function(color){ %>
+                            <div class="color-container">
+                                <input type="radio" class="color-size-radio" value="<%= color %>" name="color" id="<%= color %>">
+
+                                <label for="<%= color %>" class="color-size-button">
+                                    <%= color %>
+                                </label>
+
+                            </div>
+                            <% }) %>
+
+                    </div>
+                    <div class="color-size-holder">
+                        <% product.sizes.forEach(function(size){ %>
+                            <div class="size-container">
+                                <input type="radio" class="color-size-radio" value="<%= size %>" name="size" id="<%= size %>">
+
+                                <label for="<%= size %>" class="color-size-button">
+                                    <%= size %>
+                                </label>
+
+                            </div>
+                            <% }) %>
+
+                    </div>
+                
+                <div class="product-content">
+                    <%- product.content %>
+                </div>
+                <button class="btn-submit">Add to Cart</button>
+            </form>
+                <% }else {%>
+
+                    <p class="product-content">
+                        <%- product.content %>
+                    </p>
+                    <p class="product-add-btn">
+                            <a href="/cart/add/<%= product.slug %>">Add to cart</a>
+
+                    </p>
+                    <% } %>
+        </div>
+        
+
+    </div>
+
+
+
+    <% include ../_layouts/footer %>

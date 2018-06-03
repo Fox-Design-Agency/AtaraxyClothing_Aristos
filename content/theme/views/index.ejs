@@ -1,0 +1,36 @@
+<% include _layouts/header %>
+    <div class="main-slider">
+        <% media.forEach(function(media){ %>
+            <% if(media.category == "main_slider"){ %>
+                <img class="main-slider-img" src="/images/<%= media.path %>" alt="<%= media.alt %>">
+                <% } %>
+                    <% }) %>
+    </div>
+
+    <div>
+        <a href="/products">
+            <h2 class="display-heading">products</h2>
+        </a>
+        <div class="display-product-categories">
+            <% productcategories.forEach(function(productCat){ %>
+                <a href="/products/<%= productCat.slug %>">
+                    <div class="display-category-card">
+                        <img src="/images/<%= productCat.imagepath %>" alt="" class="display-product-images">
+                        <h4>
+                            <%= productCat.title %>
+                        </h4>
+                    </div>
+                </a>
+
+                <% }) %>
+        </div>
+    </div>
+    <div class="main-slider">
+        <% media.forEach(function(media){ %>
+            <% if(media.category == "bottom_img"){ %>
+                <img class="main-slider-img" src="/images/<%= media.path %>" alt="<%= media.alt %>">
+                <% } %>
+                    <% }) %>
+    </div>
+
+    <% include _layouts/footer %>
