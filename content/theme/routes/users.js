@@ -90,7 +90,7 @@ router.post("/register", function (req, res) {
 
 router.get("/login", function (req, res) {
 
-    if (res.locals.user) res.render("/")
+    if (res.locals.user) {res.render("/")}
     res.render("user/login", {
         title: "Log in",
         description: "",

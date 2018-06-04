@@ -8,10 +8,12 @@ const Page = require("../../../models/page")
 
 //GET media model
 const Media = require("../../../models/media")
+// GET user model
+const User = require("../../../models/user")
 /*
 * GET pages index
 */
-router.get("/",isAdmin, function (req, res) {
+router.get("/", isAdmin, function (req, res) {
 
 
     let count;
@@ -52,7 +54,7 @@ router.get("/",isAdmin, function (req, res) {
 /*
 * GET add page
 */
-router.get("/add-page",isAdmin, function (req, res) {
+router.get("/add-page", isAdmin, function (req, res) {
     let title = "";
     let slug = "";
     let content = "";
@@ -78,77 +80,82 @@ router.get("/add-page",isAdmin, function (req, res) {
 * POST add page
 */
 router.post("/add-page", function (req, res) {
+    User.findById(req.session.passport.user, function (err, user) {
+        if (user.admin === 1) {
+            req.checkBody("title", "Title must have a value.").notEmpty();
+            req.checkBody("content", "Content must have a value.").notEmpty();
 
-    req.checkBody("title", "Title must have a value.").notEmpty();
-    req.checkBody("content", "Content must have a value.").notEmpty();
+            let title = req.body.title;
+            let slug = req.body.slug.replace(/\s+/g, "-").toLowerCase();
+            if (slug == "") {
+                slug = title.replace(/\s+/g, "-").toLowerCase();
+            }
+            let content = req.body.content;
+            let parent = req.body.parent;
+            let description = req.body.description;
+            let keywords = req.body.keywords;
+            let author = req.body.author;
+            if (parent == "") {
+                parent = "home"
+            }
+            let errors = req.validationErrors();
 
-    let title = req.body.title;
-    let slug = req.body.slug.replace(/\s+/g, "-").toLowerCase();
-    if (slug == "") {
-        slug = title.replace(/\s+/g, "-").toLowerCase();
-    }
-    let content = req.body.content;
-    let parent = req.body.parent;
-    let description = req.body.description;
-    let keywords = req.body.keywords;
-    let author = req.body.author;
-    if (parent == "") {
-        parent = "home"
-    }
-    let errors = req.validationErrors();
-
-    if (errors) {
-        return res.render("../../../includes/admin/views/pages/add_page", {
-            errors: errors,
-            title: title,
-            slug: slug,
-            parent: parent,
-            content: content,
-            description: description,
-            keywords: keywords,
-            author: author
-        })
-    } else {
-        Page.findOne({ slug: slug }, function (err, page) {
-            if (page) {
-                req.flash("danger", "Page slug exists, chooser another.")
+            if (errors) {
                 return res.render("../../../includes/admin/views/pages/add_page", {
+                    errors: errors,
                     title: title,
                     slug: slug,
-                    content: content,
                     parent: parent,
+                    content: content,
                     description: description,
                     keywords: keywords,
                     author: author
-                });
+                })
             } else {
-                let page = new Page({
-                    title: title,
-                    slug: slug,
-                    content: content,
-                    parent: parent,
-                    sorting: 100,
-                    description: description,
-                    keywords: keywords,
-                    author: author
-                });
-                page.save(function (err) {
-                    if (err) { return console.log(err) };
+                Page.findOne({ slug: slug }, function (err, page) {
+                    if (page) {
+                        req.flash("danger", "Page slug exists, chooser another.")
+                        return res.render("../../../includes/admin/views/pages/add_page", {
+                            title: title,
+                            slug: slug,
+                            content: content,
+                            parent: parent,
+                            description: description,
+                            keywords: keywords,
+                            author: author
+                        });
+                    } else {
+                        let page = new Page({
+                            title: title,
+                            slug: slug,
+                            content: content,
+                            parent: parent,
+                            sorting: 100,
+                            description: description,
+                            keywords: keywords,
+                            author: author
+                        });
+                        page.save(function (err) {
+                            if (err) { return console.log(err) };
 
-                    Page.find({}).sort({ sorting: 1 }).exec(function (err, pages) {
-                        if (err) {
-                            console.log(err);
-                        } else {
-                            req.app.locals.pages = pages;
-                        }
-                    })
+                            Page.find({}).sort({ sorting: 1 }).exec(function (err, pages) {
+                                if (err) {
+                                    console.log(err);
+                                } else {
+                                    req.app.locals.pages = pages;
+                                }
+                            })
 
-                    req.flash("success", "Page added!");
-                    res.redirect("/admin/pages");
+                            req.flash("success", "Page added!");
+                            res.redirect("/admin/pages");
+                        })
+                    }
                 })
             }
-        })
-    }
+        } else {
+            res.redirect("/users/login");
+        }
+    })
 })
 
 // Sort pages function
@@ -182,16 +189,22 @@ function sortPages(ids, cb) {
 * POST reorder pages
 */
 router.post("/reorder-pages", function (req, res) {
-    let ids = req.body["id[]"]
+    User.findById(req.session.passport.user, function (err, user) {
+        if (user.admin === 1) {
+            let ids = req.body["id[]"]
 
-    sortPages(ids, function () {
-        Page.find({}).sort({ sorting: 1 }).exec(function (err, pages) {
-            if (err) {
-                console.log(err);
-            } else {
-                req.app.locals.pages = pages;
-            }
-        })
+            sortPages(ids, function () {
+                Page.find({}).sort({ sorting: 1 }).exec(function (err, pages) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        req.app.locals.pages = pages;
+                    }
+                })
+            })
+        } else {
+            res.redirect("/users/login");
+        }
     })
 })
 
@@ -199,7 +212,7 @@ router.post("/reorder-pages", function (req, res) {
 /*
 * GET edit page
 */
-router.get("/edit-page/:id",isAdmin, function (req, res) {
+router.get("/edit-page/:id", isAdmin, function (req, res) {
     Page.findById(req.params.id, function (err, page) {
         if (err) {
             return console.log(err)
@@ -226,98 +239,103 @@ router.get("/edit-page/:id",isAdmin, function (req, res) {
 * POST edit page
 */
 router.post("/edit-page/:id", function (req, res) {
+    User.findById(req.session.passport.user, function (err, user) {
+        if (user.admin === 1) {
+            req.checkBody("title", "Title must have a value.").notEmpty();
+            req.checkBody("content", "Content must have a value.").notEmpty();
 
-    req.checkBody("title", "Title must have a value.").notEmpty();
-    req.checkBody("content", "Content must have a value.").notEmpty();
+            let title = req.body.title;
+            let slug = req.body.slug.replace(/\s+/g, "-").toLowerCase();
+            if (slug == "") {
+                slug = title.replace(/\s+/g, "-").toLowerCase();
+            }
+            let parent = req.body.parent
+            if (parent == "") {
+                parent = "home"
+            }
+            let content = req.body.content;
+            let keywords = req.body.keywords;
+            let author = req.body.author;
+            let description = req.body.description;
+            let id = req.params.id;
 
-    let title = req.body.title;
-    let slug = req.body.slug.replace(/\s+/g, "-").toLowerCase();
-    if (slug == "") {
-        slug = title.replace(/\s+/g, "-").toLowerCase();
-    }
-    let parent = req.body.parent
-    if (parent == "") {
-        parent = "home"
-    }
-    let content = req.body.content;
-    let keywords = req.body.keywords;
-    let author = req.body.author;
-    let description = req.body.description;
-    let id = req.params.id;
+            let errors = req.validationErrors();
 
-    let errors = req.validationErrors();
-
-    if (errors) {
-        Media.find({}, function (err, media) {
-            return res.render("../../../includes/admin/views/pages/edit_page", {
-                errors: errors,
-                title: title,
-                slug: slug,
-                content: content,
-                parent: parent,
-                media: media,
-                keywords: keywords,
-                description: description,
-                author: author,
-                id: id
-            })
-        })
-    } else {
-        Page.findOne({ slug: slug, _id: { '$ne': id } }, function (err, page) {
-            if (page) {
+            if (errors) {
                 Media.find({}, function (err, media) {
-                    req.flash("danger", "Page slug exists, chooser another.")
                     return res.render("../../../includes/admin/views/pages/edit_page", {
+                        errors: errors,
                         title: title,
                         slug: slug,
                         content: content,
                         parent: parent,
-                        id: id,
                         media: media,
                         keywords: keywords,
+                        description: description,
                         author: author,
-                        description: description
+                        id: id
                     })
-                });
+                })
             } else {
-                Page.findById(id, function (err, page) {
-                    if (err) {
-                        return console.log(err);
-                    } else {
-                        page.title = title;
-                        page.slug = slug;
-                        page.content = content;
-                        page.parent = parent;
-                        page.description = description;
-                        page.keywords = keywords;
-                        page.author = author;
-
-                        page.save(function (err) {
-                            if (err) { return console.log(err) };
-
-                            Page.find({}).sort({ sorting: 1 }).exec(function (err, pages) {
-                                if (err) {
-                                    console.log(err);
-                                } else {
-                                    req.app.locals.pages = pages;
-                                }
+                Page.findOne({ slug: slug, _id: { '$ne': id } }, function (err, page) {
+                    if (page) {
+                        Media.find({}, function (err, media) {
+                            req.flash("danger", "Page slug exists, chooser another.")
+                            return res.render("../../../includes/admin/views/pages/edit_page", {
+                                title: title,
+                                slug: slug,
+                                content: content,
+                                parent: parent,
+                                id: id,
+                                media: media,
+                                keywords: keywords,
+                                author: author,
+                                description: description
                             })
+                        });
+                    } else {
+                        Page.findById(id, function (err, page) {
+                            if (err) {
+                                return console.log(err);
+                            } else {
+                                page.title = title;
+                                page.slug = slug;
+                                page.content = content;
+                                page.parent = parent;
+                                page.description = description;
+                                page.keywords = keywords;
+                                page.author = author;
 
-                            req.flash("success", "Page edited!");
-                            res.redirect("/admin/pages");
+                                page.save(function (err) {
+                                    if (err) { return console.log(err) };
+
+                                    Page.find({}).sort({ sorting: 1 }).exec(function (err, pages) {
+                                        if (err) {
+                                            console.log(err);
+                                        } else {
+                                            req.app.locals.pages = pages;
+                                        }
+                                    })
+
+                                    req.flash("success", "Page edited!");
+                                    res.redirect("/admin/pages");
+                                })
+                            }
                         })
+
                     }
                 })
-
             }
-        })
-    }
+        } else {
+            res.redirect("/users/login");
+        }
+    })
 })
 
 /*
 * GET delete page
 */
-router.get("/delete-page/:id",isAdmin, function (req, res) {
+router.get("/delete-page/:id", isAdmin, function (req, res) {
     Page.findByIdAndRemove(req.params.id, function (err) {
         if (err) {
             return console.log(err)
@@ -341,7 +359,7 @@ router.get("/delete-page/:id",isAdmin, function (req, res) {
 /*
 * GET add dynamic page
 */
-router.get("/add-dynamic-builder",isAdmin, function (req, res) {
+router.get("/add-dynamic-builder", isAdmin, function (req, res) {
     let title = "";
     let slug = "";
     let content = "";
@@ -365,7 +383,7 @@ router.get("/add-dynamic-builder",isAdmin, function (req, res) {
 /*
 * GET edit dynamic page
 */
-router.get("/edit-dynamic-builder/:id", isAdmin,function (req, res) {
+router.get("/edit-dynamic-builder/:id", isAdmin, function (req, res) {
     Page.findById(req.params.id, function (err, page) {
         if (err) {
             return console.log(err)

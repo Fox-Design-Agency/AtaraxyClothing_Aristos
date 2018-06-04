@@ -7,6 +7,8 @@ const auth = require("../../../../includes/config/auth")
 const Category = require("../models/blogCategory")
 // GET blog model
 const Blog = require("../models/blog")
+// GET user model
+const User = require("../../../../includes/models/user")
 
 /*
 * GET blog comments index

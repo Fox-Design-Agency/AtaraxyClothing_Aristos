@@ -7,10 +7,12 @@ const isAdmin = auth.isAdmin;
 const Category = require("../models/productCategory")
 // GET media model
 const Media = require("../../../../includes/models/media")
+// GET user model
+const User = require("../../../../includes/models/user")
 /*
 * GET product category index
 */
-router.get("/", isAdmin,function (req, res) {
+router.get("/", isAdmin, function (req, res) {
     let count;
 
     Category.count(function (err, c) {
@@ -54,7 +56,7 @@ router.get("/", isAdmin,function (req, res) {
 /*
 * GET add product category
 */
-router.get("/add-product-category",isAdmin, function (req, res) {
+router.get("/add-product-category", isAdmin, function (req, res) {
     let title = "";
     let author = "";
     let description = "";
@@ -76,65 +78,70 @@ router.get("/add-product-category",isAdmin, function (req, res) {
 * POST add product category
 */
 router.post("/add-product-category", function (req, res) {
+    User.findById(req.session.passport.user, function (err, user) {
+        if (user.admin === 1) {
+            req.checkBody("title", "Title must have a value.").notEmpty();
 
-    req.checkBody("title", "Title must have a value.").notEmpty();
+            let title = req.body.title;
+            let slug = title.replace(/\s+/g, "-").toLowerCase();
+            let errors = req.validationErrors();
+            let author = req.body.author;
+            let description = req.body.description;
+            let keywords = req.body.keywords;
+            let imagePath = req.body.imagepath
 
-    let title = req.body.title;
-    let slug = title.replace(/\s+/g, "-").toLowerCase();
-    let errors = req.validationErrors();
-    let author = req.body.author;
-    let description = req.body.description;
-    let keywords = req.body.keywords;
-    let imagePath = req.body.imagepath
-
-    if (errors) {
-        return res.render("../../upgrade/products/views/categories/add_product_category", {
-            errors: errors,
-            title: title,
-            author: author,
-            description: description,
-            keywords: keywords
-        })
-    } else {
-        Category.findOne({ slug: slug }, function (err, category) {
-            if (category) {
-                req.flash("danger", "Category title exists, choose another.")
+            if (errors) {
                 return res.render("../../upgrade/products/views/categories/add_product_category", {
+                    errors: errors,
                     title: title,
                     author: author,
                     description: description,
                     keywords: keywords
-                });
+                })
             } else {
-                let category = new Category({
-                    title: title,
-                    slug: slug,
-                    author: author,
-                    description: description,
-                    keywords: keywords,
-                    imagepath: imagePath
-                });
-                category.save(function (err) {
-                    if (err) { return console.log(err) };
-                    Category.find(function (err, categories) {
-                        if (err) {
-                            console.log(err)
-                        } else {
-                            req.app.locals.productcategories = categories;
-                        }
-                    })
-                    req.flash("success", "Page added!");
-                    res.redirect("/admin/product-categories");
+                Category.findOne({ slug: slug }, function (err, category) {
+                    if (category) {
+                        req.flash("danger", "Category title exists, choose another.")
+                        return res.render("../../upgrade/products/views/categories/add_product_category", {
+                            title: title,
+                            author: author,
+                            description: description,
+                            keywords: keywords
+                        });
+                    } else {
+                        let category = new Category({
+                            title: title,
+                            slug: slug,
+                            author: author,
+                            description: description,
+                            keywords: keywords,
+                            imagepath: imagePath
+                        });
+                        category.save(function (err) {
+                            if (err) { return console.log(err) };
+                            Category.find(function (err, categories) {
+                                if (err) {
+                                    console.log(err)
+                                } else {
+                                    req.app.locals.productcategories = categories;
+                                }
+                            })
+                            req.flash("success", "Page added!");
+                            res.redirect("/admin/product-categories");
+                        })
+                    }
                 })
             }
-        })
-    }
+        } else {
+            res.redirect("/users/login");
+        }
+    })
 })
 
 /*
 * GET edit product category
 */
-router.get("/edit-product-category/:id",isAdmin, function (req, res) {
+router.get("/edit-product-category/:id", isAdmin, function (req, res) {
     Category.findById(req.params.id, function (err, category) {
         if (err) {
             return console.log(err)
@@ -158,76 +165,81 @@ router.get("/edit-product-category/:id",isAdmin, function (req, res) {
 * POST edit product category
 */
 router.post("/edit-product-category/:id", function (req, res) {
+    User.findById(req.session.passport.user, function (err, user) {
+        if (user.admin === 1) {
+            req.checkBody("title", "Title must have a value.").notEmpty();
 
-    req.checkBody("title", "Title must have a value.").notEmpty();
+            let title = req.body.title;
+            let slug = title.replace(/\s+/g, "-").toLowerCase();
+            let id = req.params.id;
 
-    let title = req.body.title;
-    let slug = title.replace(/\s+/g, "-").toLowerCase();
-    let id = req.params.id;
+            let author = req.body.author;
+            let description = req.body.description;
+            let keywords = req.body.keywords;
+            let imagepath = req.body.imagepath;
+            let errors = req.validationErrors();
 
-    let author = req.body.author;
-    let description = req.body.description;
-    let keywords = req.body.keywords;
-    let imagepath = req.body.imagepath;
-    let errors = req.validationErrors();
-
-    if (errors) {
-        return res.render("../../upgrade/products/views/categories/edit_product_category", {
-            errors: errors,
-            title: title,
-            id: id,
-            author: author,
-            description: description,
-            keywords: keywords
-        })
-    } else {
-
-        Category.findOne({ slug: slug, _id: { '$ne': id } }, function (err, category) {
-            if (category) {
-                req.flash("danger", "Category title exists, chooser another.")
+            if (errors) {
                 return res.render("../../upgrade/products/views/categories/edit_product_category", {
+                    errors: errors,
                     title: title,
                     id: id,
                     author: author,
                     description: description,
                     keywords: keywords
-                });
-            } else {
-                Category.findById(id, function (err, category) {
-                    if (err) {
-                        return console.log(err);
-                    }
-                    category.title = title;
-                    category.slug = slug;
-                    category.author = author;
-                    category.description = description;
-                    category.keywords = keywords;
-                    category.imagepath = imagepath
-
-                    category.save(function (err) {
-                        if (err) { return console.log(err) };
-                        Category.find(function (err, categories) {
-                            if (err) {
-                                console.log(err)
-                            } else {
-                                req.app.locals.productcategories = categories;
-                            }
-                        })
-                        req.flash("success", "Page added!");
-                        res.redirect("/admin/product-categories");
-                    })
-
                 })
+            } else {
 
+                Category.findOne({ slug: slug, _id: { '$ne': id } }, function (err, category) {
+                    if (category) {
+                        req.flash("danger", "Category title exists, chooser another.")
+                        return res.render("../../upgrade/products/views/categories/edit_product_category", {
+                            title: title,
+                            id: id,
+                            author: author,
+                            description: description,
+                            keywords: keywords
+                        });
+                    } else {
+                        Category.findById(id, function (err, category) {
+                            if (err) {
+                                return console.log(err);
+                            }
+                            category.title = title;
+                            category.slug = slug;
+                            category.author = author;
+                            category.description = description;
+                            category.keywords = keywords;
+                            category.imagepath = imagepath
+
+                            category.save(function (err) {
+                                if (err) { return console.log(err) };
+                                Category.find(function (err, categories) {
+                                    if (err) {
+                                        console.log(err)
+                                    } else {
+                                        req.app.locals.productcategories = categories;
+                                    }
+                                })
+                                req.flash("success", "Page added!");
+                                res.redirect("/admin/product-categories");
+                            })
+
+                        })
+
+                    }
+                })
             }
-        })
-    }
+        } else {
+            res.redirect("/users/login");
+        }
+    })
 })
 
 /*
 * GET delete product category
 */
-router.get("/delete-product-category/:id",isAdmin, function (req, res) {
+router.get("/delete-product-category/:id", isAdmin, function (req, res) {
     Category.findByIdAndRemove(req.params.id, function (err) {
         if (err) {
             return console.log(err)

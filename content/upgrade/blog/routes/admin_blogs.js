@@ -8,10 +8,12 @@ const Blog = require("../models/blog")
 const Media = require("../../../../includes/models/media")
 // GET Blog Category model
 const Category = require("../models/blogCategory")
+// GET user model
+const User = require("../../../../includes/models/user")
 /*
 * GET blog index
 */
-router.get("/",isAdmin, function (req, res) {
+router.get("/", isAdmin, function (req, res) {
     let count;
 
     Blog.count(function (err, c) {
@@ -32,7 +34,7 @@ router.get("/",isAdmin, function (req, res) {
 /*
 * GET add blog
 */
-router.get("/add-blog",isAdmin, function (req, res) {
+router.get("/add-blog", isAdmin, function (req, res) {
     let title = "";
     let slug = "";
     let content = "";
@@ -58,40 +60,28 @@ router.get("/add-blog",isAdmin, function (req, res) {
 /*
 * POST add blog
 */
-router.post("/add-blog",isAdmin, function (req, res) {
+router.post("/add-blog", isAdmin, function (req, res) {
+    User.findById(req.session.passport.user, function (err, user) {
+        if (user.admin === 1) {
+            req.checkBody("title", "Title must have a value.").notEmpty();
+            req.checkBody("content", "Content must have a value.").notEmpty();
 
-    req.checkBody("title", "Title must have a value.").notEmpty();
-    req.checkBody("content", "Content must have a value.").notEmpty();
+            let title = req.body.title;
+            let slug = req.body.slug.replace(/\s+/g, "-").toLowerCase();
+            if (slug == "") {
+                slug = title.replace(/\s+/g, "-").toLowerCase();
+            }
+            let content = req.body.content;
+            let category = req.body.category;
+            let author = req.body.author;
+            let description = req.body.description;
+            let keywords = req.body.keywords;
 
-    let title = req.body.title;
-    let slug = req.body.slug.replace(/\s+/g, "-").toLowerCase();
-    if (slug == "") {
-        slug = title.replace(/\s+/g, "-").toLowerCase();
-    }
-    let content = req.body.content;
-    let category = req.body.category;
-    let author = req.body.author;
-    let description = req.body.description;
-    let keywords = req.body.keywords;
+            let errors = req.validationErrors();
 
-    let errors = req.validationErrors();
-
-    if (errors) {
-        return res.render("../../upgrade/blog/views/add_blog", {
-            errors: errors,
-            title: title,
-            slug: slug,
-            content: content,
-            category: category,
-            author: author,
-            description: description,
-            keywords: keywords
-        })
-    } else {
-        Blog.findOne({ slug: slug }, function (err, blog) {
-            if (blog) {
-                req.flash("danger", "Blog slug exists, chooser another.")
+            if (errors) {
                 return res.render("../../upgrade/blog/views/add_blog", {
+                    errors: errors,
                     title: title,
                     slug: slug,
                     content: content,
@@ -99,33 +89,50 @@ router.post("/add-blog",isAdmin, function (req, res) {
                     author: author,
                     description: description,
                     keywords: keywords
-                });
+                })
             } else {
-                let blog = new Blog({
-                    title: title,
-                    slug: slug,
-                    content: content,
-                    category: category,
-                    author: author,
-                    description: description,
-                    keywords: keywords,
-                    published: new Date()
-                });
-                blog.save(function (err) {
-                    if (err) { return console.log(err) };
+                Blog.findOne({ slug: slug }, function (err, blog) {
+                    if (blog) {
+                        req.flash("danger", "Blog slug exists, chooser another.")
+                        return res.render("../../upgrade/blog/views/add_blog", {
+                            title: title,
+                            slug: slug,
+                            content: content,
+                            category: category,
+                            author: author,
+                            description: description,
+                            keywords: keywords
+                        });
+                    } else {
+                        let blog = new Blog({
+                            title: title,
+                            slug: slug,
+                            content: content,
+                            category: category,
+                            author: author,
+                            description: description,
+                            keywords: keywords,
+                            published: new Date()
+                        });
+                        blog.save(function (err) {
+                            if (err) { return console.log(err) };
 
-                    req.flash("success", "Blog added!");
-                    res.redirect("/admin/blogs");
+                            req.flash("success", "Blog added!");
+                            res.redirect("/admin/blogs");
+                        })
+                    }
                 })
             }
-        })
-    }
+        } else {
+            res.redirect("/users/login");
+        }
+    })
 })
 
 /*
 * GET edit blog
 */
-router.get("/edit-blog/:id",isAdmin, function (req, res) {
+router.get("/edit-blog/:id", isAdmin, function (req, res) {
     Category.find(function (err, categories) {
         Blog.findById(req.params.id, function (err, blog) {
             if (err) {
@@ -154,42 +161,29 @@ router.get("/edit-blog/:id",isAdmin, function (req, res) {
 /*
 * POST edit blog
 */
-router.post("/edit-blog/:id",isAdmin, function (req, res) {
+router.post("/edit-blog/:id", isAdmin, function (req, res) {
+    User.findById(req.session.passport.user, function (err, user) {
+        if (user.admin === 1) {
+            req.checkBody("title", "Title must have a value.").notEmpty();
+            req.checkBody("content", "Content must have a value.").notEmpty();
 
-    req.checkBody("title", "Title must have a value.").notEmpty();
-    req.checkBody("content", "Content must have a value.").notEmpty();
+            let title = req.body.title;
+            let slug = req.body.slug.replace(/\s+/g, "-").toLowerCase();
+            if (slug == "") {
+                slug = title.replace(/\s+/g, "-").toLowerCase();
+            }
+            let content = req.body.content;
+            let id = req.params.id;
+            let category = req.body.category;
+            let author = req.body.author;
+            let description = req.body.description;
+            let keywords = req.body.keywords;
 
-    let title = req.body.title;
-    let slug = req.body.slug.replace(/\s+/g, "-").toLowerCase();
-    if (slug == "") {
-        slug = title.replace(/\s+/g, "-").toLowerCase();
-    }
-    let content = req.body.content;
-    let id = req.params.id;
-    let category = req.body.category;
-    let author = req.body.author;
-    let description = req.body.description;
-    let keywords = req.body.keywords;
+            let errors = req.validationErrors();
 
-    let errors = req.validationErrors();
-
-    if (errors) {
-        return res.render("../../upgrade/blog/views/edit_blog", {
-            errors: errors,
-            title: title,
-            slug: slug,
-            content: content,
-            category: category,
-            id: id,
-            author: blog.author,
-            description: blog.description,
-            keywords: blog.keywords
-        })
-    } else {
-        Blog.findOne({ slug: slug, _id: { '$ne': id } }, function (err, page) {
-            if (page) {
-                req.flash("danger", "Blog slug exists, chooser another.")
+            if (errors) {
                 return res.render("../../upgrade/blog/views/edit_blog", {
+                    errors: errors,
                     title: title,
                     slug: slug,
                     content: content,
@@ -198,39 +192,57 @@ router.post("/edit-blog/:id",isAdmin, function (req, res) {
                     author: blog.author,
                     description: blog.description,
                     keywords: blog.keywords
-                });
+                })
             } else {
-                Blog.findById(id, function (err, blog) {
-                    if (err) {
-                        return console.log(err);
+                Blog.findOne({ slug: slug, _id: { '$ne': id } }, function (err, page) {
+                    if (page) {
+                        req.flash("danger", "Blog slug exists, chooser another.")
+                        return res.render("../../upgrade/blog/views/edit_blog", {
+                            title: title,
+                            slug: slug,
+                            content: content,
+                            category: category,
+                            id: id,
+                            author: blog.author,
+                            description: blog.description,
+                            keywords: blog.keywords
+                        });
                     } else {
-                        blog.title = title;
-                        blog.slug = slug;
-                        blog.content = content;
-                        blog.category = category;
-                        blog.author = author;
-                        blog.description = description;
-                        blog.keywords = keywords;
+                        Blog.findById(id, function (err, blog) {
+                            if (err) {
+                                return console.log(err);
+                            } else {
+                                blog.title = title;
+                                blog.slug = slug;
+                                blog.content = content;
+                                blog.category = category;
+                                blog.author = author;
+                                blog.description = description;
+                                blog.keywords = keywords;
 
-                        blog.save(function (err) {
-                            if (err) { return console.log(err) };
+                                blog.save(function (err) {
+                                    if (err) { return console.log(err) };
 
-                            req.flash("success", "Blog edited!");
-                            res.redirect("/admin/blogs");
+                                    req.flash("success", "Blog edited!");
+                                    res.redirect("/admin/blogs");
+                                })
+                            }
                         })
+
                     }
                 })
-
             }
-        })
-    }
+        } else {
+            res.redirect("/users/login");
+        }
+    })
 })
 
 
 /*
 * GET delete blog
 */
-router.get("/delete-blog/:id",isAdmin, function (req, res) {
+router.get("/delete-blog/:id", isAdmin, function (req, res) {
     Blog.findByIdAndRemove(req.params.id, function (err) {
 
         req.flash("success", "Blog deleted!")
