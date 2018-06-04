@@ -166,6 +166,7 @@
 .product-header{
     font-size: 45px;
     margin-bottom: 20px;
+    max-width: 400px;
 }
 .product-price{
     font-weight: 600;
@@ -188,6 +189,11 @@
     border: 2px solid #eee;
     color: #fff;
     background: #000;
+}
+
+.gallery{
+    display: flex;
+    flex-wrap: wrap;
 }
 
 /* blogs stuffs */
@@ -575,9 +581,10 @@ border-bottom: 1px solid black;
 
 .color-size-holder{
     display: flex;
+    max-width: 400px;
     margin: 5px 0 20px 0;
     padding: 5px;
-    flex-wrap: flex;
+    flex-wrap: wrap;
 }
 
 .color-size-button{
@@ -586,6 +593,7 @@ border-bottom: 1px solid black;
     margin: 0px 5px 5px 5px;
     cursor: pointer;
 }
+
 
 /* .container input {
     position: absolute;

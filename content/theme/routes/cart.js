@@ -23,6 +23,7 @@ paypal.configure({
     "client_id": config.paypalSandboxClient_id,
     "client_secret": config.paypalSandboxSecret
 })
+
 /*
 * GET  add product to cart
 */
