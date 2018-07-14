@@ -29,6 +29,7 @@
     text-align: center;
     padding: 10px;
     transition: all 0.5s ease-out;
+      overflow: hidden;
 
     &:hover {
       background-color: #b22222;
@@ -99,8 +100,6 @@
   }
 
   &__product-add {
-    border: 2px solid black;
-    width: 150px;
     text-align: center;
     padding: 10px;
     font-weight: 600;

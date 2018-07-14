@@ -1,28 +1,10 @@
 const express = require("express");
 const router = express.Router();
-
-// GET page model
-const findPageWithParam = require("../../../important/admin/adminModels/queries/page/FindPageWithParam");
-
+const pagesController = require("../controllers/pages_controller");
 /*
-* GET blog index
+* GET contact page
 */
-
-router.get("/", function(req, res) {
-  findPageWithParam({ slug: "contact" }).then(page => {
-    if (!page) {
-      res.redirect("/");
-    } else {
-      res.render("contact", {
-        title: page.title,
-        content: page.content,
-        keywords: page.keywords,
-        description: page.description,
-        author: page.author
-      });
-    }
-  });
-});
+router.get("/", pagesController.contact);
 
 //Exports
 module.exports = router;

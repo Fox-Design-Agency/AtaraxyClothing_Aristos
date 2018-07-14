@@ -1,6 +1,4 @@
 const express = require("express")
-const router = express.Router();
-// const isAdmin = auth.isAdmin;
 
 module.exports = (product, color, size) => {
     switch (product) {

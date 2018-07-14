@@ -26,38 +26,36 @@
                 <%= parseFloat(product.price).toFixed(2) %>
             </p>
             <% if(printfulPluginExists){ %>
-                <form  method="post" action="/cart/add/<%= product.slug %>" enctype="multipart/form-data">
-                    <div class="product__color-size-holder">
-                        <% product.color.forEach(function(color){ %>
-                            <div class="color-container">
-                                <input type="radio" class="color-size-radio" value="<%= color %>" name="color" id="<%= color %>">
-
-                                <label for="<%= color %>" class="product__color-size-button">
-                                    <%= color %>
+                <form  method="post" action="/cart/add/<%= product.slug %>">
+                     
+                    <label>
+                                    Select Color:
                                 </label>
-
-                            </div>
+                                 <div class="product__color-size-holder"> 
+                    <select  name="color" class="color-container" required>
+                        <% product.color.forEach((color)=>{ %>
+                                <option class="color-size-radio" value="<%= color %>" id="<%= color %>"><%= color %></option>
+                            
                             <% }) %>
-
-                    </div>
-                    <div class="product__color-size-holder">
-                        <% product.sizes.forEach(function(size){ %>
-                            <div class="size-container">
-                                <input type="radio" class="color-size-radio" value="<%= size %>" name="size" id="<%= size %>">
-
-                                <label for="<%= size %>" class="product__color-size-button">
-                                    <%= size %>
-                                </label>
-
-                            </div>
-                            <% }) %>
+</select>
+                    </div> 
+                   
+                    <label>
+                    Select Size:
+                </label>
+                    <div class="product__color-size-holder"> 
+                    <select name="size" class="size-container" required>
+                        <% product.sizes.forEach((size)=>{ %>
+                                <option class="color-size-radio" value="<%= size %>"  id="<%= size %>"><%= size %></option>                           
+                            <% }) %> 
+                            </select>
 
                     </div>
                 
                 <div class="product__content">
                     <%- product.content %>
                 </div>
-                <button class="button button__product-add">Add to Cart</button>
+                <button type="submit" class="button button__product-add">Add to Cart</button>
             </form>
                 <% }else {%>
 

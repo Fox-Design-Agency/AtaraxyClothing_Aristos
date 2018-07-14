@@ -1,8 +1,21 @@
 .product {
-  margin: 50px 20px 10px 50px;
-  width: 100%;
+  overflow: hideen;
+  width: 260px;
   display: flex;
   flex-wrap: wrap;
+
+  @mixin atSmall {
+    width: 500px;
+  }
+
+  @mixin atMedium {
+    width: 550px;
+    margin: 50px 20px 10px 200px;
+  }
+  @mixin atLarge {
+    width: 750px;
+    margin: 50px 20px 10px 200px;
+  }
 
   &__preview {
     margin: 20px;
@@ -50,11 +63,21 @@
   }
 
   &__holder {
-    margin: 60px 20px 10px 10px;
     padding: 10px;
     display: flex;
-    width: 1000px;
+    width: 300px;
     justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    @mixin atSmall {
+      width: 500px;
+    }
+
+    @mixin atMedium {
+      margin: 60px 20px 10px 220px;
+      width: 1000px;
+      flex-direction: row;
+    }
   }
 
   &__header {

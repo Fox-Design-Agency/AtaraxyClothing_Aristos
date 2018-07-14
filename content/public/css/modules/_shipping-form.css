@@ -20,11 +20,13 @@
   }
 
   & h2 {
+    overflow: hidden;
     font-size: 30px;
     margin: 10px;
     text-align: center;
     font-weight: 900;
     font-variant: small-caps;
+    height: 50px;
   }
 
   & div {
@@ -35,9 +37,11 @@
   }
 
   & label {
+    overflow: hidden;
     align-self: flex-start;
     font-size: 20px;
-    margin: 5px 0 5px 10%;
+    height: 40px;
+      margin: 5px 0 5px 10%;
   }
 
   & input {
@@ -60,5 +64,8 @@
       transition: 0.4s;
       transition: all 0.5s ease-out;
     }
+  }
+  &__showform{
+    visibility: visible;
   }
 }

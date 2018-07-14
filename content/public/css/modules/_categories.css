@@ -5,6 +5,12 @@
   border: 2px solid black;
   width: 200px;
 
+
+  @mixin atMedium{
+    left: 10px;
+  position: fixed;
+  }
+
   &__title {
     width: 100%;
     text-align: center;

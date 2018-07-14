@@ -8,5 +8,5 @@ const Logger = require("../../../../../../important/AristosStuff/AristosLogger/A
  */
 module.exports = orderProps => {
   const order = new Order(orderProps);
-  order.save().catch(err => Logger.error(err));
+  return order.save().catch(err => Logger.error(err));
 };

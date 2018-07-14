@@ -8,12 +8,6 @@ const usersController = require("../controllers/users_controller");
 router.get("/register", usersController.register);
 
 /*
-* POST register
-*/
-// moved to admin user controls
-// router.post("/register", )
-
-/*
 * GET login
 */
 router.get("/login", usersController.login);
