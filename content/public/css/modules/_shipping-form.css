@@ -5,7 +5,7 @@
   height: 600px;
   box-shadow: 0 2px 2px 4px rgba(0, 0, 0, 0.1);
   visibility: hidden;
-
+  
   &__holder {
     display: flex;
     justify-content: center;
@@ -41,7 +41,7 @@
     align-self: flex-start;
     font-size: 20px;
     height: 40px;
-      margin: 5px 0 5px 10%;
+    margin: 5px 0 5px 10%;
   }
 
   & input {
@@ -65,7 +65,7 @@
       transition: all 0.5s ease-out;
     }
   }
-  &__showform{
+  &__showform {
     visibility: visible;
   }
 }
