@@ -1,0 +1,65 @@
+<%- include("../_layouts/adminheader") %>
+    <h2 class="admin-page__main-title">Add a page</h2>
+    <% include ../_layouts/messages/errors %>
+    <div>
+        <button class="admin-button admin-button--main">
+            <a class="btn-text" href="/admin/pages">Back to pages</a>
+        </button>
+        <button class="admin-button admin-button--main">
+            <a class="btn-text" href="/admin/pages/add-dynamic-builder">Dynamic Builder</a>
+        </button>
+
+    </div>
+
+    <form method="post" action="/admin/pages/add-page" class="admin-form" class="admin-form">
+        <%- include("../../../AristosStuff/AristosTextEditor/AristosTextEditor") %>
+            <div class="admin-form__form-options--bottom-group">
+                <div class="admin-form__form-options">
+                    <div class="admin-form__group">
+                        <label for="">Title</label>
+                        <input type="text" class="form-control" name="title" value="<%= title %>" placeholder="Title">
+
+                    </div>
+
+                    <div class="admin-form__group">
+                        <label for="">Slug</label>
+                        <input type="text" class="form-control" name="slug" value="<%= slug %>" placeholder="Slug">
+
+                    </div>
+
+                    <div class="admin-form__group">
+                        <label for="">Parent</label>
+                        <select name="parent" class="form-control">
+                            <% pages.forEach(function(page){ %>
+                                <option value="<%= page.slug %>">
+                                    <%= page.title %>
+                                </option>
+                                <% }); %>
+                        </select>
+                        <div class="admin-form__group">
+                            <label for="">Author</label>
+                            <input type="text" class="form-control" name="author" value="<%= author %>" placeholder="Author">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="admin-form__form-options admin-form__form-options--second-group">
+                    <div class="admin-form__group">
+                        <label for="">Meta Description</label>
+                        <textarea class="admin-form--disabled-resize" rows="4" name="description" placeholder="Place a brief description of this page. Max of 320 characters including spaces."
+                            maxlength="320"></textarea>
+                    </div>
+                    <div class="admin-form__group">
+                        <label for="">Meta Keywords</label>
+                        <textarea class="admin-form--disabled-resize" rows="4" name="keywords" placeholder="Place your keywords seperated by a comma. Max of 300 characters. EX. neat site, neater page, neatest person"
+                            maxlength="300"></textarea>
+                    </div>
+
+                </div>
+            </div>
+            <div>
+                <button class="admin-button admin-button--submit">Submit</button>
+            </div>
+    </form>
+
+    <%- include("../_layouts/adminfooter") %>

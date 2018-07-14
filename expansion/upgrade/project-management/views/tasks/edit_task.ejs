@@ -1,0 +1,45 @@
+<% include ../../../../../important/admin/views/_layouts/adminheader %>
+    <h2 class="admin-page__main-title">Edit a Task</h2>
+    <% include ../../../../../important/admin/views/_layouts/messages/errors %>
+    <button class="admin-button admin-button--main">
+        <a href="/admin/project-management">Back to Tasks</a>
+    </button>
+ 
+    <form method="post" action="/admin/project-management/edit-task/<%= id %>" class="admin-form">
+
+        <%- include ../../../../../important/AristosStuff/AristosTextEditor/AristosTextEditor %>
+        <div class="admin-form__form-options">
+            <div class="admin-form__group">
+                <label for="">Task Name</label>
+                <input type="text" class="form-control" name="taskName" value="<%= taskName %>" placeholder="Task Name">
+
+            </div>
+            <div class="admin-form__group">
+                <label for="">Assigned</label>
+                <select name="assigned" class="form-control">
+                    <option value="full-team">
+                        Full Team
+                    </option>
+                    <% user.forEach(function(users){ %>
+                        <option value="<%= users.username %>" <% if (users.username === assigned) { %>
+                            selected = "selected"
+                            <% } %>
+                                >
+                            <%= users.username %>
+                        </option>
+                        <% }); %>
+                </select>
+            </div>
+
+
+</div>
+            <div class="button-row">
+                <button class="admin-button admin-button--submit">Submit</button>
+            </div>
+    </form>
+    <form method="post" action="/admin/project-management/delete-task/<%= id %>?_method=DELETE">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <button class="admin-button admin-button--danger" type="submit">Delete</button>
+                            </form>
+
+    <% include ../../../../../important/admin/views/_layouts/adminfooter %>

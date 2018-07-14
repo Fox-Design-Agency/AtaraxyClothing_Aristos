@@ -1,0 +1,122 @@
+<%- include("../../../../important/admin/views/_layouts/adminheader") %>
+    <h2 class="admin-page__main-title">Add a product</h2>
+    <% include ../../../../important/admin/views/_layouts/messages/errors %>
+    <button class="admin-button admin-button--main">
+        <a  href="/admin/products">Back to products</a>
+    </button>
+
+    <form method="post" action="/admin/products/add-product" enctype="multipart/form-data" class="admin-form">
+
+        <%- include ../../../../important/AristosStuff/AristosTextEditor/AristosTextEditor %>
+            <div class="admin-form__form-options--bottom-group">
+                <div class="admin-form__form-options">
+                    <div class="admin-form__group">
+                        <label for="">Title</label>
+                        <input type="text" class="form-control" name="title" value="<%= title %>" placeholder="Title">
+
+                    </div>
+                    <div class="admin-form__group">
+                        <label for="">Price</label>
+                        <input type="text" class="form-control" name="price" value="<%= price %>" placeholder="Price">
+
+                    </div>
+                    <div class="admin-form__group">
+                        <label for="">Category</label>
+                        <select name="category" id="category" class="form-control">
+                            <% categories.forEach(function(category){ %>
+                                <option value="<%= category.slug %>">
+                                    <%= category.title %>
+                                </option>
+                                <% }); %>
+                        </select>
+                    </div>
+                    <div class="admin-form__group">
+                        <label for="">Author</label>
+                        <input type="text" class="form-control" name="author" value="<%= author %>" placeholder="Author">
+
+                    </div>
+                    <div class="admin-form__group">
+                        <label for="">Image</label>
+                        <input type="file" class="form-control" name="image" id="img">
+                        <img src="#" id="imgPreview" alt="">
+                    </div>
+
+                </div>
+                <div class="admin-form__form-options admin-form__form-options--second-group">
+                    <div class="admin-form__group">
+                        <label for="">Meta Description</label>
+                        <textarea class="admin-form--disabled-resize" rows="4" name="description" placeholder="Place a brief description of this blog. Max of 320 characters including spaces."
+                            maxlength="320"></textarea>
+                    </div>
+                    <div class="admin-form__group">
+                        <label for="">Meta Keywords</label>
+                        <textarea class="admin-form--disabled-resize" rows="4" name="keywords" placeholder="Place your keywords seperated by a comma. Max of 300 characters. EX. neat blog, neater topic, neatest person"
+                            maxlength="300"></textarea>
+                    </div>
+                    <% if(printfulPluginExists){ %>
+                        <div id="printful-section">
+                            <div class="form-group-row">
+                                <div class="admin-form__group">
+                                    <label for="">Print File</label>
+                                    <input type="text" class="form-control" name="printfile" value="<%= printfile %>" placeholder="Print file">
+
+                                </div>
+                                <div class="admin-form__group">
+                                    <label for="">Product</label>
+                                    <select id="productselector">
+                                        <option value=""></option>
+                                        <option value="raglan">Raglan</option>
+                                        <option value="t-shirt">T-Shirt</option>
+                                        <option value="leggings">Leggings</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div id="type-holder" class="size-holder">
+
+                            </div>
+                            <div id="color-size-holder">
+
+
+                            </div>
+                        </div>
+                        <% } %>
+
+                </div>
+            </div>
+
+            <div>
+                <button class="admin-button admin-button--submit">Submit</button>
+            </div>
+    </form>
+
+    <script>
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                let reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $("#imgPreview").attr("src", e.target.result).width(100).height(100);
+                }
+                reader.readAsDataURL(input.files[0])
+            }
+        }
+
+        $("#img").change(function () {
+            readURL(this);
+        })
+        $("#printful-section").on("click", function (e) {
+            $("#productselector").on("change", function (e) {
+                $.get("/admin/printful/" + $("#productselector").val(), function (data) {
+                    $("#type-holder").html(data)
+
+                })
+            })
+
+            $("#typeselector").on("change", function (e) {
+                $.get("/admin/printful/" + $("#productselector").val() + "/" + $("#typeselector").val(), function (data) {
+                    $("#color-size-holder").html(data)
+                })
+            })
+        })
+    </script>
+    <%- include("../../../../important/admin/views/_layouts/adminfooter") %>

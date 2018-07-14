@@ -1,0 +1,43 @@
+.admin-page {
+  margin-left: 200px;
+
+  &__full-background {
+    margin-left: 0;
+    background: $mainBackground;
+    position: fixed;
+    height: 100vh;
+    width:100%;
+    z-index: -1;
+  }
+  &__none-of-something {
+    color: $fontColor;
+    margin: 10px;
+    font-size: 40px;
+    font-weight: 900;
+  }
+
+  &__main-title {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    border-bottom: 2px solid $borderOne;
+    color: $titleColor;
+    background: $secondaryBackground;
+    font-weight: 900;
+    font-variant: small-caps;
+    box-shadow: 0px 4px 10px 0px rgba(5, 60, 94, 0.2);
+  }
+
+  &__sub-title-one {
+    font-size: 30px;
+    margin: 30px 10px 10px 10px;
+    padding: 5px;
+    color: $subTitleColor;
+    border-bottom: 1px solid $borderTwo;
+    border-top: 2px solid $borderTwo;
+  }
+}

@@ -1,21 +1,21 @@
 <% include ../_layouts/productHeader %>
 
-    <div class="products-previews">
-            <div class="category-title">
+    <div class="product">
+            <div class="categories__title">
                     <h4><%= slug %></h4>
                    </div>
         <% products.forEach(function(p){ %>
-            <div class="product-preview">
+            <div class="product__preview">
                 <a class="pa" href="/products/<%= p.category %>/<%= p.slug %>">
-                    <img class="pimage" src="/images/product_images/<%= p.id %>/<%= p.image %>" alt="">
+                    <img class="product__pimage" src="/product_images/<%= p.id %>/<%= p.image %>" alt="">
                 </a>
-                <h3 class="product-preview-title">
+                <h3 class="product__preview__title">
                     <%= p.title %>
                 </h3>
-                <h4 class="product-preview-price">
+                <h4 class="product__preview__price">
                     $<%= parseFloat(p.price).toFixed(2) %>
                 </h4>
-                <a class="product-preview-details" href="/products/<%= p.category %>/<%= p.slug %>">View Details</a>
+                <a class="product__preview__details" href="/products/<%= p.category %>/<%= p.slug %>">View Details</a>
             </div>
 
             <% }) %>

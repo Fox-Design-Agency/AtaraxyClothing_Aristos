@@ -1,0 +1,47 @@
+<% include ../_layouts/adminheader %>
+    <h2 class="admin-page__main-title">Add a User</h2>
+    <% include ../_layouts/messages/messages %>
+        <button class="admin-button admin-button--main">
+            <a class="btn-text" href="/admin/user-controls">Back to Users</a>
+        </button>
+        <form method="post" action="/admin/user-controls/add-admin" class="admin-form">
+            <div class="admin-form__form-options">
+            <div class="admin-form__group">
+                <label>Name</label>
+                <input type="text" name="name" class="form-control" placeholder="Name">
+            </div>
+            <div class="admin-form__group">
+                <label>Email</label>
+                <input type="text" name="email" class="form-control" placeholder="Email">
+            </div>
+            <div class="admin-form__group">
+                <label>Username</label>
+                <input type="text" name="username" class="form-control" placeholder="Username">
+            </div>
+            <div class="admin-form__group">
+                <label for="">Admin</label>
+                <select name="admin" class="form-control">
+                    <option value="">
+
+                    </option>
+                    <option value="no">
+                        No
+                    </option>
+                    <option value="yes" selected>
+                        Yes
+                    </option>
+                </select>
+            </div>
+            <div class="admin-form__group">
+                <label>Password</label>
+                <input type="password" name="password" class="form-control" placeholder="Password">
+            </div>
+            <div class="admin-form__group">
+                <label>Confirm Password</label>
+                <input type="password" name="password2" class="form-control" placeholder="Confirm Password">
+            </div>
+</div>
+            <button type="submit" class="admin-button admin-button--submit">Submit</button>
+        </form>
+
+        <% include ../_layouts/adminfooter %>

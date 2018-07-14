@@ -1,0 +1,45 @@
+<% include ../_layouts/adminheader %>
+    <h2 class="admin-page__main-title">Admin Users</h2>
+    <% include ../_layouts/messages/messages %>
+    <div>
+    <button class="admin-button admin-button--main">
+        <a  href="/admin/user-controls/add-admin">Add a new member</a>
+    </button>
+    <button class="admin-button admin-button--main">
+        <a  href="/admin/user-controls/add-admin">Add Existing User</a>
+    </button>
+</div>
+    <table class="admin-table">
+        <thead>
+            <tr class="home">
+                <th>Name</th>
+                <th>Role</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <% users.forEach((user)=>{ %>
+                <tr>
+                    <td value="<%= user.username %>">
+                        <%= user.username %>
+                    </td>
+                    <td>
+                       NOT A THING YET
+                    </td>
+                        <td class="admin-table__edit-stuffs">
+                            <a href="/admin/user-controls/edit-admin/<%= user._id %>">Edit</a>
+                        </td>
+                                    <td  class="admin-table__delete-stuffs">
+                                    <form method="post" action="/admin/user-controls/remove-admin/<%= user._id %>?_method=DELETE">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <button type="submit">Remove</button>
+                                </form>
+                                    </td>
+                </tr>
+                <% }); %>
+        </tbody>
+
+    </table>
+    <% include ../_layouts/adminfooter %>

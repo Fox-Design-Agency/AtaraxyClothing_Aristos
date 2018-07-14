@@ -1,0 +1,1 @@
+// for blogs and blog comments

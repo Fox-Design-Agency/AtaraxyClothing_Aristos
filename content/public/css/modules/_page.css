@@ -1,0 +1,70 @@
+.page {
+  &__title {
+    text-align: center;
+    font-size: 30px;
+    font-weight: 900;
+    margin: 20px;
+  }
+
+  &__quote {
+    width: 100%;
+    margin: 10px 0 10px 0;
+    padding: 20px;
+    background: #eee;
+
+    & blockquote {
+      line-height: 45px;
+      font-size: 20px;
+      width: 700px;
+      color: slategray;
+      margin: 0 auto;
+      text-align: center;
+    }
+  }
+  &__heading {
+    margin: 20px;
+    font-size: 60px;
+    font-weight: 900;
+    text-align: center;
+    font-variant: small-caps;
+  }
+
+  &__main-slider {
+    overflow: hidden;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__display {
+    display: flex;
+    padding: 20px;
+    justify-content: center;
+  }
+
+  &__full-width-img {
+    width: 100%;
+  }
+
+  &__stuff-holder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__team-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    & h1 {
+      font-weight: 900;
+      font-size: 40px;
+      border-top: 2px solid black;
+      border-bottom: 1px solid black;
+      margin: 20px;
+      padding: 5px;
+    }
+  }
+}

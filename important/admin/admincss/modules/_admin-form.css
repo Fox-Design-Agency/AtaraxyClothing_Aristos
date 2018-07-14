@@ -1,0 +1,87 @@
+.admin-form {
+  display: flex;
+  flex-direction: column;
+
+  &__group {
+    display: flex;
+    flex-direction: column;
+  }
+  &--row {
+    display: flex;
+  }
+
+  label {
+    font-size: 20px;
+    font-weight: 600;
+    color: #05386b;
+    width: 250px;
+    margin: 10px 0 0px 10px;
+
+  }
+
+  input {
+    width: 250px;
+    height: 30px;
+    margin: 10px 0 0 10px;
+  }
+
+  select {
+    width: 250px;
+    height: 30px;
+    margin: 10px 0 10px 10px;
+    font-size: 18px;
+  }
+
+  textarea {
+    margin: 10px;
+  }
+  input[type="checkbox"] {
+    background: #000;
+  }
+  &--disabled-resize {
+    resize: none;
+  }
+
+  &__form-options {
+    width: 290px;
+    background: #8ee4af;
+    border: 1px solid #f0f8ff;
+    margin: 10px;
+    padding: 5px 5px 15px 5px;
+
+    &--bottom-group {
+      display: flex;
+    }
+
+    &--second-group {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+  }
+
+  &__size-holer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+
+    div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    label {
+      font-size: 12px;
+      width: 40px;
+      font-weight: 600;
+      color: #05386b;
+      margin: 10px;
+    }
+
+    input {
+      margin: 0 auto;
+    }
+  }
+}

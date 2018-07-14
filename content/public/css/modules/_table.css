@@ -1,0 +1,36 @@
+.table {
+  padding: 40px;
+  width: 100%;
+  text-align: center;
+  border-spacing: 0;
+
+  &__empty-cart{
+text-align: center;
+  font-size: 80px;
+  margin: 50px 0 100px 0;
+  }
+
+  & th {
+    border-top: 1px solid black;
+    border-bottom: 2px solid black;
+    padding: 5px;
+    font-size: 20px;
+    font-variant: small-caps;
+  }
+
+  & tbody td {
+    vertical-align: middle;
+    border-bottom: 1px solid black;
+  }
+
+  & tbody tr:nth-child(odd) {
+    background: #eee;
+  }
+
+  & tfoot td {
+    padding: 20px;
+    vertical-align: middle;
+    height: 30px;
+    border-bottom: 2px solid black;
+  }
+}

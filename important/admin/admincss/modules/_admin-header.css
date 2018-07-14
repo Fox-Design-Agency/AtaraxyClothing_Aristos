@@ -1,0 +1,48 @@
+.admin-header {
+  top: 0;
+  left: 0;
+  bottom: 0;
+  position: fixed;
+  z-index: 2;
+
+  border-right: 2px solid $borderOne;
+  background-color: $main;
+  text-align: center;
+  max-width: 200px;
+
+  &__brand {
+    max-width: 200px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    font-size: 26px;
+    font-weight: 600;
+    color: $titleColor;
+    margin-bottom: 10px;
+  }
+  &__basics {
+    color: $titleColor;
+  }
+  &__upgrades {
+    color: $titleColor;
+  }
+
+  &__project-management {
+  }
+
+  &__configuration {
+  }
+
+  &__marketplace {
+    border-top: 2px solid $borderOne;
+    border-bottom: 2px solid $borderOne;
+  }
+
+  &__logout {
+    border-bottom: 2px solid $borderOne;
+    margin-bottom: 20px;
+    margin: 2px;
+    padding: 5px;
+  }
+  
+}

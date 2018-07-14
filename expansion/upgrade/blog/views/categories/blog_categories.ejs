@@ -1,0 +1,62 @@
+<%- include("../../../../../important/admin/views/_layouts/adminheader") %>
+
+    <h2 class="admin-page__main-title">Blog Categories</h2>
+    <% include ../../../../../important/admin/views/_layouts/messages/messages %>
+    <div>
+
+        <button class="admin-button admin-button--main">
+            <a  href="/admin/blogs/add-blog">Add a new blog</a>
+        </button>
+        <button class="admin-button admin-button--main">
+            <a href="/admin/blog-categories/add-blog-category">Add a New Category</a>
+        </button>
+    </div>
+
+    <% if (count > 0) { %>
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% categories.forEach(function(cat) { %>
+                    <tr  id="id_<%= cat._id %>" class="<%= cat.slug %>">
+                        <td>
+                            <%= cat.title %>
+                        </td>
+                        <td  class="admin-table__edit-stuffs"> 
+                            <a href="/admin/blog-categories/edit-blog-category/<%= cat._id %>">Edit</a>
+                        </td>
+                        <% if (cat.title == "General") { %>
+                            <td></td>
+                            <% } else { %>
+                                <td  class="admin-table__delete-stuffs">
+                                <form method="post" action="/admin/blog-categories/delete-blog-category/<%= cat._id %>?_method=DELETE">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <button type="submit">Delete</button>
+                            </form>
+                                </td>
+                                <% } %>
+                    </tr>
+                    <% }); %>
+            </tbody>
+        </table>
+        <% } else { %>
+            <h3  class="admin-page__none-of-something">There are no blog categories, you should make one.</h3>
+            <% } %>
+            <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+            <script>
+                $('tbody').sortable({
+                    items: "tr",
+                    placeholder: "ui-state-hightlight",
+                    update: function () {
+                        let ids = $("tbody").sortable("serialize");
+                        let url = "/admin/blog-categories/reorder-blog-categories";
+                        $.post(url, ids);
+                    }
+                });
+            </script>
+                <%- include("../../../../../important/admin/views/_layouts/adminfooter") %>

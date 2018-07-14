@@ -1,0 +1,40 @@
+.categories {
+  margin: 20px;
+  margin-top: 50px;
+  padding: 20px;
+  border: 2px solid black;
+  width: 200px;
+
+  &__title {
+    width: 100%;
+    text-align: center;
+    font-size: 50px;
+    font-weight: 900;
+    font-variant: small-caps;
+  }
+
+  & h3 {
+    font-size: 30px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid black;
+  }
+
+  &__categories {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+
+    & li {
+      padding: 10px;
+
+      & a {
+        display: flex;
+        flex: 1;
+      }
+
+      &:hover {
+        background: #eee;
+      }
+    }
+  }
+}

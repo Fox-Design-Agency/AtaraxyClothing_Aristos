@@ -1,15 +1,15 @@
 <% include ../_layouts/productHeader %>
 
-    <div class="product-holder">
+    <div class="product__holder">
         <div class="">
-            <img class="product-image" src="/images/product_images/<%= product.id %>/<%= product.image %>" alt="">
+            <img class="product__image" src="/product_images/<%= product.id %>/<%= product.image %>" alt="">
             <div class="">
             <ul class="gallery">
                 <% galleryImages.forEach(function(image){ %>
                     <% if (image != "thumbs") { %>
                         <li>
-                            <a data-fancybox="Gallery" href="/images/product_images/<%= product.id %>/gallery/<%= image %>">
-                                <img src="/images/product_images/<%= product.id %>/gallery/thumbs/<%= image %>" alt="">
+                            <a data-fancybox="Gallery" href="/product_images/<%= product.id %>/gallery/<%= image %>">
+                                <img src="/product_images/<%= product.id %>/gallery/thumbs/<%= image %>" alt="">
                             </a>
                         </li>
                         <% } %>
@@ -18,10 +18,10 @@
         </div>
         </div>
         <div class="">
-            <h1 class="product-header">
+            <h1 class="product__header">
                 <%= product.title %>
             </h1>
-            <p class="product-price">
+            <p class="product__price">
                 $
                 <%= parseFloat(product.price).toFixed(2) %>
             </p>
@@ -54,17 +54,17 @@
 
                     </div>
                 
-                <div class="product-content">
+                <div class="product__content">
                     <%- product.content %>
                 </div>
-                <button class="btn-submit">Add to Cart</button>
+                <button class="button button__product-add">Add to Cart</button>
             </form>
                 <% }else {%>
 
-                    <p class="product-content">
+                    <p class="product__content">
                         <%- product.content %>
                     </p>
-                    <p class="product-add-btn">
+                    <p class="button button__product-add">
                             <a href="/cart/add/<%= product.slug %>">Add to cart</a>
 
                     </p>

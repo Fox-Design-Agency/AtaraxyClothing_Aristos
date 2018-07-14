@@ -1,0 +1,38 @@
+.admin-media {
+    &__viewer{
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px;
+    }
+  &__preview-image {
+    width: 150px;
+    height: 150px;
+    position: relative;
+    z-index: 1;
+    margin: 5px;
+   
+  }
+  &__trash {
+    position: fixed;
+    z-index: 1;
+    background: red;
+    width: 200px;
+    height: 300px;
+    right: 0;
+    top: 0;
+    visibility: hidden;
+    border: 4px groove #05386b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    padding: 20px;
+    font-size: 150px;
+    font-weight: 900;
+    box-shadow: 2px 8px 16px 4px rgba(5, 60, 94, 0.2);
+
+    &--visible {
+      visibility: visible;
+    }
+  }
+}

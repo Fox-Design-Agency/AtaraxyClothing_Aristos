@@ -1,19 +1,19 @@
 <% include ../_layouts/header %>
-    <h1 class="page_title">
+    <h1 class="page__title">
         <%= title %>
     </h1>
-    <div class="form-holder">
-        <form method="post" action="/users/login">
-            <div class="form-group">
+    <div class="form">
+        <form  method="post" action="/users/login">
+            <div class="form__group">
                 <label>Username</label>
-                <input type="text" name="username" class="form-control" placeholder="Username">
+                <input type="text" name="username" placeholder="Username">
             </div>
-            <div class="form-group">
+            <div class="form__group">
                 <label>Password</label>
-                <input type="password" name="password" class="form-control" placeholder="Password">
+                <input type="password" name="password" placeholder="Password">
             </div>
 
-            <button type="submit" class="btn-submit">Log in</button>
+            <button type="submit" class="button button__submit" >Log in</button>
 
         </form>
     </div>

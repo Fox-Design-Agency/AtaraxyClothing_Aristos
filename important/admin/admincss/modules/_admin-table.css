@@ -1,0 +1,81 @@
+.admin-table {
+  width: 100%;
+  text-align: center;
+  border-spacing: 0;
+
+
+  &__image-preview{
+     width: 100px;
+    height: 100px;
+  }
+
+  th {
+    border-top: 1px solid $borderTwo;
+    border-bottom: 2px solid $borderTwo;
+    background: $lightMain;
+    color: $fontColor;
+    padding: 5px;
+    font-size: 20px;
+    font-variant: small-caps;
+  }
+
+  & tbody tr:nth-child(odd) {
+    background: #fff;
+  }
+
+  & td {
+    border-right: 1px solid $borderTwo;
+    border-bottom: 1px solid $borderTwo;
+    color: $fontColor;
+    vertical-align: middle;
+  }
+
+  &__complete-stuffs a {
+    display: flex;
+    padding: 10px;
+    justify-content: center;
+    transition: background 0.4s linear;
+
+    &:hover {
+      background: $hoverSuccess;
+      color: $titleColor;
+      transition: background 0.4s linear;
+    }
+  }
+
+  &__delete-stuffs form {
+    display: flex;
+
+    justify-content: center;
+    transition: background 0.4s linear;
+
+    & button {
+      padding: 10px;
+      background: transparent;
+      border: none;
+      display: flex;
+      cursor: pointer;
+      flex: 1;
+     justify-content: center;
+    }
+
+    &:hover {
+      background: $hoverDanger;
+      color: $titleColor;
+      transition: background 0.4s linear;
+    }
+  }
+
+  &__edit-stuffs a {
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    transition: background 0.4s linear;
+
+    &:hover {
+      background: $hoverNorm;
+      color: $titleColor;
+      transition: background 0.4s linear;
+    }
+  }
+}

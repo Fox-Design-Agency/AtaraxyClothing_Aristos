@@ -1,0 +1,59 @@
+<%- include("../../_layouts/adminheader") %>
+    <h2 class="admin-page__main-title">Media Categories</h2>
+    <% include ../../_layouts/messages/messages %>
+    <div>
+        <button class="admin-button admin-button--main">
+            <a href="/admin/add-media/upload-image">Upload an Image</a>
+        </button>
+        <button class="admin-button admin-button--main">
+            <a href="/admin/add-media/upload-video">Upload a Video</a>
+        </button>
+        <button class="admin-button admin-button--main">
+            <a href="/admin/media-categories/add-media-category">Add a Category</a>
+        </button>
+    </div>
+
+    <% if (count > 0) { %>
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% categories.forEach((cat)=> { %>
+                    <tr>
+                        <td>
+                            <%= cat.title %>
+                        </td>
+                        <% if (cat.title == "General") { %>
+                            <td>
+
+                            </td>
+                            <% } else { %>
+                                <td class="admin-table__edit-stuffs">
+                                    <a href="/admin/media-categories/edit-media-category/<%= cat._id %>">Edit</a>
+                                </td>
+                                <% } %>
+                                    <% if (cat.title == "General") { %>
+                                        <td>
+
+                                        </td>
+                                        <% } else { %>
+                                            <td class="admin-table__delete-stuffs">
+                                            <form method="post" action="/admin/media-categories/delete-media-category/<%= cat._id %>?_method=DELETE">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <button type="submit">Delete</button>
+                            </form>
+                                            </td>
+                                            <% } %>
+                    </tr>
+                    <% }); %>
+            </tbody>
+        </table>
+        <% } else { %>
+            <h3 class="admin-page__none-of-something">There are no product categories, you should make one.</h3>
+            <% } %>
+                <%- include("../../_layouts/adminfooter") %>

@@ -12,9 +12,9 @@
         <%= title %>
     </title>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.min.css" />
-    <link rel="stylesheet" href="/css/themereset.css" />
-    <link rel="stylesheet" href="/css/main.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.min.css" >
+
+    <link rel="stylesheet" href="/styles/theme.css">
     <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.min.js"></script>
     <script src="https://www.paypalobjects.com/api/checkout.js"></script>
@@ -28,20 +28,24 @@
     </div> -->
 
     <nav class="header">
-        <a class="header-brand" href="/"><p>Ataraxy</p><p>Clothing</p></a>
-        <div class="header-navbar" id="">
-            <ul class="header-navbar-actualOne">
+        <a class="header__brand" href="/"><p>Ataraxy</p><p>Clothing</p></a>
+
+        <div class="header__menu-icon">
+        <div class="header__menu-icon__middle"></div>
+    </div>
+        <div class="header__navbar" id="">
+            <ul class="header__navbar--nav-left">
                 <% pages.forEach(function(page){ %>
                     <% if (page.slug == "home"){ %>
                         <li>
-                            <a class="nav-link" href="/">
+                            <a href="/">
                                 <%= page.title.toLowerCase() %>
                             </a>
                         </li>
                         <% } else{ %>
                             <% if (page.parent == "home") { %>
                                 <li>
-                                    <a class="nav-link" href="/<%= page.slug %>">
+                                    <a href="/<%= page.slug %>">
                                         <%= page.title.toLowerCase() %>
                                     </a>
                                 </li>
@@ -49,9 +53,9 @@
                                     <% } %>
                                         <% }) %>
             </ul>
-            <ul class="header-navbar-actualTwo">
+            <ul class="header__navbar--nav-right">
                 <li>
-                    <a class="nav-link" href="/cart/checkout">My Cart (
+                    <a href="/cart/checkout">My Cart (
                         <% if (typeof cart !== "undefined") { %>
                             <%= cart.length %>
                                 <% } else { %>
@@ -61,20 +65,20 @@
                 </li>
                 <% if (user) { %>
                     <li>
-                        <a class="nav-link" href="/users/logout">Hi,
+                        <a  href="/users/logout">Hi,
                             <%= user.username %> ( Logout )</a>
                     </li>
                     <% } else{ %>
                         <li>
-                            <a class="nav-link" href="/users/register">Register</a>
+                            <a  href="/users/register">Register</a>
                         </li>
                         <li>
-                            <a class="nav-link" href="/users/login">Log in</a>
+                            <a href="/users/login">Log in</a>
                         </li>
                         <% } %>
                             <% if (user && user.admin == 1) { %>
                                 <li>
-                                    <a class="nav-link" href="/admin/pages">Admin Area</a>
+                                    <a href="/admin/pages">Admin Area</a>
                                 </li>
                                 <% } %>
             </ul>

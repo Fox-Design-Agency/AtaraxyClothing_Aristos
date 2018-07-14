@@ -1,41 +1,28 @@
-const express = require("express")
+const express = require("express");
 const router = express.Router();
 
-//GET blog category model
-const Category = require("../../upgrade/blog/models/blogCategory")
 // GET page model
-const Page = require("../../../includes/models/page")
-
-
-
-
-
-
+const findPageWithParam = require("../../../important/admin/adminModels/queries/page/FindPageWithParam");
 
 /*
 * GET blog index
 */
 
-router.get("/", function (req, res) {
-    Page.findOne({ slug: "contact" }, function (err, page) {
-        if (err) {
-            console.log(err);
-        }
+router.get("/", function(req, res) {
+  findPageWithParam({ slug: "contact" }).then(page => {
+    if (!page) {
+      res.redirect("/");
+    } else {
+      res.render("contact", {
+        title: page.title,
+        content: page.content,
+        keywords: page.keywords,
+        description: page.description,
+        author: page.author
+      });
+    }
+  });
+});
 
-        if (!page) {
-            res.redirect("/")
-        } else {
-            res.render("contact", {
-                title: page.title,
-                content: page.content,
-                keywords: page.keywords,
-                description: page.description,
-                author: page.author
-            })
-        }
-    })
-    })
-
-    
 //Exports
 module.exports = router;

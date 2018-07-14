@@ -1,0 +1,89 @@
+<%- include("../../../../important/admin/views/_layouts/adminheader") %>
+    <h2 class="admin-page__main-title">Products</h2>
+    <% include ../../../../important/admin/views/_layouts/messages/messages %>
+    <div class="button-row">
+        <button class="admin-button admin-button--main">
+            <a href="/admin/products/add-product">Add a new product</a>
+        </button>
+        <button class="admin-button admin-button--main">
+            <a href="/admin/product-categories/add-product-category">Add a new category</a>
+        </button>
+    </div>
+ 
+    <% if (count > 0) { %>
+        <div class="button-row">
+
+            <button class="admin-button admin-button--main">
+                <a href="/admin/products/">All Categories</a>
+            </button>
+       
+        <% categories.forEach(function(category){ %>
+            
+                <button  class="admin-button admin-button--main">
+                    <a href="/admin/products/categories/<%= category.slug %>">
+                        <%= category.title %>
+                    </a>
+                </button>
+           
+            <% }) %> 
+        </div>
+                <table class="admin-table">
+                    <thead>
+                        <tr class="home">
+                            <th>Product</th>
+                            <th>Price</th>
+                            <th>Category</th>
+                            <th>Product Image</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% products.forEach(function(product) { %>
+                            <tr id="id_<%= product._id %>" class="<%= product.slug %>">
+                                <td>
+                                    <%= product.title %>
+                                </td>
+                                <td>
+                                    $<%= parseFloat(product.price).toFixed(2) %>
+                                </td>
+                                <td>
+                                    <%= product.category %>
+                                </td>
+                                <td>
+                                    <% if (product.image == "") { %>
+                                        <img class="admin-table__image-preview" id="noimage" src="/noimage.png" alt="">
+                                        <% } else { %>
+                                            <img class="admin-table__image-preview" id="noimage" src="/product_images/<%= product.id%>/<%= product.image %>" alt="">
+                                            <% } %>
+                                </td>
+                                <td class="admin-table__edit-stuffs">
+                                    <a href="/admin/products/edit-product/<%= product._id %>">Edit</a>
+                                </td>
+                                <td class="admin-table__delete-stuffs">
+                                <form method="post" action="/admin/products/delete-product/<%= product._id %>?_method=DELETE">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <button type="submit">Delete</button>
+                            </form>
+                                </td>
+                            </tr>
+                            <% }); %>
+                    </tbody>
+                </table>
+                <% } else { %>
+                    <h3 class="admin-page__none-of-something">There are no products...</h3>
+                    <% } %>
+                        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+                        <script>
+                            $('tbody').sortable({
+                                items: "tr",
+                                placeholder: "ui-state-hightlight",
+                                update: function () {
+                                    let ids = $("tbody").sortable("serialize");
+                                    let url = "/admin/products/reorder-products";
+
+                                    $.post(url, ids);
+                                }
+                            });
+                        </script>
+                        <%- include("../../../../important/admin/views/_layouts/adminfooter") %>

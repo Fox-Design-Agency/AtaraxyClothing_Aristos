@@ -1,0 +1,19 @@
+.admin-footer {
+  position: relative;
+  bottom: 10px;
+  margin-top: 5px;
+  padding: 10px;
+  color: $titleColor;
+  font-size: 0.9rem;
+  line-height: 0.15;
+
+  p {
+    margin: 0;
+    padding: 5px;
+  }
+
+  &__link {
+    margin: 0;
+    padding: 0;
+  }
+}

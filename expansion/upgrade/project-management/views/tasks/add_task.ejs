@@ -1,0 +1,38 @@
+<% include ../../../../../important/admin/views/_layouts/adminheader %>
+    <h2 class="admin-page__main-title">Add a Task</h2>
+    <% include ../../../../../important/admin/views/_layouts/messages/errors %>
+    <%- content %>
+        <button class="admin-button admin-button--main">
+            <a href="/admin/project-management">Back to Tasks</a>
+        </button>
+
+        <form method="post" action="/admin/project-management/add-task" class="admin-form">
+
+            <%- include ../../../../../important/AristosStuff/AristosTextEditor/AristosTextEditor %>
+            <div class="admin-form__form-options">
+            <div class="admin-form__group">
+                <label for="">Task Name</label>
+                <input type="text" class="form-control" name="taskName" value="<%= taskName %>" placeholder="Task Name">
+
+            </div>
+            <div class="admin-form__group">
+                <label for="">Assigned</label>
+                <select name="assigned" class="form-control">
+                    <option value="full-team">
+                        Full Team
+                    </option>
+                    <% user.forEach(function(user){ %>
+                        <option value="<%= user.username %>">
+                            <%= user.username %>
+                        </option>
+                        <% }); %>
+                </select>
+            </div>
+
+</div>
+                <div>
+                    <button class="admin-button admin-button--submit">Submit</button>
+                </div>
+        </form>
+
+        <% include ../../../../../important/admin/views/_layouts/adminfooter %>

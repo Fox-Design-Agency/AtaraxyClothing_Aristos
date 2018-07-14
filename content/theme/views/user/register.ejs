@@ -1,31 +1,31 @@
 <% include ../_layouts/header %>
-    <h1 class="page_title">
+    <h1 class="page__title">
         <%= title %>
     </h1>
-    <div class="form-holder">
+    <div class="form">
         <form method="post" action="/users/register">
-            <div class="form-group">
+            <div class="form__group">
                 <label>Name</label>
-                <input type="text" name="name" class="form-control" placeholder="Name">
+                <input type="text" name="name"  placeholder="Name">
             </div>
-            <div class="form-group">
+            <div class="form__group">
                 <label>Email</label>
-                <input type="text" name="email" class="form-control" placeholder="Email">
+                <input type="text" name="email" placeholder="Email">
             </div>
-            <div class="form-group">
+            <div class="form__group">
                 <label>Username</label>
-                <input type="text" name="username" class="form-control" placeholder="Username">
+                <input type="text" name="username" placeholder="Username">
             </div>
-            <div class="form-group">
+            <div class="form__group">
                 <label>Password</label>
-                <input type="password" name="password" class="form-control" placeholder="Password">
+                <input type="password" name="password" placeholder="Password">
             </div>
-            <div class="form-group">
+            <div class="form__group">
                 <label>Confirm Password</label>
-                <input type="password" name="password2" class="form-control" placeholder="Confirm Password">
+                <input type="password" name="password2" placeholder="Confirm Password">
             </div>
 
-            <button type="submit" class="btn-submit">Register</button>
+            <button type="submit" class="button button__submit">Register</button>
 
         </form>
     </div>

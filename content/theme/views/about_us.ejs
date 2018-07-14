@@ -1,21 +1,21 @@
 <% include _layouts/header %>
     <div class="img-holder">
-        <img src="/images/<%= media.path %>">
+        <img src="<%= media.path %>">
     </div>
-    <div class="about-blockquote">
+    <div class="page__quote">
         <blockquote>
             Our mission is to promote a life style of happiness and tranquility. Presently, we sell Handmade Hats, 3/4 Sleeve Shirts,
             and T-shirts. It is the owner's belief that through business you can promote goodness and well being. Ataraxy
             has been set as a personal goal for all employees that we hope to bring into the world.
         </blockquote>
     </div>
-    <div class="team-section">
+    <div class="page__team-section">
         <h1>The Team</h1>
-        <div class="card-holder">
+        <div class="page__stuff-holder">
             <% team.forEach(function(team){ %>
                 <a href="<%= team.link %>" target="_blank">
-                    <div class="team-card">
-                        <img src="/images/<%= team.path %>" alt="<%= team.alt %>">
+                    <div class="card card__team-card">
+                        <img src="<%= team.path %>" alt="<%= team.alt %>">
                         <h3>
                             <%= team.title %>
                         </h3>

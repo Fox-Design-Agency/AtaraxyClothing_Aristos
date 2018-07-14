@@ -1,0 +1,68 @@
+<% include ../_layouts/adminheader %>
+    <h2 class="admin-page__main-title">Edit an Image</h2>
+    <% include ../_layouts/messages/messages %>
+    <% include ../_layouts/messages/errors %>
+    <button class="admin-button admin-button--main">
+        <a href="/admin/add-media">Back to Add Media</a>
+    </button>
+
+    <form method="post" action="/admin/add-media/edit-image/<%= id %>" enctype="multipart/form-data" class="admin-form">
+        <div class="admin-form__form-options--bottom-group">
+            <div class="admin-form__form-options">
+                <div class="admin-form__group">
+                    <label for="">Title</label>
+                    <input type="text" class="form-control" name="title" value="<%= title %>" placeholder="Title">
+
+                </div>
+
+                <div class="admin-form__group">
+                    <label for="">Alt</label>
+                    <input type="text" class="form-control" name="alt" value="<%= alt %>" placeholder="Alt Tag">
+
+                </div>
+
+                <div class="admin-form__group">
+                    <label for="">Category</label>
+                    <select name="category" class="form-control">
+                        <% categories.forEach((category)=>{ %>
+                            <option value="<%= category.title %>" <% if (category.title === selectedCat) { %>
+                                selected = "selected"
+                                <% } %>
+                                    >
+                                <%= category.title %>
+                            </option>
+                            <% }); %>
+                    </select>
+                </div>
+                <img class="add-media-preview-image" src="<%= path %>" id="imgPreview" alt="<%= alt %>">
+
+            </div>
+                <div class="admin-form__form-options admin-form__form-options--second-group">
+                    <div class="admin-form__group">
+                        <label for="">Link</label>
+                        <input type="text" class="form-control" name="link" value="<%= link %>" placeholder="Optional link for redirection use">
+
+                    </div>
+                    <div class="admin-form__group">
+                        <label for="">Meta Description</label>
+                        <textarea class="disabled-resize" rows="4" name="description" placeholder="Place a brief description of this image. Max of 320 characters including spaces."
+                            maxlength="320"><%= description %></textarea>
+                    </div>
+                    <div class="admin-form__group">
+                        <label for="">Meta Keywords</label>
+                        <textarea class="disabled-resize" rows="4" name="keywords" placeholder="Place your keywords seperated by a comma. Max of 300 characters. EX. neat image, neater image stuffs, neatest photographer"
+                            maxlength="300"><%= keywords %></textarea>
+                        </div>
+
+                    </div>
+                </div>
+            <div>
+                <button type="submit" class="admin-button admin-button--submit">Submit</button>
+            </div>  
+    </form>
+    <form method="post" action="/admin/add-media/delete-image/<%= id %>?_method=DELETE">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <button type="submit" class="admin-button admin-button--danger">Delete </button>
+                            </form>
+
+    <% include ../_layouts/adminfooter %>

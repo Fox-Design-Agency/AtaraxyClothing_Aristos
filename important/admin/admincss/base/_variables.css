@@ -1,0 +1,36 @@
+/* used for: nav-header background */
+$main: #5cdb95;
+/* used for: table heads */
+$lightMain: #8ee4af;
+/* used for:  main background */
+$mainBackground: #EDF5E1;
+/* used for: pages title background */
+$secondaryBackground: #379683;
+/* used for:  */
+$contrastBackground: #05386b;
+/* used for:header nav borders */
+$borderOne: #f0f8ff;
+/* used for: table borders */
+$borderTwo: #379683;
+/* used for button danger */
+$borderThree: #4a6fa5;
+/* used for: nav hovers, table edit hovers */
+$hoverNorm: #05386b;
+/* used for:  main button hover */
+$hoverSecondary: #b0c4de;
+/* used for: marketplace link and complete type links */
+$hoverSuccess: #1E90FF;
+/* used for: button submit */
+$transitionSuccessHover:  #b0c4de;
+/* used for: logout, delete type links */
+$hoverDanger: #FF0000;
+/* used for: button danger */
+$transitionDangerHover:  #b22222;
+/* used for: used for titles, and main nav colors */
+$titleColor: #f0f8ff;
+/* used for: sub title one*/
+$subTitleColor: ##05386B;
+/* used for: used for base font color */
+$fontColor: #05386B;
+/* used for: global set for all links */
+$linkColor: #05386B;

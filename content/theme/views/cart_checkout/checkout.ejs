@@ -1,10 +1,10 @@
 <% include ../_layouts/header %>
 
     <% if(typeof cart !== "undefined"){ %>
-        <h1 class="page_title">My Cart</h1>
+        <h1 class="page__title">My Cart</h1>
         <br>
         <br>
-        <table class="checkout_table">
+        <table class="table">
             <thead>
                 <tr>
                     <th>Image</th>
@@ -17,10 +17,10 @@
             </thead>
             <tbody>
                 <% cart.forEach(function(product){ %>
-
+<% console.log(product.image)%>
                     <tr>
                         <td>
-                            <img class="img-preview" src="/images/<%= product.image %>" alt="">
+                            <img class="img-preview" src="<%= product.image %>" alt="">
                         </td>
                         <td>
                             <%= product.title %>
@@ -33,9 +33,9 @@
                             <%= product.qty %>
                         </td>
                         <td>
-                            <a class="btn-quantity" href="/cart/update/<%= product.title %>?action=add">+</a>&nbsp;
-                            <a class="btn-quantity" href="/cart/update/<%= product.title %>?action=remove">-</a>&nbsp;
-                            <a class="btn-clearcart" href="/cart/update/<%= product.title %>?action=clear">Remove</a>&nbsp;
+                            <a class="button__quantity" href="/cart/update/<%= product.title %>?action=add">+</a>&nbsp;
+                            <a class="button__quantity" href="/cart/update/<%= product.title %>?action=remove">-</a>&nbsp;
+                            <a class="button__clearcart" href="/cart/update/<%= product.title %>?action=clear">Remove</a>&nbsp;
                         </td>
                         <td>
 
@@ -63,15 +63,15 @@
             </tfoot>
 
         </table>
-        <div class="checkout-bottom-buttons">
+        <div class="button__bottom-type">
             <% if(shipping == "0.00"){ %>
-                <div id="shipping" class="btn-buynow">Add Shipping Information</div>
+                <div id="shipping" class="button__buynow">Add Shipping Information</div>
                     <% } %>
                         <div>
                             <% if(shipping != "0.00"){ %>
-                                <a id="buy-now" class="btn-buynow" href="/cart/pay/<%= orderid %>">Buy Now</a>
+                                <a id="buy-now" class="button__buynow" href="/cart/pay/<%= orderid %>">Buy Now</a>
                                 <% } %>
-                                    <a class="btn-clearcart" href="/cart/clear">Clear cart</a>
+                                    <a class="button__clearcart" href="/cart/clear">Clear cart</a>
                         </div>
         </div>
         <div id="full-grey-screen" class="full-grey-screen"></div>
@@ -111,7 +111,7 @@
         </div>
 
         <% } else { %>
-            <h3 class="empty-cart">Your cart is empty...</h3>
+            <h3 class="table__empty-cart">Your cart is empty...</h3>
             <% } %>
 
                 <script>

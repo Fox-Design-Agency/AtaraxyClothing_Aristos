@@ -1,0 +1,1 @@
+// for about, home and other pages

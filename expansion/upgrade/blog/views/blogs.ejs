@@ -1,0 +1,68 @@
+<%- include("../../../../important/admin/views/_layouts/adminheader") %>
+    <h2 class="admin-page__main-title">Blogs</h2>
+    <% include ../../../../important/admin/views/_layouts/messages/messages %>
+    <div class="button-row">
+        <button class="admin-button admin-button--main">
+            <a href="/admin/blogs/add-blog">Add a new blog</a>
+        </button>
+        <button class="admin-button admin-button--main">
+            <a href="/admin/blog-categories/add-blog-category">Add a new category</a>
+        </button>
+    </div>
+
+    <% if (count > 0) { %>
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>title</th>
+                    <th>category</th>
+                    <th>published</th>
+                    <th>comments</th>
+                    <th>edit</th>
+                    <th>delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% blogs.forEach(function(blog) { %>
+                    <tr id="id_<%= blog._id %>" class="<%= blog.slug %>">
+                        <td>
+                            <%= blog.title %>
+                        </td>
+                        <td>
+                            <%= blog.category %>
+                        </td>
+                        <td>
+                            <%= blog.published %>
+                        </td>
+                        <td class="admin-table__edit-stuffs">
+                            <a href="/admin/blog-comments/<%= blog.id %>">See Comments</a>
+                        </td>
+                        <td  class="admin-table__edit-stuffs">
+                            <a href="/admin/blogs/edit-blog/<%= blog._id %>">Edit</a>
+                        </td>
+                        <td  class="admin-table__delete-stuffs">
+                        <form method="post" action="/admin/blogs/delete-blog/<%= blog._id %>?_method=DELETE">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <button type="submit">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    <% }); %>
+            </tbody>
+        </table>
+        <% } else { %>
+            <h3 class="admin-page__none-of-something">There are no blogs, you should write one.</h3>
+            <% } %>
+            <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+            <script>
+                $('tbody').sortable({
+                    items: "tr",
+                    placeholder: "ui-state-hightlight",
+                    update: function () {
+                        let ids = $("tbody").sortable("serialize");
+                        let url = "/admin/blogs/reorder-blogs";
+                        $.post(url, ids);
+                    }
+                });
+            </script>
+                <%- include("../../../../important/admin/views/_layouts/adminfooter") %>
