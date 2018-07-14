@@ -1,3 +1,61 @@
-.blog{
-    
+.blog {
+  margin: 50px 20px 10px 50px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  margin-bottom: 50px;
+
+  & h1 {
+    width: 100%;
+    text-align: center;
+    font-size: 50px;
+    font-weight: 900;
+    font-variant: small-caps;
+  }
+
+  & h2 {
+    width: 100%;
+    font-size: 50px;
+    font-weight: 900;
+    margin-bottom: 20px;
+  }
+
+  &__author {
+    font-style: italic;
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+
+  &__content {
+    margin-bottom: 40px;
+  }
+
+  &__keywords-map {
+    font-size: 10px;
+    margin-bottom: 20px;
+  }
+
+  &__comments-stuffs {
+    border: 1px solid black;
+    text-align: center;
+    height: 100px;
+    padding: 20px;
+  }
+
+  &__individual-blog {
+    border: 1px solid black;
+    width: 675px;
+    margin: 10px 0 10px 40px;
+    padding: 10px;
+
+    & h3 {
+      font-size: 30px;
+    }
+
+    & h4 {
+      font-style: italic;
+      margin: 5px 0 10px 0;
+    }
+  }
 }

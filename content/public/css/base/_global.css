@@ -53,3 +53,11 @@ a {
   flex-wrap: wrap;
   list-style: none;
 }
+
+.pp {
+  visibility: hidden;
+}
+
+.showform {
+  visibility: visible;
+}

@@ -1,11 +1,11 @@
 <% include ../_layouts/blogHeader %>
 
   
-        <div class="blogs-holder">
+        <div class="blogs">
                 <h1>all blogs</h1>
             <% blogs.forEach(function(blog){ %>
                 <a href="/blog/<%= blog.category %>/<%= blog.slug %>">
-                    <div class="individual-blog">
+                    <div class="blogs__individual-blog">
                         <h3>
                             <%= blog.title %>
                         </h3>

@@ -5,14 +5,17 @@
   border: 1px solid black;
   margin: 20px 0 20px 0;
   font-size: 20px;
+  transition: all 0.5s ease-out;
 
   &__submit {
+    transition: all 0.5s ease-out;
     background: white;
 
     &:hover {
       background: black;
       border: 1px solid #eee;
       color: white;
+      transition: all 0.5s ease-out;
     }
   }
 
@@ -25,11 +28,13 @@
     color: white;
     text-align: center;
     padding: 10px;
+    transition: all 0.5s ease-out;
 
     &:hover {
       background-color: #b22222;
       color: #eee;
       transition: 0.4s;
+      transition: all 0.5s ease-out;
     }
   }
 
@@ -40,11 +45,13 @@
     border: 1px solid black;
     background: #ff0000;
     color: white;
+    transition: all 0.5s ease-out;
 
     &:hover {
       background-color: #b22222;
       color: #eee;
       transition: 0.4s;
+      transition: all 0.5s ease-out;
     }
   }
 
@@ -55,10 +62,12 @@
     border: 1px solid black;
     background: #1e90ff;
     color: white;
+    transition: all 0.5s ease-out;
     &:hover {
       background-color: #b0c4de;
       color: #eee;
       transition: 0.4s;
+      transition: all 0.5s ease-out;
     }
   }
 
@@ -67,9 +76,11 @@
     cursor: pointer;
     border: 1px solid black;
     color: black;
+    transition: all 0.5s ease-out;
     &:hover {
       background: slategray;
       transition: 0.4s;
+      transition: all 0.5s ease-out;
     }
   }
 
@@ -78,10 +89,12 @@
     flex-direction: column;
     align-items: flex-end;
     margin: 10px 30px 10px 0;
+    transition: all 0.5s ease-out;
 
     & div {
       display: flex;
       margin: 10px 0 10px 0;
+      transition: all 0.5s ease-out;
     }
   }
 
@@ -91,11 +104,13 @@
     text-align: center;
     padding: 10px;
     font-weight: 600;
+    transition: all 0.5s ease-out;
 
     &:hover {
       border: 2px solid #eee;
       color: #fff;
       background: #000;
+      transition: all 0.5s ease-out;
     }
   }
 }

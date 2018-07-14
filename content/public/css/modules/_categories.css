@@ -26,7 +26,7 @@
 
     & li {
       padding: 10px;
-
+      transition: all 0.5s ease-out;
       & a {
         display: flex;
         flex: 1;
@@ -34,6 +34,7 @@
 
       &:hover {
         background: #eee;
+        transition: all 0.5s ease-out;
       }
     }
   }

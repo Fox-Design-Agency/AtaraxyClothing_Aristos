@@ -1,0 +1,30 @@
+input[type="radio"] {
+  display: none;
+}
+input[type="radio"] + label {
+  display: inline-block;
+  color: black;
+  background: white;
+  border: 1px solid black;
+}
+input[type="radio"]:checked + label {
+  border: 1px solid #eee;
+  background: black;
+  color: white;
+  cursor: pointer;
+}
+input[type="radio"] + label {
+  /* width:200px;
+    height:30px; */
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+input[type="radio"]:checked + label {
+  background-color: #000;
+}
+
+input[type="radio"] + label,
+input[type="radio"]:checked + label {
+  transition: background-color 0.4s linear;
+}

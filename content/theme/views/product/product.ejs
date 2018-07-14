@@ -27,12 +27,12 @@
             </p>
             <% if(printfulPluginExists){ %>
                 <form  method="post" action="/cart/add/<%= product.slug %>" enctype="multipart/form-data">
-                    <div class="color-size-holder">
+                    <div class="product__color-size-holder">
                         <% product.color.forEach(function(color){ %>
                             <div class="color-container">
                                 <input type="radio" class="color-size-radio" value="<%= color %>" name="color" id="<%= color %>">
 
-                                <label for="<%= color %>" class="color-size-button">
+                                <label for="<%= color %>" class="product__color-size-button">
                                     <%= color %>
                                 </label>
 
@@ -40,12 +40,12 @@
                             <% }) %>
 
                     </div>
-                    <div class="color-size-holder">
+                    <div class="product__color-size-holder">
                         <% product.sizes.forEach(function(size){ %>
                             <div class="size-container">
                                 <input type="radio" class="color-size-radio" value="<%= size %>" name="size" id="<%= size %>">
 
-                                <label for="<%= size %>" class="color-size-button">
+                                <label for="<%= size %>" class="product__color-size-button">
                                     <%= size %>
                                 </label>
 
@@ -64,7 +64,7 @@
                     <p class="product__content">
                         <%- product.content %>
                     </p>
-                    <p class="button button__product-add">
+                    <p class="button__product-add">
                             <a href="/cart/add/<%= product.slug %>">Add to cart</a>
 
                     </p>

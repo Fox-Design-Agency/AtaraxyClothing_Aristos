@@ -189,7 +189,7 @@
 } */
 
 /* blogs stuffs */
-.blogs-holder {
+/* .blogs-holder {
   margin: 50px 20px 10px 50px;
   width: 100%;
   display: flex;
@@ -241,7 +241,7 @@
 .individual-blog h4 {
   font-style: italic;
   margin: 5px 0 10px 0;
-}
+} */
 
 /* sidebar menu */
 /* .category-title {
@@ -440,7 +440,7 @@
 /* .img-preview {
   width: 100px;
 } */
-
+/* 
 .pp {
   visibility: hidden;
 }
@@ -448,7 +448,7 @@
 .checkout-total {
   font-weight: 900;
   font-size: 20px;
-}
+} */
 
 /* .empty-cart {
   text-align: center;
@@ -484,7 +484,7 @@
   height: 100%;
   visibility: hidden;
 } */
-
+/* 
 .shipping-form-holder {
   display: flex;
   justify-content: center;
@@ -536,11 +536,11 @@
   color: white;
   /* visibility: hidden; */
 }
-.shipping-form button:hover {
+/* .shipping-form button:hover {
   background-color: #b0c4de;
   color: #eee;
   transition: 0.4s;
-}
+} */ 
 
 /* .btn-cancel {
   width: 100%;
@@ -562,7 +562,7 @@
   align-items: center;
   justify-content: center;
 } */
-.showform {
+/* .showform {
   visibility: visible;
 }
 
@@ -579,7 +579,7 @@
   padding: 5px;
   margin: 0px 5px 5px 5px;
   cursor: pointer;
-}
+} */
 
 /* .container input {
     position: absolute;
@@ -597,7 +597,7 @@
     color: white;
     cursor: pointer;
   } */
-input[type="radio"] {
+/* input[type="radio"] {
   display: none;
 }
 input[type="radio"] + label {
@@ -614,7 +614,7 @@ input[type="radio"]:checked + label {
 }
 input[type="radio"] + label {
   /* width:200px;
-    height:30px; */
+    height:30px;
   vertical-align: middle;
   cursor: pointer;
 }
@@ -626,4 +626,4 @@ input[type="radio"]:checked + label {
 input[type="radio"] + label,
 input[type="radio"]:checked + label {
   transition: background-color 0.4s linear;
-}
+} */
