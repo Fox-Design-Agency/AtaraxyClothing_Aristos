@@ -27,8 +27,10 @@ module.exports = {
     });
   },
   home(req, res, next) {
-    findPageWithParam({ slug: "home" }).then(page => {
-      if (!page) {
+    const homePage = findPageWithParam({ slug: "home" });
+    const allMedia = findAllMedia();
+    Promise.all([homePage, allMedia]).then(result => {
+      if (result[0].length < 1) {
         createPage({
           title: "Home",
           slug: "home",
@@ -38,19 +40,6 @@ module.exports = {
           keywords: "",
           author: ""
         }).then(page => {
-          findAllMedia().then(media => {
-            res.render("index", {
-              title: page.title,
-              content: page.content,
-              keywords: page.keywords,
-              description: page.description,
-              author: page.author,
-              media: media
-            });
-          });
-        });
-      } else {
-        findAllMedia().then(media => {
           res.render("index", {
             title: page.title,
             content: page.content,
@@ -59,6 +48,15 @@ module.exports = {
             author: page.author,
             media: media
           });
+        });
+      } else {
+        res.render("index", {
+          title: result[0][0].title,
+          content: result[0][0].content,
+          keywords: result[0][0].keywords,
+          description: result[0][0].description,
+          author: result[0][0].author,
+          media: result[1]
         });
       }
     });
@@ -78,19 +76,19 @@ module.exports = {
       }
     });
   },
-  contact(req, res, next){
+  contact(req, res, next) {
     findPageWithParam({ slug: "contact" }).then(page => {
-        if (page.length < 1) {
-          res.redirect("/");
-        } else {
-          res.render("contact", {
-            title: page.title,
-            content: page.content,
-            keywords: page.keywords,
-            description: page.description,
-            author: page.author
-          });
-        }
-      });
+      if (page.length < 1) {
+        res.redirect("/");
+      } else {
+        res.render("contact", {
+          title: page.title,
+          content: page.content,
+          keywords: page.keywords,
+          description: page.description,
+          author: page.author
+        });
+      }
+    });
   }
 };

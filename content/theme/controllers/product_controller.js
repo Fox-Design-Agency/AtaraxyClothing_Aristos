@@ -1,4 +1,6 @@
 const fs = require("fs-extra");
+// GET page model
+const findPageWithParam = require("../../../important/admin/adminModels/queries/page/FindPageWithParam");
 // GET Product model
 const findAllSortedProducts = require("../../../expansion/upgrade/products/models/queries/product/FindAllSortedProducts");
 const findSortedProductsWithParam = require("../../../expansion/upgrade/products/models/queries/product/FindSortedProductWithParam");
@@ -6,20 +8,21 @@ const findProductWithParam = require("../../../expansion/upgrade/products/models
 // GET Product Category model
 const findProductCategoryWithParam = require("../../../expansion/upgrade/products/models/queries/productCategory/FindProductCategoryWithParam");
 
-
-module.exports={
-allProducts(req, res, next){
-    findAllSortedProducts().then(products => {
-        res.render("product/all_products", {
-          title: "All products",
-          products: products,
-          description: "",
-          author: "",
-          keywords: ""
-        });
+module.exports = {
+  allProducts(req, res, next) {
+    const productPage = findPageWithParam({ slug: "store" });
+    const sortedProducts = findAllSortedProducts();
+    Promise.all([productPage, sortedProducts]).then(result => {
+      res.render("product/all_products", {
+        title: "All products",
+        products: result[1],
+        description: result[0][0].description,
+        author: result[0][0].author,
+        keywords: result[0][0].keywords
       });
-},
-productByCategory(req, res, next){
+    });
+  },
+  productByCategory(req, res, next) {
     let categorySlug = req.params.category;
 
     const ProductCategories = findProductCategoryWithParam({
@@ -38,20 +41,20 @@ productByCategory(req, res, next){
         keywords: result[0][0].keywords
       });
     });
-},
-singleProduct(req, res, next){
+  },
+  singleProduct(req, res, next) {
     let galleryImages = null;
     let loggedIn = req.isAuthenticated() ? true : false;
     findProductWithParam({ slug: req.params.product }).then(product => {
       let galleryDir =
         "content/public/images/product_images/" + product[0]._id + "/gallery";
-  
+
       fs.readdir(galleryDir, function(err, files) {
         if (err) {
           console.log(err);
         } else {
           galleryImages = files;
-  
+
           res.render("product/product", {
             title: product[0].title,
             product: product[0],
@@ -64,6 +67,5 @@ singleProduct(req, res, next){
         }
       });
     });
-}
-
-}
+  }
+};

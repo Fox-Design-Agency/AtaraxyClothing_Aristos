@@ -60,7 +60,7 @@ module.exports = {
       },
       json: true
     }).then(res => {
-      updateOrder({ shipping: res.result[0].rate });
+      updateOrder(orderid, { shipping: res.result[0].rate });
       return (req.session.shipping = res.result[0].rate);
     });
     res.redirect("/cart/checkout?orderid=" + orderid);
