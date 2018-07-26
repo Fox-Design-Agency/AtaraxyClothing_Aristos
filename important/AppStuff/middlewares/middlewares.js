@@ -10,7 +10,11 @@ module.exports = app => {
   /* Set admin css folder */
   app.use(express.static(path.join(__dirname, "../../temp")));
   /* Set temp folder */
-  app.use(express.static(path.join(__dirname, "../../../content/temp")));
+  if (process.env.NODE_ENV === "production") {
+    app.use(express.static(path.join(__dirname, "../../../content/public")));
+  } else {
+    app.use(express.static(path.join(__dirname, "../../../content/temp")));
+  }
   /* Set public folder for images (should be removed) */
   app.use(
     express.static(path.join(__dirname, "../../../content/public/images/"))

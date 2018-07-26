@@ -2,11 +2,10 @@
     <div class="page__main-slider">
         <% media.forEach(function(media){ %>
             <% if(media.category == "main_slider"){ %>
-                <img src="/<%= media.path %>" alt="<%= media.alt %>">
-                <% } %>
-                    <% }) %>
+                <img src="<%= media.path %>" alt="<%= media.alt %>">
+            <% } %>
+        <% }) %>
     </div>
-
     <div>
         <a href="/products">
             <h2 class="page__heading">products</h2>
@@ -21,16 +20,14 @@
                         </h4>
                     </div>
                 </a>
-
-                <% }) %>
+            <% }) %>
         </div>
     </div>
     <div class="page__main-slider">
         <% media.forEach(function(media){ %>
             <% if(media.category == "bottom_img"){ %>
-                <img class="page__full-width-img" src="/<%= media.path %>" alt="<%= media.alt %>">
-                <% } %>
-                    <% }) %>
+                <img class="page__full-width-img" src="<%= media.path %>" alt="<%= media.alt %>">
+            <% } %>
+        <% }) %>
     </div>
-
-    <% include _layouts/footer %>
+<% include _layouts/footer %>

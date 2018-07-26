@@ -1,31 +1,31 @@
 const localStrategy = require("passport-local").Strategy;
 const bcrypt = require("bcryptjs");
-const User = require("../../../admin/adminModels/user");
-const Logger = require("../../../AristosStuff/AristosLogger/AristosLogger").Logger;
-/* User queries */
-module.exports = function(passport){
-    passport.use(
-        new localStrategy(function(username, password, done) {
-          User.findOne({ username: username }, function(err, user) {
-            if (err) {
-              Logger.error(err);
-            }
-            if (!user) {
-              return done(null, false, { message: "No user found" });
-            }
-    
-            bcrypt.compare(password, user.password, function(err, isMatch) {
-              if (err) {
-                Logger.error(err);
-              }
-              if (isMatch) {
-                Logger.info(user.username + " has Logged in!");
-                return done(null, user);
-              } else {
-                return done(null, false, { message: "Wrong password." });
-              }
-            });
-          });
-        })
-      );
-}
+/* user queries */
+const findOneUserWithParam = require("../../../admin/adminModels/queries/user/FindUserWithParam");
+/* logger calls */
+const addInfoLog = require("../../../AristosStuff/AristosLogger/AristosLogger")
+  .addInfo;
+const addErrorLog = require("../../../AristosStuff/AristosLogger/AristosLogger")
+  .addError;
+module.exports = function(passport) {
+  passport.use(
+    new localStrategy(function(username, password, done) {
+      findOneUserWithParam({ username: username }).then(user => {
+        if (user.length < 1) {
+          return done(null, false, { message: "No user found" });
+        }
+        bcrypt.compare(password, user[0].password, function(err, isMatch) {
+          if (err) {
+            addErrorLog(err, "user hash compare error");
+          }
+          if (isMatch) {
+            addInfoLog(user[0].username + " has Logged in!", "user login info");
+            return done(null, user[0]);
+          } else {
+            return done(null, false, { message: "Wrong password." });
+          }
+        });
+      });
+    })
+  );
+};

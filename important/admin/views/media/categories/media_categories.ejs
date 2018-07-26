@@ -12,7 +12,6 @@
             <a href="/admin/media-categories/add-media-category">Add a Category</a>
         </button>
     </div>
-
     <% if (count > 0) { %>
         <table class="admin-table">
             <thead>
@@ -30,30 +29,28 @@
                         </td>
                         <% if (cat.title == "General") { %>
                             <td>
-
                             </td>
-                            <% } else { %>
-                                <td class="admin-table__edit-stuffs">
-                                    <a href="/admin/media-categories/edit-media-category/<%= cat._id %>">Edit</a>
-                                </td>
-                                <% } %>
-                                    <% if (cat.title == "General") { %>
-                                        <td>
-
-                                        </td>
-                                        <% } else { %>
-                                            <td class="admin-table__delete-stuffs">
-                                            <form method="post" action="/admin/media-categories/delete-media-category/<%= cat._id %>?_method=DELETE">
-                                <input type="hidden" name="_method" value="DELETE">
-                                <button type="submit">Delete</button>
-                            </form>
-                                            </td>
-                                            <% } %>
+                        <% } else { %>
+                            <td class="admin-table__edit-stuffs">
+                                <a href="/admin/media-categories/edit-media-category/<%= cat._id %>">Edit</a>
+                            </td>
+                        <% } %>
+                        <% if (cat.title == "General") { %>
+                            <td>
+                            </td>
+                        <% } else { %>
+                            <td class="admin-table__delete-stuffs">
+                                <form method="post" action="/admin/media-categories/delete-media-category/<%= cat._id %>?_method=DELETE">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <button type="submit">Delete</button>
+                                </form>
+                            </td>
+                        <% } %>
                     </tr>
-                    <% }); %>
+                <% }); %>
             </tbody>
         </table>
         <% } else { %>
             <h3 class="admin-page__none-of-something">There are no product categories, you should make one.</h3>
-            <% } %>
-                <%- include("../../_layouts/adminfooter") %>
+        <% } %>
+<%- include("../../_layouts/adminfooter") %>

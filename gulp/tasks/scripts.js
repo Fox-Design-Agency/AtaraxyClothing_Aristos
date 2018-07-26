@@ -1,11 +1,11 @@
 const gulp = require("gulp");
 const webpack = require("webpack");
-const Logger = require("../../important/AristosStuff/AristosLogger/AristosLogger").Logger;
+const debugErrorEvent = require("../../important/AristosStuff/AristosLogger/AristosLogger").addDebug;
 
 gulp.task("scripts", ["modernizr"], callback => {
   webpack(require("../../webpack.config"), (err, stats) => {
     if (err) {
-      Logger.debug(err.toString());
+      debugErrorEvent(err.toString(), "Script issue");
     }
     console.log(stats.toString());
     callback();

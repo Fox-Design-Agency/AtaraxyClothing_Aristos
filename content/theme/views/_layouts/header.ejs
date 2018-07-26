@@ -13,8 +13,9 @@
     </title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.min.css" >
-
-    <link rel="stylesheet" href="/styles/theme.css">
+     <!-- build:css(content/temp) /styles/theme.css-->
+     <link rel="stylesheet" href="/styles/theme.css" />
+     <!-- endbuild -->
     <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.min.js"></script>
     <script src="https://www.paypalobjects.com/api/checkout.js"></script>
@@ -42,49 +43,49 @@
                                 <%= page.title.toLowerCase() %>
                             </a>
                         </li>
-                        <% } else{ %>
-                            <% if (page.parent == "home") { %>
-                                <li>
-                                    <a href="/<%= page.slug %>">
-                                        <%= page.title.toLowerCase() %>
-                                    </a>
-                                </li>
-                                <% } %>
-                                    <% } %>
-                                        <% }) %>
+                    <% } else{ %>
+                        <% if (page.parent == "home") { %>
+                            <li>
+                                <a href="/<%= page.slug %>">
+                                    <%= page.title.toLowerCase() %>
+                                </a>
+                            </li>
+                        <% } %>
+                    <% } %>
+                <% }) %>
             </ul>
             <ul class="header__navbar--nav-right">
                 <li>
                     <a href="/cart/checkout">My Cart (
                         <% if (typeof cart !== "undefined") { %>
                             <%= cart.length %>
-                                <% } else { %>
+                        <% } else { %>
                                     0
-                                    <% } %>
-                                        )</a>
+                        <% } %>
+                    )</a>
                 </li>
                 <% if (user) { %>
                     <li>
                         <a  href="/users/logout">Hi,
-                            <%= user.username %> ( Logout )</a>
+                            <%= user.username %> ( Logout )
+                        </a>
                     </li>
-                    <% } else{ %>
-                        <li>
-                            <a  href="/users/register">Register</a>
-                        </li>
-                        <li>
-                            <a href="/users/login">Log in</a>
-                        </li>
-                        <% } %>
-                            <% if (user && user.admin == 1) { %>
-                                <li>
-                                    <a href="/admin/pages">Admin Area</a>
-                                </li>
-                                <% } %>
+                <% } else{ %>
+                    <li>
+                        <a href="/users/register">Register</a>
+                    </li>
+                    <li>
+                        <a href="/users/login">Log in</a>
+                    </li>
+                <% } %>
+                <% if (user && user.admin == 1) { %>
+                    <li>
+                        <a href="/admin">Admin Area</a>
+                    </li>
+                <% } %>
             </ul>
         </div>
     </nav>
-
     <main role="main">
        
                         

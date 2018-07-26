@@ -7,16 +7,18 @@ const svg2png = require("gulp-svg2png");
 const config = {
   shape: {
     spacing: {
-      padding: 1
+      padding: 2
     }
   },
   mode: {
     css: {
-      variables:{
-        replaceSvgWithPng: function(){
-          return function(sprite, render){
-            return render(sprite).split(".svg").join(".png")
-          }
+      variables: {
+        replaceSvgWithPng: function() {
+          return function(sprite, render) {
+            return render(sprite)
+              .split(".svg")
+              .join(".png");
+          };
         }
       },
       sprite: "sprite.svg",
@@ -40,16 +42,16 @@ gulp.task("createSprite", ["beginClean"], () => {
     .pipe(gulp.dest("./content/temp/sprite/"));
 }); /* end of createSprite task */
 
-gulp.task("createPngCopy", ["createSprite"], () => {
-  return gulp
-    .src("./content/temp/sprite/css/*.svg")
-    .pipe(svg2png())
-    .pipe(gulp.dest("./content/temp/sprite/css"));
-}); /* end of create svg copy task */
+// gulp.task("createPngCopy", ["createSprite"], () => {
+//   return gulp
+//     .src("./content/temp/sprite/css/*.svg")
+//     .pipe(svg2png())
+//     .pipe(gulp.dest("./content/temp/sprite/css"));
+// }); /* end of create svg copy task */
 
-gulp.task("copySpriteGraphic", ["createPngCopy"], () => {
+gulp.task("copySpriteGraphic", ["copySpriteCSS"],() => {
   return gulp
-    .src("./content/temp/sprite/css/**/*.{svg, png}")
+    .src("./content/temp/sprite/css/**/*.svg")
     .pipe(gulp.dest("./content/public/images/sprites"));
 }); /* end of copySpriteGraphic task */
 
@@ -62,12 +64,12 @@ gulp.task("copySpriteCSS", ["createSprite"], () => {
 
 gulp.task("endClean", ["copySpriteGraphic", "copySpriteCSS"], () => {
   return del("./content/temp/sprite");
-});/* end of endClean */
+}); /* end of endClean */
 
 gulp.task("icons", [
   "beginClean",
   "createSprite",
-  "createPngCopy",
+  // "createPngCopy",
   "copySpriteGraphic",
   "copySpriteCSS",
   "endClean"

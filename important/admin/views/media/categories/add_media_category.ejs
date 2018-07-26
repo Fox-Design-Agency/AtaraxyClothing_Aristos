@@ -6,12 +6,11 @@
 
     <form method="post" action="/admin/media-categories/add-media-category" class="admin-form">
         <div class="admin-form__form-options">
-        <div class="admin-form__group">
-            <label for="">Title</label>
-            <input type="text" class="form-control" name="title" value="<%= title %>" placeholder="Title">
-
-        </div>
+            <div class="admin-form__group">
+                <label for="">Title</label>
+                <input type="text" class="form-control" name="title" value="<%= title %>" placeholder="Title">
+            </div>
         </div>
         <button class="admin-button admin-button--submit">Submit</button>
     </form>
-    <%- include("../../_layouts/adminfooter") %>
+<%- include("../../_layouts/adminfooter") %>

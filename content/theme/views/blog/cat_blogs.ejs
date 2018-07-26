@@ -1,22 +1,20 @@
 <% include ../_layouts/blogHeader %>
-
-        <div class="blogs">
-                <h1><%= categorySlug %></h1>
-            <% blogs.forEach(function(blog){ %>
-                <a href="/blog/<% blog.category %><%= blog.slug %>">
-                    <div class="blogs__individual-blog">
-                        <h3>
-                            <%= blog.title %>
-                        </h3>
-                        <h4>
-                            By: <%= blog.author %>
-                        </h4>
-                        <p>
-                            <%= blog.description %>
-                        </p>
-                    </div>
-                </a>
-
-                <% }) %>
-        </div>
-        <% include ../_layouts/footer %>
+    <div class="blogs">
+        <h1><%= categorySlug %></h1>
+        <% blogs.forEach(function(blog){ %>
+            <a href="/blog/<% blog.category %><%= blog.slug %>">
+                <div class="blogs__individual-blog">
+                    <h3>
+                        <%= blog.title %>
+                    </h3>
+                    <h4>
+                        By: <%= blog.author %>
+                    </h4>
+                    <p>
+                        <%= blog.description %>
+                    </p>
+                </div>
+            </a>
+        <% }) %>
+    </div>
+<% include ../_layouts/footer %>

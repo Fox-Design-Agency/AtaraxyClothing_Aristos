@@ -1,9 +1,8 @@
 <% include ../_layouts/productHeader %>
-
     <div class="product">
-            <div class="categories__title">
-                    <h4><%= slug %></h4>
-                   </div>
+        <div class="categories__title">
+            <h4><%= slug %></h4>
+        </div>
         <% products.forEach(function(p){ %>
             <div class="product__preview">
                 <a class="pa" href="/products/<%= p.category %>/<%= p.slug %>">
@@ -17,10 +16,6 @@
                 </h4>
                 <a class="product__preview__details" href="/products/<%= p.category %>/<%= p.slug %>">View Details</a>
             </div>
-
-            <% }) %>
-
+        <% }) %>
     </div>
-
-
-    <% include ../_layouts/footer %>
+<% include ../_layouts/footer %>

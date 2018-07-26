@@ -7,31 +7,30 @@
 
     <form method="post" action="/admin/user-controls/edit-admin/<%= user._id %>" class="admin-form">
         <div class="admin-form__form-options">
-        <div class="admin-form__group">
-            <label>Name</label>
-            <input type="text" name="name" class="form-control" placeholder="Name" value="<%= user.name %>">
-        </div>
+            <div class="admin-form__group">
+                <label>Name</label>
+                <input type="text" name="name" class="form-control" placeholder="Name" value="<%= user.name %>">
+            </div>
 
-        <div class="admin-form__group">
-            <label>Username</label>
-            <input type="text" name="username" class="form-control" placeholder="Username" value="<%= user.username %>">
-        </div>
-        <div class="admin-form__group">
-            <label for="">Admin</label>
-            <select name="admin" class="form-control">
-                <option value="">
+            <div class="admin-form__group">
+                <label>Username</label>
+                <input type="text" name="username" class="form-control" placeholder="Username" value="<%= user.username %>">
+            </div>
+            <div class="admin-form__group">
+                <label for="">Admin</label>
+                <select name="admin" class="form-control">
+                    <option value="">
 
-                </option>
-                <option value="no">
-                    No
-                </option>
-                <option value="yes" selected>
-                    Yes
-                </option>
-            </select>
+                    </option>
+                    <option value="no">
+                        No
+                    </option>
+                    <option value="yes" selected>
+                        Yes
+                    </option>
+                </select>
+            </div>
         </div>
-</div>
         <button type="submit" class="admin-button admin-button--submit">Submit</button>
     </form>
-
-    <% include ../_layouts/adminfooter %>
+<% include ../_layouts/adminfooter %>

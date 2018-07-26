@@ -1,10 +1,7 @@
 <% include ../_layouts/header %>
-
     <% if(typeof cart !== "undefined"){ %>
         <h1 class="page__title">My Cart</h1>
         <% include ../_layouts/messages/messages %>
-        <br>
-        <br>
         <table class="table">
             <thead>
                 <tr>
@@ -41,7 +38,7 @@
 
                         </td>
                     </tr>
-                    <% }) %>
+                <% }) %>
             </tbody>
             <tfoot>
                 <tr>
@@ -49,8 +46,6 @@
                         <h6 class="checkout-shipping">Shipping: $
                             <%= shipping %>
                         </h6>
-
-
                     </td>
                 </tr>
                 <tr>
@@ -61,33 +56,32 @@
                     </td>
                 </tr>
             </tfoot>
-
         </table>
         <div class="button__bottom-type">
             <% if(shipping == "0.00"){ %>
                 <div id="shipping" class="button__buynow">Add Shipping Information</div>
-                    <% } %>
-                        <div>
-                            <% if(shipping != "0.00"){ %>
-                                <a id="buy-now" class="button__buynow" href="/cart/pay/<%= orderid %>">Buy Now</a>
-                                <% } %>
-                                    <a class="button__clearcart" href="/cart/clear">Clear cart</a>
-                        </div>
+            <% } %>
+            <div>
+                <% if(shipping != "0.00"){ %>
+                    <a id="buy-now" class="button__buynow" href="/cart/pay/<%= orderid %>">Buy Now</a>
+                <% } %>
+                <a class="button__clearcart" href="/cart/clear">Clear cart</a>
+            </div>
         </div>
         <div id="full-grey-screen" class="full-grey-screen"></div>
         <div id="shipping-form-holder" class="shipping__holder">
             <form id="shipping-form" class="shipping" method="post" action="/cart/shipping-information">
                 <h2>shipping information</h2>
                 <% include ../_layouts/messages/errors %>
-                <div >
+                <div>
                     <label>First Name</label>
                     <input type="text" name="firstname" placeholder="First Name">
                 </div>
-                <div >
+                <div>
                     <label>Last Name</label>
                     <input type="text" name="lastname"  placeholder="Last Name">
                 </div>
-                <div >
+                <div>
                     <label>Street Address</label>
                     <input type="text" name="streetaddress"  placeholder="Street Address">
                 </div>
@@ -106,43 +100,40 @@
                 <div class="btn-holders">
                     <button id="shipping-submit">Submit</button>
                     <div id="cancel" class="button__cancel">Cancel</div>
-
                 </div>
             </form>
         </div>
+    <% } else { %>
+        <h3 class="table__empty-cart">Your cart is empty...</h3>
+    <% } %>
+    <script>
+        $(function () {
+            $("a.clearcart").on("click", function () {
+                if (!confirm("Confirm clear cart")) {
+                    return false
+                }
+            })
+        })
 
-        <% } else { %>
-            <h3 class="table__empty-cart">Your cart is empty...</h3>
-            <% } %>
+        $("#shipping").click(function (e) {
+            $("#shipping-form-holder").addClass("showform")
+            $("#shipping-form").addClass("shipping__showform")
+            $("#full-grey-screen").addClass("showform")
+        })
 
-                <script>
-                    $(function () {
-                        $("a.clearcart").on("click", function () {
-                            if (!confirm("Confirm clear cart")) {
-                                return false
-                            }
-                        })
-                    })
+        $("#cancel").click(function (e) {
+            $("#shipping-form-holder").removeClass("showform")
+            $("#shipping-form").removeClass("shipping__showform")
+            $("#full-grey-screen").removeClass("showform")
+        })
 
-                    $("#shipping").click(function (e) {
-                        $("#shipping-form-holder").addClass("showform")
-                        $("#shipping-form").addClass("shipping__showform")
-                        $("#full-grey-screen").addClass("showform")
-                    })
+        $("#buy-now").click(function (e) {
+            $("#full-grey-screen").addClass("showform")
+        })
 
-                    $("#cancel").click(function (e) {
-                        $("#shipping-form-holder").removeClass("showform")
-                        $("#shipping-form").removeClass("shipping__showform")
-                        $("#full-grey-screen").removeClass("showform")
-                    })
-
-                    $("#buy-now").click(function (e) {
-                        $("#full-grey-screen").addClass("showform")
-                    })
-
-                    $("#shipping-submit").click(function (e) {
-                        $("#shipping-form-holder").removeClass("showform")
-                        $("#shipping-form").removeClass("showform")
-                    })
-                </script>
-                <% include ../_layouts/footer %>
+        $("#shipping-submit").click(function (e) {
+            $("#shipping-form-holder").removeClass("showform")
+            $("#shipping-form").removeClass("showform")
+        })
+    </script>
+<% include ../_layouts/footer %>

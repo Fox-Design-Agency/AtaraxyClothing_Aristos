@@ -1,36 +1,31 @@
 <% include ../_layouts/adminheader %>
-<h2 class="admin-page__main-title">Edit a Video</h2>
-<% include ../_layouts/messages/messages %>
-<% include ../_layouts/messages/errors %>
-<button class="admin-button admin-button--main">
-    <a href="/admin/add-media">Back to Add Media</a>
-</button>
-
+    <h2 class="admin-page__main-title">Edit a Video</h2>
+    <% include ../_layouts/messages/messages %>
+    <% include ../_layouts/messages/errors %>
+    <button class="admin-button admin-button--main">
+        <a href="/admin/add-media">Back to Add Media</a>
+    </button>
     <form method="post" action="/admin/add-media/edit-video" class="admin-form">
         <div class="admin-form__form-options">
-        <div class="admin-form__group">
-            <label for="">Title</label>
-            <input type="text" class="form-control" name="title" value="<%= title %>" placeholder="Title">
-
-        </div>
-
-        <div class="admin-form__group">
-            <label for="">Alt</label>
-            <input type="text" class="form-control" name="alt" value="<%= alt %>" placeholder="Alt Tag">
-
-        </div>
-
-        <div class="admin-form__group">
-            <label for="">Category</label>
-            <select name="category" class="form-control">
-                <% categories.forEach((category)=>{ %>
-                    <option value="<%= category.title %>">
-                        <%= category.title %>
-                    </option>
+            <div class="admin-form__group">
+                <label for="">Title</label>
+                <input type="text" class="form-control" name="title" value="<%= title %>" placeholder="Title">
+            </div>
+            <div class="admin-form__group">
+                <label for="">Alt</label>
+                <input type="text" class="form-control" name="alt" value="<%= alt %>" placeholder="Alt Tag">
+            </div>
+            <div class="admin-form__group">
+                <label for="">Category</label>
+                <select name="category" class="form-control">
+                    <% categories.forEach((category)=>{ %>
+                        <option value="<%= category.title %>">
+                            <%= category.title %>
+                        </option>
                     <% }); %>
-            </select>
+                </select>
+            </div>
         </div>
-</div>
         <button class="admin-button admin-button--submit">Submit</button>
     </form>
 <% include ../_layouts/adminfooter %>

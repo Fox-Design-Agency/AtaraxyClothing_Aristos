@@ -2,17 +2,16 @@
     <h2 class="admin-page__main-title">Settings</h2>
     <% include ../_layouts/messages/messages %>
     <%- content %>
-        <form method="post" action="/admin/settings" enctype="multipart/form-data" class="admin-form">
-            <div class="admin-form__form-options">
+    <form method="post" action="/admin/settings" enctype="multipart/form-data" class="admin-form">
+        <div class="admin-form__form-options">
             <% config.forEach(configs=>{ %>
-            <label><%= configs.name %></label>
-            <input name="<%= configs.name %>" type="text" value="<%= configs.info %>" autocomplete=false />
+                <label><%= configs.name %></label>
+                <input name="<%= configs.name %>" type="text" value="<%= configs.info %>" autocomplete=false />
             <% }) %>
-                </div>
-
-            <button class="admin-button admin-button--submit">Save</button>
-            <button class="admin-button admin-button--danger">
+        </div>
+        <button class="admin-button admin-button--submit">Save</button>
+        <button class="admin-button admin-button--danger">
             <a href="/admin/settings/cancel">Cancel</a>
-            </button>
-        </form>
-        <% include ../_layouts/adminfooter %>
+        </button>
+    </form>
+<% include ../_layouts/adminfooter %>

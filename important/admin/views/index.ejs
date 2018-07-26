@@ -1,74 +1,109 @@
 <% include ./_layouts/adminheader %>
-    <h2 class="admin-page__main-title">Dashboard</h2>
-    <% include _layouts/messages/messages %>
-    <% if(contactManagementExists) { %>
-        <div class="admin-section__dashboard-row">
-                <% if (message.length !== 0){ %>
-                    <div class="admin-section__dashboard-row__notepad">
-                    <% message.forEach(function(message){ %>
-
-                        <a href="" class="admin-section__dashboard-row__note-box"><div>
-                            <h3>
-                                <%= message.name %>
-                            </h3>
-                            <p>
-                                <%= message.content %>
-                        </div></a>
-
-                        <% }) %>
+<h2 class="admin-page__main-title">Dashboard</h2>
+<% include _layouts/messages/messages %>
+<% if(contactManagementExists) { %>
+<div class="admin-section__dashboard-row">
+    <% if (message.length !== 0){ %>
+    <div class="admin-section__dashboard-row__notepad">
+        <% message.forEach(function(message){ %>
+            <a href="" class="admin-section__dashboard-row__note-box">
+            <div>
+                <h3>
+                    <%= message.name %>
+                </h3>
+                <p>
+                    <%= message.content %>
+                </p>
             </div>
-            <% } else { %>
-                <div class="admin-section__dashboard-row__notepad">
-                    <h3 class="admin-page__none-of-something">There are no messages...</h3>
-                </div>
-                <% } %>
-            <a class="admin-section__dashboard-row__redirect" href="/admin/contact">See all messages</a>
+            </a>
+        <% }) %>
+    </div>
+        <% } else { %>
+    <div class="admin-section__dashboard-row__notepad">
+        <h3 class="admin-page__none-of-something">There are no messages...</h3>
+    </div>
+        <% } %>
+    <a class="admin-section__dashboard-row__redirect" href="/admin/contact">See all messages</a>
+</div>
+<% } %>
+<% if(projectManagementExists) { %>
+    <div class="admin-section__dashboard-row">
+        <div class="admin-section__dashboard-row__notepad">
+            <h3 class="admin-page__none-of-something">There are no notes...</h3>
+        </div>
+        <a class="admin-section__dashboard-row__redirect" href="#">See all Notes</a>
+    </div>
+    <div class="admin-section__dashboard-row">
+        <% if (tasks.length !== 0){ %>
+        <div class="admin-section__dashboard-row__notepad">
+            <% tasks.forEach(function(task){ %>
+            <a href="/admin/project-management/edit-task/<%= task._id %>" class="note-box">
+            <div>
+                <h3>
+                    <%= task.title %>
+                </h3>
+                <p>
+                    <%= task.content %>
+                </p>
+            </div>
+            </a>
+            <% }) %>
+        </div>
+        <% } else { %>
+        <div class="admin-section__dashboard-row__notepad">
+            <h3 class="admin-page__none-of-something">There are no tasks...</h3>
         </div>
         <% } %>
-            <% if(projectManagementExists) { %>
-                <div class="admin-section__dashboard-row">
-                    <div class="admin-section__dashboard-row__notepad">
-                        <h3 class="admin-page__none-of-something">There are no notes...</h3>
-                    </div>
-                    <a class="admin-section__dashboard-row__redirect" href="#">See all Notes</a>
-                </div>
-                <div class="admin-section__dashboard-row">
-                    <% if (tasks.length !== 0){ %>
-                        <div class="admin-section__dashboard-row__notepad">
-                        <% tasks.forEach(function(task){ %>
+        <a class="admin-section__dashboard-row__redirect" href="/admin/project-management#active-tasks">See all tasks</a>
+    </div>
+<% } %>
+<% if(true){ %>
+    <div class="admin-section__dashboard-row">
+        <div class="admin-section__dashboard-row__notepad">
+            <h3 class="admin-page__none-of-something">There is no data...</h3>
+        </div>
+        <a class="admin-section__dashboard-row__redirect" href="#">See more graphs</a>
+    </div>
+<% } %>
 
-                            <a href="/admin/project-management/edit-task/<%= task._id %>" class="note-box"><div>
-                                <h3>
-                                    <%= task.title %>
-                                </h3>
-                                <p>
-                                        <%= task.content %>
-                            </div></a>
-
-                            <% }) %>
-                </div>
-                <% } else { %>
-                    <div class="admin-section__dashboard-row__notepad">
-                        <h3 class="admin-page__none-of-something">There are no tasks...</h3>
-                    </div>
-                    <% } %>
-                        <a class="admin-section__dashboard-row__redirect" href="/admin/project-management#active-tasks">See all tasks</a>
-                        </div>
-                        <% } %>
-                            <% if(true){ %>
-                                <div class="admin-section__dashboard-row">
-                                    <div class="admin-section__dashboard-row__notepad">
-                                        <h3 class="admin-page__none-of-something">There is no data...</h3>
-                                    </div>
-                                    <a class="admin-section__dashboard-row__redirect" href="#">See more graphs</a>
-                                </div>
-                                <% } %>
-
-                                    <div class="admin-section__dashboard-row--divider"></div>
-                                    <div class="admin-section__dashboard-row">
-                                        <div class="admin-section__dashboard-row__notepad">
-                                            <h3 class="admin-page__none-of-something">There is nothing in the log...</h3>
-                                        </div>
-                                        <a class="admin-section__dashboard-row__redirect" href="#">See the full log</a>
-                                    </div>
-                                    <% include ./_layouts/adminfooter %>
+<div class="admin-section__dashboard-row--divider">
+    <button class="admin-button admin-button--main">
+        <a href="/admin/#logs-display">Info Logs</a>
+    </button>
+    <button class="admin-button admin-button--main">
+        <a href="/admin/dashboard/errors/#logs-display">Error Logs</a>
+    </button>
+    <button class="admin-button admin-button--main">
+        <a href="/admin/dashboard/debug/#logs-display">Debug Logs</a>
+    </button>
+</div>
+    <div class="admin-section__dashboard-row">
+    <% if(infoLogs.length < 1){ %>
+        <div class="admin-section__dashboard-row__notepad"  id="logs-display">
+            <h3 class="admin-page__none-of-something">There is nothing in the log...</h3>
+        </div>
+    <% }else{ %>
+    <table class="admin-table" id="logs-display">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Date</th>
+                <th>Info</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            <% infoLogs.forEach((log)=> { %>
+            <tr>
+                <td><%= log.name %></td>
+                <td><%= log.date %></td>
+                <td><%= log.info %></td>
+            </tr>
+            <% }) %>
+        </tbody>
+    </table>
+    <% } %>
+        <a class="admin-section__dashboard-row__redirect" href="/admin/logs-viewer">See the full log</a>
+    </div>
+</div>
+<% include ./_layouts/adminfooter %>

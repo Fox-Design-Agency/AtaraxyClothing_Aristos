@@ -9,14 +9,17 @@ const projectManagementCheck = fs.pathExists(
 );
 const portfolioCheck = fs.pathExists("expansion/upgrade/portfolio-projects");
 const contactCheck = fs.pathExists("expansion/upgrade/contact");
-
+const documentationCheck = fs.pathExists(
+  "expansion/upgrade/documentation-builder"
+);
 module.exports = app => {
   Promise.all([
     blogCheck,
     productCheck,
     projectManagementCheck,
     portfolioCheck,
-    contactCheck
+    contactCheck,
+    documentationCheck
   ]).then(results => {
     if (results[0]) {
       app.locals.blogsExists = true;
@@ -47,6 +50,12 @@ module.exports = app => {
       require("./upgrade/contact")(app);
     } else {
       app.locals.contactManagementExists = false;
+    }
+    if (results[5]) {
+      app.locals.documentationExists = true;
+      require("./upgrade/documentation-builder")(app);
+    } else {
+      app.locals.documentationExists = false;
     }
   });
   /* check plugins */
