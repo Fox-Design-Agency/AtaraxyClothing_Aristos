@@ -12,6 +12,7 @@ const contactCheck = fs.pathExists("expansion/upgrade/contact");
 const documentationCheck = fs.pathExists(
   "expansion/upgrade/documentation-builder"
 );
+const dataScienceCheck = fs.pathExists("expansion/upgrade/data-science")
 module.exports = app => {
   Promise.all([
     blogCheck,
@@ -19,7 +20,8 @@ module.exports = app => {
     projectManagementCheck,
     portfolioCheck,
     contactCheck,
-    documentationCheck
+    documentationCheck,
+    dataScienceCheck
   ]).then(results => {
     if (results[0]) {
       app.locals.blogsExists = true;
@@ -56,6 +58,12 @@ module.exports = app => {
       require("./upgrade/documentation-builder")(app);
     } else {
       app.locals.documentationExists = false;
+    }
+    if(results[6]){
+      app.locals.dataScienceExists = true;
+      require("./upgrade/data-science")(app)
+    }else{
+      app.locals.dataScienceExists = false;
     }
   });
   /* check plugins */
