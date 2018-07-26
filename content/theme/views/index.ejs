@@ -14,7 +14,7 @@
             <% productcategories.forEach(function(productCat){ %>
                 <a href="/products/<%= productCat.slug %>">
                     <div class="card">
-                        <img src="/<%= productCat.imagepath %>" alt="" class="display-product-images">
+                        <img src="<%= productCat.imagepath %>" alt="" class="display-product-images">
                         <h4>
                             <%= productCat.title %>
                         </h4>
