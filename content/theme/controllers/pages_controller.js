@@ -14,7 +14,7 @@ module.exports = {
       if (result[0].length < 1) {
         res.redirect("/");
       } else {
-        res.render("about_us", {
+        res.render(`${result[0][0].template}`, {
           title: result[0][0].title,
           content: result[0][0].content,
           keywords: result[0][0].keywords,
@@ -50,7 +50,7 @@ module.exports = {
           });
         });
       } else {
-        res.render("index", {
+        res.render(`${result[0][0].template}`, {
           title: result[0][0].title,
           content: result[0][0].content,
           keywords: result[0][0].keywords,
@@ -66,13 +66,23 @@ module.exports = {
       if (page.length < 1) {
         res.redirect("/");
       } else {
-        res.render("index", {
-          title: page.title,
-          content: page.content,
-          keywords: page.keywords,
-          description: page.description,
-          author: page.author
-        });
+        if (typeof page.template !== "undefined") {
+          res.render(`${page.template}`, {
+            title: page.title,
+            content: page.content,
+            keywords: page.keywords,
+            description: page.description,
+            author: page.author
+          });
+        } else {
+          res.render("index", {
+            title: page.title,
+            content: page.content,
+            keywords: page.keywords,
+            description: page.description,
+            author: page.author
+          });
+        }
       }
     });
   },
@@ -81,7 +91,7 @@ module.exports = {
       if (page.length < 1) {
         res.redirect("/");
       } else {
-        res.render("contact", {
+        res.render(`${page.template}`, {
           title: page.title,
           content: page.content,
           keywords: page.keywords,

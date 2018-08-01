@@ -1,0 +1,16 @@
+{
+  "name": "task management",
+  "folder":"project-management",
+  "variable": "projectManagementExists",
+  "link": "/admin/project-management",
+  "dropdownCategories": [
+    {
+      "name": "add new task",
+      "link": "/admin/project-management/add-task"
+    },
+    {
+      "name": "add new note",
+      "link": ""
+    }
+  ]
+}

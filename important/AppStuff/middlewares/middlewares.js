@@ -19,6 +19,10 @@ module.exports = app => {
   app.use(
     express.static(path.join(__dirname, "../../../content/public/images/"))
   );
+  /* testing grapesjs */
+  app.use(
+    express.static(path.join(__dirname, "../../../important/AristosStuff/"))
+  );
   /* need to set to dist for production */
   /* Express fileUpload middleware */
   app.use(fileUpload());

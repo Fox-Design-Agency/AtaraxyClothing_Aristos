@@ -27,6 +27,9 @@ const PageSchema = new Schema({
   },
   author: {
     type: String
+  },
+  template: {
+    type: String
   }
 });
 

@@ -31,6 +31,19 @@
                     <% }); %>
                     </select>
                 </div>
+                <div class="admin-form__group">
+                <label for="">Template</label>
+                <select name="template" class="form-control">
+                <% templates.forEach(function(template){ %>
+                    <option value="<%= template.path %>" <% if (template.title === template) { %>
+                        selected = "selected"
+                        <% } %>
+                        >
+                        <%= template.title %>
+                    </option>
+                <% }); %>
+                </select>
+            </div>
                 <div>
                     <label for="">Author</label>
                     <input type="text" class="form-control" name="author" value="<%= author %>" placeholder="Author">

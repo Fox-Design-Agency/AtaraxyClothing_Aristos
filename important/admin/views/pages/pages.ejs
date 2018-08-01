@@ -9,6 +9,7 @@
             <tr>
                 <th>Title</th>
                 <th>Parent</th>
+                <th>Template</th>
                 <th>Edit</th>
                 <th>Delete</th>
             </tr>
@@ -21,6 +22,9 @@
                     </td>
                     <td>
                         <%= page.parent %>
+                    </td>
+                    <td>
+                        <%= page.template %>
                     </td>
                     <td class="admin-table__edit-stuffs">
                         <a href="/admin/pages/edit-page/<%= page._id %>">Edit</a>

@@ -7,8 +7,10 @@ const adminMediaCategories = require("./routes/media/admin_media_categories");
 const adminSettings = require("./routes/settings/admin_settings");
 const adminUserControls = require("./routes/userControls/admin_user_controls");
 const adminLogsViewer = require("./routes/logsViewer/admin_logs");
+const adminTemplateBuilder = require("./routes/templateBuilder/admin_template_builder");
 module.exports = app => {
   /* */
+  app.use("/admin/template-builder", adminTemplateBuilder)
   app.use("/admin/pages", adminPages);
   app.use("/admin/add-media", adminAddMedia);
   app.use("/admin/media-categories", adminMediaCategories);

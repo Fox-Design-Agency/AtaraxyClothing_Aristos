@@ -1,0 +1,44 @@
+<% include ../_layouts/adminheader %>
+    <h2 class="admin-page__main-title">Template Dashboard</h2>
+    <% include ../_layouts/messages/messages %>
+    <button class="admin-button admin-button--main">
+        <a href="/admin/template-builder">Back</a>
+    </button>
+    <button class="admin-button admin-button--main">
+        <a href="/admin/template-builder/builder">Drag and Drop</a>
+    </button>
+
+    <form method="post" action="/admin/template-builder/edit-basic/<%= id %>" class="admin-form" class="admin-form">
+     
+            <div class="admin-form__form-options--bottom-group">
+                <div class="admin-form__form-options">
+                    <div class="admin-form__group">
+                        <label for="">Title</label>
+                        <input type="text" class="form-control" name="title" value="<%= title %>" placeholder="Title">
+                    </div>
+                    <div class="admin-form__group">
+                        <label for="">Path</label>
+                        <input type="text" class="form-control" name="path" value="<%= path %>" placeholder="Path within theme views folder">
+                    </div>
+                    <div class="admin-form__group">
+                        <label for="">Author</label>
+                        <input type="text" class="form-control" name="author" value="<%= author %>" placeholder="Author">
+                    </div>
+                    
+                </div>
+              
+                <div class="admin-form__form-options admin-form__form-options--second-group">
+                    <div class="admin-form__group">
+                        <label for="">Meta Description</label>
+                        <textarea class="admin-form--disabled-resize" rows="4" name="description" placeholder="Place a brief description of this template, only used to descirbe template use."
+                            maxlength="320"><%= description %></textarea>
+                    </div>
+
+                </div>
+            </div>
+            <div>
+                <button class="admin-button admin-button--submit">Submit</button>
+            </div>
+    </form>
+
+<% include ../_layouts/adminfooter %>

@@ -7,7 +7,12 @@ module.exports = () => {
   mongoose.Promise = global.Promise;
   /* Satrt Connect to db */
   mongoose
-    .connect(config.read("database"))
+    .connect(
+      config.read("database"),
+      {
+        useNewUrlParser: true
+      }
+    )
     .then(() => console.log("MongoDB Connected...."))
     .catch(err => errorAddEvent(err, "Mongo db connection error"));
   /* end of mongoose initialization */

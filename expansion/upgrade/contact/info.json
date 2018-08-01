@@ -1,0 +1,8 @@
+{
+    "name": "contact",
+    "folder": "contact",
+    "variable": "contactManagementExists",
+    "link": "/admin/contact",
+    "dropdownCategories":[
+    ]
+}

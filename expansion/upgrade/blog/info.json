@@ -1,0 +1,23 @@
+{
+    "name": "blog",
+    "folder": "blog",
+    "variable": "blogsExists",
+    "link": "/admin/blogs",
+    "dropdownCategories":[
+        {"name": "add blog",
+        "link": "/admin/blogs/add-blog"
+        },
+        {
+            "name": "add category",
+        "link": "/admin/blog-categories/add-blog-category"
+        },
+        {
+            "name": "see all categories",
+        "link": "/admin/blog-categories"
+        },
+        {
+            "name": "see all comments",
+        "link": "/admin/blog-categories"
+        }
+    ]
+}

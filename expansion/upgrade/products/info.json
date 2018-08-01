@@ -1,0 +1,32 @@
+{
+  "name": "products",
+  "folder": "products",
+  "variable": "productsExists",
+  "link": "/admin/products",
+  "dropdownCategories": [
+    {
+      "name": "see orders",
+      "link": ""
+    },
+    {
+      "name": "add product",
+      "link": "/admin/products/add-product"
+    },
+    {
+      "name": "add category",
+      "link": "/admin/product-categories/add-product-category"
+    },
+    {
+      "name": "see all categories",
+      "link": "/admin/product-categories"
+    },
+    {
+      "name": "add coupon",
+      "link": ""
+    },
+    {
+      "name": "see all coupons",
+      "link": ""
+    }
+  ]
+}

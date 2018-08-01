@@ -1,8 +1,8 @@
 {
   "name": "aristos-node-cms",
   "homepage": "https://foxdesignagency.com/aristos",
-  "version": "0.0.5",
-  "description": "A basic EJS CMS built with love, powered by hardwork, JQuery, Gulp, Webpack, Mocha, Mongo, and Nodejs",
+  "version": "0.1.0",
+  "description": "The Ataraxy Clothing Website",
   "keywords": [
     "Nodejs CMS",
     "Fox Design Agency, Aristos CMS"
@@ -38,7 +38,7 @@
     "lazysizes": "^4.0.4",
     "method-override": "^3.0.0",
     "moment": "^2.22.2",
-    "mongoose": "^5.2.5",
+    "mongoose": "^5.2.6",
     "normalize.css": "^8.0.0",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
