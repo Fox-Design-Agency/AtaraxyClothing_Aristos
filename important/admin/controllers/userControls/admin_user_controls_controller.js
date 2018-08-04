@@ -1,7 +1,6 @@
 const passport = require("passport");
 const bcrypt = require("bcryptjs");
-const Logger = require("../../../AristosStuff/AristosLogger/AristosLogger")
-  .Logger;
+const addErrorEvent = require("../../../AristosStuff/AristosLogger/AristosLogger").addError;
 /* User model Queries */
 const FindUserWithParam = require("../../adminModels/queries/user/FindUserWithParam");
 const CreateUser = require("../../adminModels/queries/user/CreateUser");
@@ -75,7 +74,7 @@ module.exports = {
           bcrypt.genSalt(10, (err, salt) => {
             bcrypt.hash(req.body.password, salt, (err, hash) => {
               if (err) {
-                Logger.error(err);
+                addErrorEvent(err, "user create error");
               }
               const UserProps = {
                 name: req.body.name,
@@ -136,7 +135,7 @@ module.exports = {
               bcrypt.genSalt(10, (err, salt) => {
                 bcrypt.hash(password, salt, (err, hash) => {
                   if (err) {
-                    Logger.error(err);
+                    addErrorEvent(err, "user create admin error");
                   }
                   const UserProps = {
                     name: name,

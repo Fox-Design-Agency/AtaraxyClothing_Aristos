@@ -1,5 +1,5 @@
 /*
-*``````````````````````````````````````````````````````````
+*
 *           Table of Contents:
 *           **F001**   - Get File Writes
 *           **F002**   - Get File Contents
@@ -9,17 +9,17 @@
 *           **F006**   - Temp Test of Log Files
 *           **F007**   - Exports
 *
-*``````````````````````````````````````````````````````````
+*
 */
 const fs = require("fs-extra");
 /*
-*``````````````````````````````````````````````````````````
+**********************************************************
 * after require import
 * use like this:
 * Logger.info("Stuffs here.")
 * Logger.error(err)
 * Logger.debug(shouldThisHappen???) <- maybe not like this
-*``````````````````````````````````````````````````````````
+**********************************************************
 */
 /* create log directory and nessesary files */
 /*keep these in the .gitignore so they are not pushed */
@@ -28,12 +28,12 @@ fs.ensureFileSync("./important/AristosStuff/AristosLogger/logs/debug.json");
 fs.ensureFileSync("./important/AristosStuff/AristosLogger/logs/error.json");
 fs.ensureFileSync("./important/AristosStuff/AristosLogger/logs/info.json");
 /*
-*``````````````````````````````````````````````````````````
+**********************************************************
 *           Get File Writes
 *           Not exported directly
 *           **F001**
 *
-*``````````````````````````````````````````````````````````
+**********************************************************
 */
 /* save config items */
 let saveInfoItem = items => {
@@ -57,12 +57,12 @@ let saveDebugItem = items => {
   );
 }; /* end of save config item */
 /*
-*``````````````````````````````````````````````````````````
+**********************************************************
 *           Save File Contents
 *           Not exported directly
 *           **F002**
 *
-*``````````````````````````````````````````````````````````
+**********************************************************
 */
 /* grab all config items */
 let fetchInfoLog = () => {
@@ -98,11 +98,11 @@ let fetchDebugLog = () => {
   }
 }; /* end of fetch config */
 /*
-*``````````````````````````````````````````````````````````
+**********************************************************
 *           Clear File Contents
 *           **F003**
 *
-*``````````````````````````````````````````````````````````
+**********************************************************
 */
 
 /* remove config item */
@@ -187,11 +187,11 @@ let clearSomeOldErrorLog = num => {
   saveErrorItem(filteredItems);
 }; /* end of remove config item */
 /*
-*``````````````````````````````````````````````````````````
+**********************************************************
 *           Read File Contents
 *           **F004**
 *
-*``````````````````````````````````````````````````````````
+**********************************************************
 */
 /* read config item */
 let readAllInfo = () => {
@@ -269,11 +269,11 @@ let readSomeDebug = (name, num) => {
   }
 }; /* end of read config item */
 /*
-*``````````````````````````````````````````````````````````
+**********************************************************
 *           Add File Contents
 *           **F005**
 *
-*``````````````````````````````````````````````````````````
+**********************************************************
 */
 // functions to write messages to the log files
 // also places current date
@@ -317,11 +317,11 @@ addError = (stuffs, name = "errorEvent") => {
 }; /* end of add an error log */
 
 /*
-*``````````````````````````````````````````````````````````
+**********************************************************
 *           Temp Test of Log Files
 *           **F006**
 *
-*``````````````````````````````````````````````````````````
+**********************************************************
 */
 /* possibly temp log config item */
 logInfoItems = () => {
@@ -355,11 +355,11 @@ logErrorItems = () => {
 }; /* end of log config item */
 
 /*
-*``````````````````````````````````````````````````````````
+**********************************************************
 *           Exports
 *           **F007**
 *
-*``````````````````````````````````````````````````````````
+**********************************************************
 */
 module.exports = {
   addInfo,

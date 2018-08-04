@@ -2,7 +2,6 @@
 # otherwise, the log files gets auto made, and the updater is not finished
 /important/AppStuff/config/stuff.json
 /important/AristosStuff/AristosLogger/logs/
-/important/AristosStuff/AristosUpdater/
 
 # Temp directory will be ignored as it is just a holding place during production between the modules and the dist
 /content/temp

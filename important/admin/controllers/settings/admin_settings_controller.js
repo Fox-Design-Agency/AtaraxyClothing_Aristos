@@ -1,5 +1,4 @@
-const Logger = require("../../../AristosStuff/AristosLogger/AristosLogger")
-  .Logger;
+const addErrorEvent = require("../../../AristosStuff/AristosLogger/AristosLogger").addError;
 const config = require("../../../AppStuff/config/config");
 /* User queries */
 const FindOneUserByID = require("../../adminModels/queries/user/FindOneUserWithID");

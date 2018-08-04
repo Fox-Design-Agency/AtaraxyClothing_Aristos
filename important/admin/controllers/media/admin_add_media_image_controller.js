@@ -1,5 +1,4 @@
-const Logger = require("../../../AristosStuff/AristosLogger/AristosLogger")
-  .Logger;
+const addErrorEvent = require("../../../AristosStuff/AristosLogger/AristosLogger").addError;
 const fs = require("fs-extra");
 
 /* Media Model Queries */
@@ -53,12 +52,12 @@ module.exports = {
         let path = "/General/" + req.files.file.name;
         fs.ensureDir("content/public/images/General", err => {
           if (err) {
-            Logger.error(err);
+            addErrorEvent(err, "media create error");
           }
         });
         newMedia.mv("content/public/images" + path, err => {
           if (err) {
-            Logger.error(err);
+            addErrorEvent(err, "media create error");
           }
         });
         const mediaProps = {
@@ -113,9 +112,9 @@ module.exports = {
             });
           });
         } else {
-          fs.ensureDir(`content/public/images/${category}`, err => {
+          fs.ensureDir("content/public/images/" + category, err => {
             if (err) {
-              Logger.error(err);
+              addErrorEvent(err, "media uploadCreate error");
             }
           });
           // mkdirp("content/public/images/" + category + "/" + title, function (err) {
@@ -125,7 +124,7 @@ module.exports = {
             let newMedia = req.files.image;
             newMedia.mv("content/public/images/" + path, (err)=> {
               if (err) {
-                Logger.error(err);
+                addErrorEvent(err, "media uploadCreate error");
               }
             });
           }
@@ -242,7 +241,7 @@ module.exports = {
       let path = "content/public" + media.path;
       fs.remove(path, (err) => {
         if (err) {
-          Logger.error(err);
+          addErrorEvent(err, "media delete error");
         } else {
           DeleteMedia(id);
           req.flash("success_msg", "Image deleted!");
@@ -258,7 +257,7 @@ module.exports = {
       let path = "content/public/images" + media.path;
       fs.remove(path, function(err) {
         if (err) {
-          Logger.error(err);
+          addErrorEvent(err, "media trash delete error");
         } else {
           DeleteMedia(id);
           req.flash("success_msg", "Image deleted!");

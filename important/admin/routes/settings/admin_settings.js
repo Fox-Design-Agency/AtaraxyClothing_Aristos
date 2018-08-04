@@ -18,3 +18,4 @@ router.get("/cancel", isAdmin, settingsController.cancel);
 
 /* Exports */
 module.exports = router;
+        

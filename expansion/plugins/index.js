@@ -12,7 +12,7 @@ async function readStuff() {
   let allTheStuff = [];
   const stuff = await grabStuff().then(dirs => {
     dirs.forEach(files => {
-      let json = fs.readJsonSync(`./expansion/plugins/${files}/info.json`)
+      let json = fs.readJsonSync("./expansion/plugins/" + files + "/info.json")
       allTheStuff.push(json)
       return allTheStuff;
     });

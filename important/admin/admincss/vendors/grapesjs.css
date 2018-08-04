@@ -1,0 +1,36 @@
+.gjs-one-bg {
+  background-color: $lightMain;
+}
+.gjs-one-color {
+  color: $titleColor;
+}
+.gjs-one-color-h:hover {
+  color: $hoverNorm;
+}
+.gjs-two-bg {
+  background-color: $borderOne;
+}
+.gjs-two-color {
+  color: $subTitleColor;
+}
+.gjs-two-color-h:hover {
+  color: $hoverNorm;
+}
+.gjs-three-bg {
+  background-color: #eee;
+}
+.gjs-three-color {
+  color: $titleColor;
+}
+.gjs-three-color-h:hover {
+  color: $hoverNorm;
+}
+.gjs-four-bg {
+  background-color: $borderOne;
+}
+.gjs-four-color {
+  color: #eee;
+}
+.gjs-four-color-h:hover {
+  color: $borderOne;
+}

@@ -9,5 +9,6 @@ if (process.env.NODE_ENV === "production") {
 const port = process.env.PORT || 3000;
 /* Sets the app to listen to the server */
 app.listen(port, () => {
-  console.log(`Aristos CMS - NodeJS - is being awesome on port: ${port}`);
+  console.log("Aristos CMS - NodeJS - is being awesome on port: " + port);
 });
+        

@@ -26,7 +26,7 @@
     <a class="admin-section__dashboard-row__redirect" href="/admin/contact">See all messages</a>
 </div>
 <% } %>
-<% if(projectManagementExists) { %>
+<% if(typeof(projectManagementExists) !== "undefined") { %>
     <div class="admin-section__dashboard-row">
         <div class="admin-section__dashboard-row__notepad">
             <h3 class="admin-page__none-of-something">There are no notes...</h3>
@@ -57,7 +57,7 @@
         <a class="admin-section__dashboard-row__redirect" href="/admin/project-management#active-tasks">See all tasks</a>
     </div>
 <% } %>
-<% if(dataScienceExists){ %>
+<% if(typeof(dataScienceExists) !== "undefined"){ %>
     <div class="admin-section__dashboard-row">
         <div class="admin-section__dashboard-row__notepad">
             <h3 class="admin-page__none-of-something">There is no data...</h3>

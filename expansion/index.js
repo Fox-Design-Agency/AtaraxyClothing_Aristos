@@ -10,7 +10,7 @@ module.exports = app => {
     app.locals.upgrades = res;
     res.forEach(files => {
       app.locals[files.variable] = true;
-      require(`./upgrade/${files.folder}`)(app);
+      require("./upgrade/" + files.folder)(app);
     });
   });
 

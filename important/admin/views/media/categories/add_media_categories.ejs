@@ -1,0 +1,17 @@
+<%- include("../../_layouts/adminheader") %>
+    <h2 class="admin-page__main-title">Add a Media Category</h2>
+    <% include ../../_layouts/messages/messages %>
+    <% include ../../_layouts/messages/errors %>
+    <button class="admin-button admin-button--main"><a href="/admin/media-categories">Back to Media Categories</a></button>
+
+    <form method="post" action="/admin/media-categories/add-media-category" class="admin-form">
+        <div class="admin-form__form-options">
+            <div class="admin-form__group">
+                <label for="">Title</label>
+                <input type="text" class="form-control" name="title" value="<%= title %>" placeholder="Title">
+            </div>
+        </div>
+        <button class="admin-button admin-button--submit">Submit</button>
+    </form>
+<%- include("../../_layouts/adminfooter") %>
+        
