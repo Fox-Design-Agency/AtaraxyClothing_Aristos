@@ -1,12 +1,15 @@
 const Note = require("../../note");
 /* Aristos Logger Path */
-// const Logger = require("../../../../../../important/AristosStuff/AristosLogger/AristosLogger").Logger;
-
+const errorAddEvent = require("../../../../../../important/AristosStuff/AristosLogger/AristosLogger")
+  .addError;
 /**
- * Finds a single page in the Page collection.
- * @param {string} _id - The ID of the record to find.
- * @return {promise} A promise that resolves with the page that matches the id
+ * Finds all the notes by param in the Note collection.
+ * @param {object} stuff - The object of the stuff to find.
+ * @return {promise} A promise that resolves with the note(s) that matches the stuff
  */
 module.exports = stuff => {
-  return Note.find(stuff);
+  return Note.find(stuff).catch(err => {
+    errorAddEvent(err, "notes query error");
+  });
 };
+

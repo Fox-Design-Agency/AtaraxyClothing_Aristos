@@ -2,67 +2,66 @@
     <h2 class="admin-page__main-title">Blogs</h2>
     <% include ../../../../important/admin/views/_layouts/messages/messages %>
     <div class="button-row">
-        <button class="admin-button admin-button--main">
-            <a href="/admin/blogs/add-blog">Add a new blog</a>
-        </button>
-        <button class="admin-button admin-button--main">
-            <a href="/admin/blog-categories/add-blog-category">Add a new category</a>
+        <button class="admin-button admin-button--add-something">
+            <a href="/admin/blogs/add-blog">+</a>
         </button>
     </div>
 
     <% if (count > 0) { %>
-        <table class="admin-table">
-            <thead>
-                <tr>
-                    <th>title</th>
-                    <th>category</th>
-                    <th>published</th>
-                    <th>comments</th>
-                    <th>edit</th>
-                    <th>delete</th>
-                </tr>
-            </thead>
-            <tbody>
+    <div class="blocks-holder">
                 <% blogs.forEach(function(blog) { %>
-                    <tr id="id_<%= blog._id %>" class="<%= blog.slug %>">
-                        <td>
+                <div class="admin-blocks" id="id_<%= blog._id %>" class="<%= blog.slug %>">
+                    <a href="/admin/blogs/edit-blog/<%= blog._id %>">
+                        <h4>
+                            title:
+                        </h4>
+                        <h5>
                             <%= blog.title %>
-                        </td>
-                        <td>
+                        </h5>
+                        <h4>
+                            category:
+                        </h4>
+                        <h5>
                             <%= blog.category %>
-                        </td>
-                        <td>
+                        </h5>
+                        <h4>
+                            published:
+                        </h4>
+                        <h5>
                             <%= blog.published %>
-                        </td>
-                        <td class="admin-table__edit-stuffs">
+                        </h5>
+                        <h4>
+                            allow comments:
+                        </h4>
+                        <h5>
+                        <%= blog.allowComments %>
+                        </h5>
+                        
+                    </a><% if(blog.allowComments){ %>
+                        <h5 class="admin-table__edit-stuffs">
                             <a href="/admin/blog-comments/<%= blog.id %>">See Comments</a>
-                        </td>
-                        <td  class="admin-table__edit-stuffs">
-                            <a href="/admin/blogs/edit-blog/<%= blog._id %>">Edit</a>
-                        </td>
-                        <td  class="admin-table__delete-stuffs">
-                        <form method="post" action="/admin/blogs/delete-blog/<%= blog._id %>?_method=DELETE">
-                                <input type="hidden" name="_method" value="DELETE">
-                                <button type="submit">Delete</button>
-                            </form>
-                        </td>
-                    </tr>
-                    <% }); %>
-            </tbody>
-        </table>
+                        </h5>
+                        <% } %>
+                        <form class="admin-blocks__delete-stuffs" method="post" action="/admin/blogs/delete-blog/<%= blog._id %>?_method=DELETE">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <button type="submit">Delete</button>
+                        </form>
+                    
+                </div>
+                <% }); %>
+            </div>
         <% } else { %>
             <h3 class="admin-page__none-of-something">There are no blogs, you should write one.</h3>
             <% } %>
             <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
             <script>
-                $('tbody').sortable({
-                    items: "tr",
-                    placeholder: "ui-state-hightlight",
+                $('.blocks-holder').sortable({
+                    items: "div",
                     update: function () {
-                        let ids = $("tbody").sortable("serialize");
+                        let ids = $(".blocks-holder").sortable("serialize");
                         let url = "/admin/blogs/reorder-blogs";
                         $.post(url, ids);
                     }
-                });
+                }, "refresh");
             </script>
                 <%- include("../../../../important/admin/views/_layouts/adminfooter") %>

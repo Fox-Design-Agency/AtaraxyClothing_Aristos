@@ -1,13 +1,16 @@
 const Blog = require("../../blog");
 /* Aristos Logger Path */
-const Logger = require("../../../../../../important/AristosStuff/AristosLogger/AristosLogger").Logger;
+const errorAddEvent = require("../../../../../../important/AristosStuff/AristosLogger/AristosLogger")
+  .addError;
 /**
- * Finds a single blog in the Blog collection.
- * @param {object} blogProps - Object containing <change this>
- * @return {promise} A promise that resolves with the Blog that was created
+ * Counts blogs in the Blog collection.
+ * @return {promise} A promise that resolves with the count of the blogs
  */
 module.exports = () => {
-  return Blog.count({}).then(c => {
-      return c
+  return Blog.countDocuments({})
+    .then(count => {
+      return count;
     })
+    .catch(err => errorAddEvent(err, "blog query error"));
 };
+

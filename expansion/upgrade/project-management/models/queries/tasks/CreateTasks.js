@@ -1,12 +1,16 @@
 const Task = require("../../tasks");
 /* Aristos Logger Path */
-const Logger = require("../../../../../../important/AristosStuff/AristosLogger/AristosLogger").Logger;
+const errorAddEvent = require("../../../../../../important/AristosStuff/AristosLogger/AristosLogger")
+  .addError;
 /**
- * Finds a single page in the Page collection.
- * @param {object} pageProps - Object containing title, slug, content, parent, 100, description, keywords, author
- * @return {promise} A promise that resolves with the Page that was created
+ * Create a single task in the Task collection.
+ * @param {object} taskProps - Object containing ??
+ * @return {promise} A promise that resolves with the Task that was created
  */
 module.exports = taskProps => {
   const task = new Task(taskProps);
-  task.save().catch(err => Logger.error(err));
+  return task.save().catch(err => {
+    errorAddEvent(err, "tasks query error");
+  });
 };
+

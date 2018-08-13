@@ -1,11 +1,11 @@
 <% include ../_layouts/adminheader %>
-    <h2 class="admin-page__main-title">Template Dashboard</h2>
+    <h2 class="admin-page__main-title">Add Template Dashboard</h2>
     <% include ../_layouts/messages/messages %>
-    <button class="admin-button admin-button--main">
-        <a href="/admin/template-builder">Back</a>
+    <button class="admin-button admin-button--add-something admin-button--add-something--second">
+        <a href="/admin/template-builder"><i class="fa fa-hand-point-left"></i></a>
     </button>
-    <button class="admin-button admin-button--main">
-        <a href="/admin/template-builder/builder">Drag and Drop</a>
+    <button class="admin-button admin-button--add-something">
+        <a href="/admin/template-builder/builder"><i class="fa fa-mouse-pointer"></i></a>
     </button>
 
     <form method="post" action="/admin/template-builder/add-basic" class="admin-form" class="admin-form">
@@ -36,9 +36,8 @@
 
                 </div>
             </div>
-            <div>
-                <button class="admin-button admin-button--submit">Submit</button>
-            </div>
+            <button class="admin-button admin-button--submit">Submit</button>
+         
     </form>
 
 

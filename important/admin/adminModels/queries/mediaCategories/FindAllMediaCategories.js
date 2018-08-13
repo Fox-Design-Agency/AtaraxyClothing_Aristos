@@ -1,12 +1,13 @@
 const MediaCategory = require("../../mediaCategory");
 /* Aristos Logger Path */
-// const Logger = require("../../../../AristosStuff/AristosLogger/AristosLogger").Logger;
-
+const addErrorEvent = require("../../../../AristosStuff/AristosLogger/AristosLogger")
+  .addError;
 /**
- * Finds a single page in the Page collection.
- * @param {string} _id - The ID of the record to find.
- * @return {promise} A promise that resolves with the page that matches the id
+ * Finds all the media categories in the Media Category collection.
+ * @return {promise} A promise that resolves with the media categories
  */
 module.exports = () => {
-  return MediaCategory.find({});
+  return MediaCategory.find({}).catch(err => {
+    addErrorEvent(err, "media category query error");
+  });
 };

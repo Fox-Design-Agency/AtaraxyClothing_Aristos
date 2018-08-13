@@ -1,13 +1,17 @@
 const ContactMessage = require("../contactMessage");
 /* Aristos Logger Path */
-const Logger = require("../../../../../important/AristosStuff/AristosLogger/AristosLogger").Logger;
+const errorAddEvent = require("../../../../../important/AristosStuff/AristosLogger/AristosLogger")
+  .addError;
 /**
- * Finds a single page in the Page collection.
- * @param {object} pageProps - Object containing <change this>
- * @return {promise} A promise that resolves with the Page that was created
+ * Counts the messages in the Contact Message collection.
+ * @return {promise} A promise that resolves with the contact message that was created
  */
 module.exports = () => {
-  return ContactMessage.count({}).then(c => {
-      return c
+  return ContactMessage.estimatedDocumentCount({})
+    .then(c => {
+      return c;
     })
+    .catch(err => {
+      errorAddEvent(err, "contact message query error");
+    });
 };

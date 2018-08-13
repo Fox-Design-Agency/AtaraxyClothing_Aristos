@@ -6,7 +6,7 @@
                 <i class='fa fa-undo'></i>
             </a>
             <a href="#" data-command='redo'>
-                <i class='fa fa-repeat'></i>
+                <i class='fa fa-redo'></i>
             </a>
             <div class="fore-wrapper">
                 <i class='fa fa-font' style='color:#C96;'></i>
@@ -72,7 +72,7 @@
                 <i class='fa fa-superscript'></i>
             </a>
             <a href="#" data-command='HR'>
-                <i class='fa fa-arrows-h'></i>
+                <i class='fa fa-arrows-alt-h'></i>
             </a>
             <a href="#" data-command='removeFormat'>
                 <i class='fa fa-trash'></i>
@@ -86,13 +86,12 @@
             <a href="#" data-command='insertimage'>
                 <i class='fa fa-image'></i>
             </a>
-             <!-- <a href="#" data-command='increaseFontSize'>
+            <a href="#" data-command='increaseFontSize'>
                     <i class='fa fa-caret-up'></i>
                 </a>
                 <a href="#" data-command='decreaseFontSize'>
                         <i class='fa fa-caret-down'></i>
-                    </a>
-            -->
+                </a>
             <div class="editorStyleSelector">
                 <a href="#" class="dropbtn">Style</a>
                 <div id="myDropdown" class="dropdown-content">
@@ -178,6 +177,7 @@ for (var i = 0; i < colorPalette.length; i++) {
 }
 
 $(".toolbar a").click(function(e) {
+    e.preventDefault();
   let command = $(this).data("command");
   if (
     command === "H1" ||
@@ -229,6 +229,5 @@ $(".dropbtn").click(function() {
 });
 
 </script>
-        
         
         

@@ -8,7 +8,6 @@ const DashboardController = require("../../controllers/dashboard/admin_home_cont
 * GET pages index
 */
 router.get("/", isAdmin, DashboardController.dashboardGET);
-
 /*
 * GET log variations
 */

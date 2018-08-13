@@ -5,21 +5,29 @@
         <a href="/admin/logs-viewer">Info Logs</a>
     </button>
     <button class="admin-button admin-button--main">
+        <a href="/admin/logs-viewer/type/updates">Update Logs</a>
+    </button>
+    <button class="admin-button admin-button--main">
         <a href="/admin/logs-viewer/type/errors">Error Logs</a>
     </button>
     <button class="admin-button admin-button--main">
         <a href="/admin/logs-viewer/type/debug">Debug Logs</a>
     </button>
+   
+   
+    
+    <% if(infoLogs.length < 1){ %>
+        <div class="admin-section__dashboard-row__notepad"  id="logs-display">
+            <h3 class="admin-page__none-of-something">There is nothing in the log...</h3>
+        </div>
+    <% }else{ %>  
+    <% if(logname !== "updates"){ %>
     <div class="button-row">
         <button class="admin-button admin-button--danger">
             <a href="/admin/logs-viewer/clear/<%= logname %>">Clear Log</a>
         </button>
     </div>
-    <% if(infoLogs.length < 1){ %>
-        <div class="admin-section__dashboard-row__notepad"  id="logs-display">
-            <h3 class="admin-page__none-of-something">There is nothing in the log...</h3>
-        </div>
-    <% }else{ %>
+    <% } %>
     <table class="admin-table" id="logs-display">
         <thead>
             <tr>
@@ -40,4 +48,5 @@
     </table>
     <% } %>
 <%- include("../_layouts/adminfooter") %>
+        
         

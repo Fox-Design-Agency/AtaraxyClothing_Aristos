@@ -1,13 +1,19 @@
 const BlogCategory = require("../../blogCategory");
 /* Aristos Logger Path */
-const Logger = require("../../../../../../important/AristosStuff/AristosLogger/AristosLogger").Logger;
+const errorAddEvent = require("../../../../../../important/AristosStuff/AristosLogger/AristosLogger")
+  .addError;
 /**
- * Finds a single blog category in the Blog Category collection.
- * @param {object}  - Object containing <change this>
+ * counts the blog category in the Blog Category collection.
  * @return {promise} A promise that resolves with the Page that was created
  */
 module.exports = () => {
-  return BlogCategory.count({}).then(c => {
-      return c
+  return BlogCategory.estimatedDocumentCount({})
+    .then(c => {
+      return c;
     })
+    .catch(err => {
+      errorAddEvent(err, "blog category query error");
+    });
 };
+
+

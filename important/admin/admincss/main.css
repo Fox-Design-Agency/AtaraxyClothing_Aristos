@@ -16,3 +16,5 @@
 @import "AristosTextEditor";
 @import "vendors/grapesjs";
 @import "modules/_alert";
+@import "modules/_admin-blocks";
+@import "modules/_admin-blocks-holder";

@@ -1,14 +1,19 @@
 const ProductCategory = require("../../productCategory");
 // Aristos Logger Path
-// const Logger = require("../../../../../../important/AristosStuff/AristosLogger/AristosLogger").Logger;
+const errorAddEvent = require("../../../../../../important/AristosStuff/AristosLogger/AristosLogger")
+  .addError;
 /**
- * Sorts pages by ids.
- * @param {string} _id - The ID of the record to find.
- * @return {promise} A promise that resolves with the page that matches the id
+ * Sorts product categories by ids.
+ * @param {string} ids - The ids of the records to sort.
+ * @return {promise} A promise that resolves with the sorted product categories
  */
 module.exports = ids => {
   return sortProductCategories(ids, function() {
-    ProductCategory.find({}).sort({ sorting: 1 });
+    ProductCategory.find({})
+      .sort({ sorting: 1 })
+      .catch(err => {
+        errorAddEvent(err, "product category query error");
+      });
   });
 }; /// end of exports
 // Sort pages function
@@ -33,3 +38,4 @@ function sortProductCategories(ids, cb) {
     })(count);
   }
 } // end of sort pages function
+

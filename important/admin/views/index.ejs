@@ -1,74 +1,46 @@
 <% include ./_layouts/adminheader %>
 <h2 class="admin-page__main-title">Dashboard</h2>
 <% include _layouts/messages/messages %>
-<% if(contactManagementExists) { %>
-<div class="admin-section__dashboard-row">
-    <% if (message.length !== 0){ %>
-    <div class="admin-section__dashboard-row__notepad">
-        <% message.forEach(function(message){ %>
-            <a href="" class="admin-section__dashboard-row__note-box">
-            <div>
-                <h3>
-                    <%= message.name %>
-                </h3>
-                <p>
-                    <%= message.content %>
-                </p>
-            </div>
-            </a>
-        <% }) %>
+<div class="blocks-holder">
+    <div class="admin-blocks">
+        <h4>
+            total site views:
+        </h4>
+        <h5>
+            <%= Math.floor(siteViews) %>
+        </h5>
+        <h4>
+            total page views:
+        </h4>
+        <h5>
+            <%= Math.floor(totalViews/3) %>
+        </h5>
     </div>
-        <% } else { %>
-    <div class="admin-section__dashboard-row__notepad">
-        <h3 class="admin-page__none-of-something">There are no messages...</h3>
+    <div class="admin-blocks">
+        <h4>
+            total front-end page views:
+        </h4>
+        <h5>
+            <%= Math.floor(FrontEndViews/3) %>
+        </h5>
     </div>
-        <% } %>
-    <a class="admin-section__dashboard-row__redirect" href="/admin/contact">See all messages</a>
 </div>
-<% } %>
-<% if(typeof(projectManagementExists) !== "undefined") { %>
-    <div class="admin-section__dashboard-row">
-        <div class="admin-section__dashboard-row__notepad">
-            <h3 class="admin-page__none-of-something">There are no notes...</h3>
-        </div>
-        <a class="admin-section__dashboard-row__redirect" href="#">See all Notes</a>
-    </div>
-    <div class="admin-section__dashboard-row">
-        <% if (tasks.length !== 0){ %>
-        <div class="admin-section__dashboard-row__notepad">
-            <% tasks.forEach(function(task){ %>
-            <a href="/admin/project-management/edit-task/<%= task._id %>" class="note-box">
-            <div>
-                <h3>
-                    <%= task.title %>
-                </h3>
-                <p>
-                    <%= task.content %>
-                </p>
-            </div>
-            </a>
-            <% }) %>
-        </div>
-        <% } else { %>
-        <div class="admin-section__dashboard-row__notepad">
-            <h3 class="admin-page__none-of-something">There are no tasks...</h3>
-        </div>
-        <% } %>
-        <a class="admin-section__dashboard-row__redirect" href="/admin/project-management#active-tasks">See all tasks</a>
-    </div>
-<% } %>
-<% if(typeof(dataScienceExists) !== "undefined"){ %>
-    <div class="admin-section__dashboard-row">
-        <div class="admin-section__dashboard-row__notepad">
-            <h3 class="admin-page__none-of-something">There is no data...</h3>
-        </div>
-        <a class="admin-section__dashboard-row__redirect" href="#">See more graphs</a>
-    </div>
-<% } %>
+<div class="blocks-holder">
+    <% if(upgradeDashboard.length < 1){ %>
+      
+    <% }else{ %>
+        <% upgradeDashboard.forEach(inceptionLevelPromise=>{ %> 
+            <%- inceptionLevelPromise %>  
+        <% }) %>
+    <% } %>
+</div>
 
 <div class="admin-section__dashboard-row--divider">
     <button class="admin-button admin-button--main">
         <a href="/admin/#logs-display">Info Logs</a>
+    </button>
+    <button class="admin-button admin-button--main">
+        <a href="/admin/dashboard/updates/#logs-display">Update Logs</a>
     </button>
     <button class="admin-button admin-button--main">
         <a href="/admin/dashboard/errors/#logs-display">Error Logs</a>

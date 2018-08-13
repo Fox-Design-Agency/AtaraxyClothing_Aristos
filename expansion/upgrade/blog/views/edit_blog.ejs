@@ -1,10 +1,11 @@
 <%- include("../../../../important/admin/views/_layouts/adminheader") %>
     <h2 class="admin-page__main-title">Edit a blog</h2>
     <% include ../../../../important/admin/views/_layouts/messages/errors %>
-    <button class="admin-button admin-button--main">
-        <a href="/admin/blogs">Back to blogs</a>
+    <button class="admin-button admin-button--add-something">
+        <a href="/admin/blogs"><i class="fa fa-hand-point-left"></i></a>
     </button>
-
+    <br>
+    <br>
 
     <form method="post" action="/admin/blogs/edit-blog/<%= id %>" class="admin-form">
 
@@ -40,6 +41,14 @@
                         <input type="text" class="form-control" name="author" value="<%= author %>" placeholder="Author">
 
                     </div>
+                    <div class="admin-form__group">
+                        <label for="">Allow Comments</label>
+                        <input type="checkbox" class="form-control" name="allowComments"
+                        <% if(allowComments){ %>
+                            checked
+                        <% } %>
+                        >
+                    </div>
 
 
                 </div>
@@ -58,8 +67,7 @@
                 </div>
             </div>
 
-            <div>
-                <button class="admin-button admin-button--submit">Submit</button>
-            </div>
+            <button class="admin-button admin-button--submit">Submit</button>
+          
     </form>
     <%- include("../../../../important/admin/views/_layouts/adminfooter") %>

@@ -1,12 +1,16 @@
 const Order = require("../../orders");
 // Aristos Logger Path
-const Logger = require("../../../../../../important/AristosStuff/AristosLogger/AristosLogger").Logger;
+const errorAddEvent = require("../../../../../../important/AristosStuff/AristosLogger/AristosLogger")
+  .addError;
 
 /**
- * Deletes a single page from the Page collection
- * @param {string} _id - The ID of the page to delete.
+ * Deletes a single order from the ORder collection
+ * @param {string} _id - The ID of the order to delete.
  * @return {promise} A promise that resolves when the record is deleted
  */
 module.exports = _id => {
-    Order.findByIdAndRemove(_id).catch(err => Logger.error(err));
+  return Order.findByIdAndRemove(_id).catch(err => {
+    errorAddEvent(err, "order query error");
+  });
 };
+

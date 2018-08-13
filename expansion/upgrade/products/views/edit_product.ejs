@@ -1,7 +1,13 @@
 <%- include("../../../../important/admin/views/_layouts/adminheader") %>
     <h2 class="admin-page__main-title">Edit product</h2>
     <% include ../../../../important/admin/views/_layouts/messages/errors %>
-    <button class="admin-button admin-button--main"><a class="btn-text" href="/admin/products">Back to products</a></button>
+    <button class="admin-button admin-button--add-something">
+        <a class="btn-text" href="/admin/products">
+            <i class="fa fa-hand-point-left"></i>
+        </a>
+    </button>
+    <br>
+    <br>
 
     <form method="post" action="/admin/products/edit-product/<%= id %>" enctype="multipart/form-data" class="admin-form">
 
@@ -69,10 +75,10 @@
             
         </div>
 </div>
-        <div>
+   
 
         <button class="admin-button admin-button--submit">Submit</button>
-    </div>
+   
     </form>
 
     <h3 class="page-header">Gallery</h3>

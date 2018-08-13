@@ -5,6 +5,8 @@ async function grabStuff() {
   const dirs = await fs.readdirSync("./expansion/upgrade");
   const index = dirs.indexOf("index.js");
   dirs.splice(index, 1);
+  const dashboard = dirs.indexOf("dashboard.js");
+  dirs.splice(dashboard, 1);
   return dirs;
 }
 
@@ -12,13 +14,14 @@ async function readStuff() {
   let allTheStuff = [];
   const stuff = await grabStuff().then(dirs => {
     dirs.forEach(files => {
-      let json = fs.readJsonSync("./expansion/upgrade/" +files+"/info.json")
-      allTheStuff.push(json)
+      let json = fs.readJsonSync("./expansion/upgrade/" + files + "/info.json");
+      allTheStuff.push(json);
       return allTheStuff;
     });
     return allTheStuff;
   });
-  return stuff
+
+  return stuff;
 }
 
 module.exports = readStuff();

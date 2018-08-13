@@ -2,42 +2,33 @@
     <h2 class="admin-page__main-title">Admin Users</h2>
     <% include ../_layouts/messages/messages %>
     <div>
-        <button class="admin-button admin-button--main">
-            <a href="/admin/user-controls/add-admin">Add a new member</a>
-        </button>
-        <button class="admin-button admin-button--main">
-            <a href="/admin/user-controls/add-admin">Add Existing User</a>
+        <button class="admin-button admin-button--add-something">
+            <a href="/admin/user-controls/add-admin">+</a>
         </button>
     </div>
-    <table class="admin-table">
-        <thead>
-            <tr class="home">
-                <th>Name</th>
-                <th>Role</th>
-                <th>Edit</th>
-                <th>Delete</th>
-            </tr>
-        </thead>
-        <tbody>
+
+    <div class="blocks-holder">
         <% users.forEach((user)=>{ %>
-            <tr>
-                <td value="<%= user.username %>">
+        <div class="admin-blocks">
+            <a href="/admin/user-controls/edit-admin/<%= user._id %>">
+                <h4>
+                    username:
+                </h4>
+                <h5 value="<%= user.username %>">
                     <%= user.username %>
-                </td>
-                <td>
+                </h5>
+                <h4>
+                    role:
+                </h4>
+                <h5>
                     NOT A THING YET
-                </td>
-                <td class="admin-table__edit-stuffs">
-                    <a href="/admin/user-controls/edit-admin/<%= user._id %>">Edit</a>
-                </td>
-                <td class="admin-table__delete-stuffs">
-                    <form method="post" action="/admin/user-controls/remove-admin/<%= user._id %>?_method=DELETE">
-                        <input type="hidden" name="_method" value="DELETE">
-                        <button type="submit">Remove</button>
-                    </form>
-                </td>
-            </tr>
+                </h5>
+                <form method="post" class="admin-blocks__delete-stuffs" action="/admin/user-controls/remove-admin/<%= user._id %>?_method=DELETE">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button type="submit">Remove</button>
+                </form>
+            </a>
+        </div>
         <% }); %>
-        </tbody>
-    </table>
+    </div>
 <% include ../_layouts/adminfooter %>

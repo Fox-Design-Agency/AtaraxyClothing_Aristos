@@ -1,6 +1,6 @@
 const Page = require("../../page");
 /* Aristos Logger Path */
-const Logger = require("../../../../AristosStuff/AristosLogger/AristosLogger").Logger;
+const addErrorEvent = require("../../../../AristosStuff/AristosLogger/AristosLogger").addError;
 
 /**
  * Deletes a single page from the Page collection
@@ -8,5 +8,7 @@ const Logger = require("../../../../AristosStuff/AristosLogger/AristosLogger").L
  * @return {promise} A promise that resolves when the record is deleted
  */
 module.exports = _id => {
-  return Page.findByIdAndRemove(_id).catch(err => Logger.error(err));
+  return Page.findByIdAndRemove(_id).catch(err => {
+    addErrorEvent(err, "page query error");
+  });
 };

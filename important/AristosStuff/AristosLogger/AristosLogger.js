@@ -12,6 +12,7 @@
 *
 */
 const fs = require("fs-extra");
+const moment = require("moment");
 /*
 **********************************************************
 * after require import
@@ -27,6 +28,7 @@ fs.ensureDirSync("./important/AristosStuff/AristosLogger/logs");
 fs.ensureFileSync("./important/AristosStuff/AristosLogger/logs/debug.json");
 fs.ensureFileSync("./important/AristosStuff/AristosLogger/logs/error.json");
 fs.ensureFileSync("./important/AristosStuff/AristosLogger/logs/info.json");
+fs.ensureFileSync("./important/AristosStuff/AristosLogger/logs/update.json");
 /*
 **********************************************************
 *           Get File Writes
@@ -53,6 +55,13 @@ let saveErrorItem = items => {
 let saveDebugItem = items => {
   fs.writeFileSync(
     "./important/AristosStuff/AristosLogger/logs/debug.json",
+    JSON.stringify(items)
+  );
+}; /* end of save config item */
+/* save config items */
+let saveUpdateItem = items => {
+  fs.writeFileSync(
+    "./important/AristosStuff/AristosLogger/logs/update.json",
     JSON.stringify(items)
   );
 }; /* end of save config item */
@@ -91,6 +100,17 @@ let fetchDebugLog = () => {
   try {
     const configString = fs.readFileSync(
       "./important/AristosStuff/AristosLogger/logs/debug.json"
+    );
+    return (config = JSON.parse(configString));
+  } catch (e) {
+    return [];
+  }
+}; /* end of fetch config */
+/* grab all config items */
+let fetchUpdateLog = () => {
+  try {
+    const configString = fs.readFileSync(
+      "./important/AristosStuff/AristosLogger/logs/update.json"
     );
     return (config = JSON.parse(configString));
   } catch (e) {
@@ -268,6 +288,31 @@ let readSomeDebug = (name, num) => {
     return "none";
   }
 }; /* end of read config item */
+/* read config item */
+let readAllUpdates = name => {
+  try {
+    let items = fetchUpdateLog();
+    return items;
+  } catch (e) {
+    return "none";
+  }
+}; /* end of read config item */
+/* read config item */
+let readSomeUpdates = (name, num) => {
+  try {
+    let items = fetchUpdateLog();
+    let filteredItems = [];
+    let i = items.length - 1;
+    while (num > 0) {
+      filteredItems.push(items[i]);
+      --num;
+      --i;
+    }
+    return filteredItems;
+  } catch (e) {
+    return "none";
+  }
+}; /* end of read config item */
 /*
 **********************************************************
 *           Add File Contents
@@ -282,10 +327,10 @@ addInfo = (stuffs, name = "infoEvent") => {
   let items = fetchInfoLog();
   let item = {
     name: name,
-    date: new Date().toString(),
+    date: moment().format("MMMM Do YYYY, h:mm:ss a"),
     info: stuffs
   };
-  items.push(item);
+  items.unshift(item);
   saveInfoItem(items);
   return item;
 }; /* end of add a config item */
@@ -295,10 +340,10 @@ addDebug = (stuffs, name = "debugEvent") => {
   let items = fetchDebugLog();
   let item = {
     name: name,
-    date: new Date().toString(),
+    date: moment().format("MMMM Do YYYY, h:mm:ss a"),
     info: stuffs
   };
-  items.push(item);
+  items.unshift(item);
   saveDebugItem(items);
   return item;
 }; /* end of add a config item */
@@ -308,13 +353,25 @@ addError = (stuffs, name = "errorEvent") => {
   let items = fetchErrorLog();
   let item = {
     name: name,
-    date: new Date().toString(),
+    date: moment().format("MMMM Do YYYY, h:mm:ss a"),
     info: stuffs
   };
-  items.push(item);
+  items.unshift(item);
   saveErrorItem(items);
   return item;
 }; /* end of add an error log */
+/* use for error logging */
+addUpdate = (stuffs, name = "core Update") => {
+  let items = fetchUpdateLog();
+  let item = {
+    name: name,
+    date: moment().format("MMMM Do YYYY, h:mm:ss a"),
+    info: stuffs
+  };
+  items.unshift(item);
+  saveUpdateItem(items);
+  return item;
+}; /* end of add an update log */
 
 /*
 **********************************************************
@@ -335,7 +392,7 @@ logInfoItems = () => {
 }; /* end of log config item */
 /* possibly temp log config item */
 logDebugItems = () => {
-  let items = fetchInfoLog();
+  let items = fetchDebugLog();
   items.forEach(item => {
     console.log("----");
     console.log("Name:" + item.name);
@@ -345,7 +402,17 @@ logDebugItems = () => {
 }; /* end of log config item */
 /* possibly temp log config item */
 logErrorItems = () => {
-  let items = fetchInfoLog();
+  let items = fetchErrorLog();
+  items.forEach(item => {
+    console.log("----");
+    console.log("Name:" + item.name);
+    console.log("Date:" + item.date);
+    console.log("Info: " + item.info);
+  });
+}; /* end of log config item */
+/* possibly temp log config item */
+logUpdateItems = () => {
+  let items = fetchUpdateLog();
   items.forEach(item => {
     console.log("----");
     console.log("Name:" + item.name);
@@ -365,11 +432,14 @@ module.exports = {
   addInfo,
   addError,
   addDebug,
+  addUpdate,
   readAllInfo,
   readSomeInfo,
   readAllError,
   readSomeError,
   readAllDebug,
+  readSomeUpdates,
+  readAllUpdates,
   readSomeDebug,
   clearInfoLog,
   clearSomeNewInfoLog,
@@ -382,5 +452,7 @@ module.exports = {
   clearSomeOldDebugLog,
   logDebugItems,
   logErrorItems,
-  logInfoItems
+  logInfoItems,
+  logUpdateItems
 };
+

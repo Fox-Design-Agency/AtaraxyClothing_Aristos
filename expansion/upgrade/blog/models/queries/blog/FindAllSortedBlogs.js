@@ -1,12 +1,14 @@
 const Blog = require("../../blog");
 /* Aristos Logger Path */
-// const Logger = require("../../../../../../important/AristosStuff/AristosLogger/AristosLogger").Logger;
+const errorAddEvent = require("../../../../../../important/AristosStuff/AristosLogger/AristosLogger").addError;
 
 /**
  * Finds all blogs in the Blog collection sorted by their sorting value.
- * @param {string} _id - The ID of the record to find.
- * @return {promise} A promise that resolves with the page that matches the id
+ * @return {promise} A promise that resolves with all the sorted blogs
  */
 module.exports = () => {
-  return Blog.find({}).sort({ sorting: 1 });
+  return Blog.find({}).sort({ sorting: 1 }).catch(err=>{
+    errorAddEvent(err, "blog query error")
+  });
 };
+

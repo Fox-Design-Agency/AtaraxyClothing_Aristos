@@ -16,3 +16,4 @@ module.exports = app => {
   app.use("/admin/product-categories", adminProductCategories);
   app.use("/admin/products", adminProducts);
 };
+

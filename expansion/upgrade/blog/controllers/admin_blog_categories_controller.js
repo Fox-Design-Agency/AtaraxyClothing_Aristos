@@ -1,5 +1,5 @@
-const Logger = require("../../../../important/AristosStuff/AristosLogger/AristosLogger")
-  .Logger;
+const errorAddEvent = require("../../../../important/AristosStuff/AristosLogger/AristosLogger")
+  .addError;
 /* Blog Category Model Queries */
 const CountBlogCategories = require("../models/queries/blogCategory/CountBlogCategory");
 const FindAllBlogCategories = require("../models/queries/blogCategory/FindAllBlogCategory");
@@ -68,7 +68,7 @@ module.exports = {
         }
 
         let title = req.body.title;
-        let slug = title.replace(/\s+/g, "-").toLowerCase();
+        let slug = title.replace(/s+/g, "-").toLowerCase();
         let description = req.body.description;
         let author = req.body.author;
         let keywords = req.body.keywords;
@@ -145,7 +145,7 @@ module.exports = {
         }
 
         let title = req.body.title;
-        let slug = title.replace(/\s+/g, "-").toLowerCase();
+        let slug = title.replace(/s+/g, "-").toLowerCase();
         let id = req.params.id;
 
         let author = req.body.author;
@@ -223,3 +223,4 @@ module.exports = {
     });
   } /* end of reorder function */
 };
+

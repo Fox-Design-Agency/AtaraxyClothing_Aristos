@@ -1,12 +1,16 @@
 const Blog = require("../../blog");
 /* Aristos Logger Path */
-const Logger = require("../../../../../../important/AristosStuff/AristosLogger/AristosLogger").Logger;
+const errorAddEvent = require("../../../../../../important/AristosStuff/AristosLogger/AristosLogger")
+  .addError;
 
 /**
- * Deletes a single blog from the Blog collection
- * @param {string} _id - The ID of the blog to delete.
- * @return {promise} A promise that resolves when the record is deleted
+ * Removes a single blog from the Blog collection
+ * @param {string} _id - The ID of the blog to remove.
+ * @return {promise} A promise that resolves when the Blog is removed
  */
 module.exports = _id => {
-    Blog.findByIdAndRemove(_id).catch(err => Logger.error(err));
+  return Blog.findByIdAndRemove(_id).catch(err =>
+    errorAddEvent(err, "blog query error")
+  );
 };
+

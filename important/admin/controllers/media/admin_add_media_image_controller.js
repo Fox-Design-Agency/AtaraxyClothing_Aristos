@@ -48,6 +48,7 @@ module.exports = {
   create(req, res, next) {
     FindOneUserByID(req.session.passport.user).then(user => {
       if (user.admin === 1) {
+       if (req.app.locals.mediaSwitch) {
         let newMedia = req.files.file;
         let path = "/General/" + req.files.file.name;
         fs.ensureDir("content/public/images/General", err => {
@@ -68,6 +69,7 @@ module.exports = {
         };
         CreateMedia(mediaProps);
         res.sendStatus(200);
+       }
       } else {
         res.redirect("/users/login");
       }

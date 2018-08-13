@@ -1,14 +1,19 @@
 const BlogCategory = require("../../blogCategory");
 /* Aristos Logger Path */
-// const Logger = require("../../../../../../important/AristosStuff/AristosLogger/AristosLogger").Logger;
+const errorAddEvent = require("../../../../../../important/AristosStuff/AristosLogger/AristosLogger")
+  .addError;
 /**
- * Sorts pages by ids.
- * @param {string} _id - The ID of the record to find.
- * @return {promise} A promise that resolves with the page that matches the id
+ * Sorts blog categories by ids.
+ * @param {string} ids - The ID's of the avilable stuffs to sort with
+ * @return {promise} A promise that resolves with the blog categories that were sorted?
  */
 module.exports = ids => {
   return sortBlogCategories(ids, function() {
-    BlogCategory.find({}).sort({ sorting: 1 });
+    BlogCategory.find({})
+      .sort({ sorting: 1 })
+      .catch(err => {
+        errorAddEvent(err, "blog category query error");
+      });
   });
 }; /* end of exports */
 /* Sort blog categories function */
@@ -21,9 +26,9 @@ function sortBlogCategories(ids, cb) {
     count++;
 
     (function(count) {
-        BlogCategory.findById(id).then(category => {
-            category.sorting = count;
-            category.save();
+      BlogCategory.findById(id).then(category => {
+        category.sorting = count;
+        category.save();
         ++count;
         if (count >= ids.length) {
           cb();

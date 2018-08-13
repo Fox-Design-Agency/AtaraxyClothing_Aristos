@@ -8,7 +8,7 @@ const adminSettings = require("./routes/settings/admin_settings");
 const adminUserControls = require("./routes/userControls/admin_user_controls");
 const adminLogsViewer = require("./routes/logsViewer/admin_logs");
 const adminTemplateBuilder = require("./routes/templateBuilder/admin_template_builder");
-const adminUpdater = require("../AristosStuff/AristosUpdater/aristosUpdater");
+const adminUpdater = require("./routes/updater/admin_updater");
 module.exports = app => {
   /* */
   app.use("/admin/template-builder", adminTemplateBuilder)

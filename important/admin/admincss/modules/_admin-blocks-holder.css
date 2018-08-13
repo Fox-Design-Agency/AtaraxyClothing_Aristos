@@ -1,0 +1,5 @@
+.blocks-holder{
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px 50px;
+}

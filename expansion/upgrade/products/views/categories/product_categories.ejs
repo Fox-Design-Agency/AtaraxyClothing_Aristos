@@ -1,62 +1,60 @@
 <%- include("../../../../../important/admin/views/_layouts/adminheader") %>
     <h2 class="admin-page__main-title">Product Categories</h2>
     <% include ../../../../../important/admin/views/_layouts/messages/messages %>
-    <div>
-        <button class="admin-button admin-button--main">
-            <a href="/admin/products/add-product">Add a new product</a>
+
+        <button class="admin-button admin-button--add-something">
+            <a href="/admin/product-categories/add-product-category">+</a>
         </button>
-        <button class="admin-button admin-button--main">
-            <a href="/admin/product-categories/add-product-category">Add a new category</a>
-        </button>
-    </div>
+   <br>
+   <br>
 
     <% if (count > 0) { %>
-        <table class="admin-table">
-            <thead>
-                <tr>
-                    <th>Category</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
-                </tr>
-            </thead>
-            <tbody>
+    <div class="blocks-holder">
                 <% categories.forEach(function(cat) { %>
-                    <tr id="id_<%= cat._id %>" class="<%= cat.slug %>">
-                        <td>
+                <div class="admin-blocks" id="id_<%= cat._id %>" class="<%= cat.slug %>">
+                <a href="/admin/product-categories/edit-product-category/<%= cat._id %>">
+                    <h4>
+                        title:
+                    </h4>
+                        <h5>
                             <%= cat.title %>
-                        </td>
-                        <td  class="admin-table__edit-stuffs">
-                            <a href="/admin/product-categories/edit-product-category/<%= cat._id %>">Edit</a>
-                        </td>
+                        </h5>
+                        <h4>
+                        image:
+                    </h4>
+                        <img src="/<%= cat.imagepath %>">
+                    <h4>
+                        description:
+                    </h4>
+                    <h5>
+                        <%= cat.description %>
+                    </h5>
                         <% if (cat.title == "General") { %>
                             <td>
 
                             </td>
                             <% } else { %>
-                                <td class="admin-table__delete-stuffs">
-                                <form method="post" action="/admin/product-categories/delete-product-category/<%= cat._id %>?_method=DELETE">
+                                <form class="admin-blocks__delete-stuffs" method="post" action="/admin/product-categories/delete-product-category/<%= cat._id %>?_method=DELETE">
                                 <input type="hidden" name="_method" value="DELETE">
                                 <button type="submit">Delete</button>
                             </form>
-                                </td>
                                 <% } %>
-                    </tr>
+                                </a>
+                   </div>
                     <% }); %>
-            </tbody>
-        </table>
+            </div>
         <% } else { %>
             <h3 class="admin-page__none-of-something">There are no product categories, you should make one...</h3>
             <% } %>
             <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
             <script>
-                $('tbody').sortable({
-                    items: "tr",
-                    placeholder: "ui-state-hightlight",
+                $('.blocks-holder').sortable({
+                    items: "div",
                     update: function () {
-                        let ids = $("tbody").sortable("serialize");
+                        let ids = $(".blocks-holder").sortable("serialize");
                         let url = "/admin/product-categories/reorder-product-categories";
                         $.post(url, ids);
                     }
-                });
+                }, "refresh");
             </script>
                 <%- include("../../../../../important/admin/views/_layouts/adminfooter") %>

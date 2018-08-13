@@ -2,54 +2,41 @@
     <h2 class="admin-page__main-title">Media Categories</h2>
     <% include ../../_layouts/messages/messages %>
     <div>
-        <button class="admin-button admin-button--main">
-            <a href="/admin/add-media/upload-image">Upload an Image</a>
-        </button>
-        <button class="admin-button admin-button--main">
-            <a href="/admin/add-media/upload-video">Upload a Video</a>
-        </button>
-        <button class="admin-button admin-button--main">
-            <a href="/admin/media-categories/add-media-category">Add a Category</a>
+    <button class="admin-button admin-button--add-something admin-button--add-something--second">
+    <a href="/admin/add-media/upload-image"><i class="fa fa-image"></i></a>
+</button>
+<button class="admin-button admin-button--add-something">
+    <a href="/admin/add-media/upload-video"><i class="fa fa-video"></i></a>
+</button>
+        <button class="admin-button admin-button--add-something admin-button--add-something--third">
+            <a href="/admin/media-categories/add-media-category">+</a>
         </button>
     </div>
     <% if (count > 0) { %>
-        <table class="admin-table">
-            <thead>
-                <tr>
-                    <th>Category</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
-                </tr>
-            </thead>
-            <tbody>
+       
+    <div class="blocks-holder">
                 <% categories.forEach((cat)=> { %>
-                    <tr>
-                        <td>
+                    <div class="admin-blocks">
+                    <a href="/admin/media-categories/edit-media-category/<%= cat._id %>">
+                    <h4>
+                        title:
+                    </h4>
+                        <h5>
                             <%= cat.title %>
-                        </td>
+                        </h5>
                         <% if (cat.title == "General") { %>
-                            <td>
-                            </td>
+                            <h5>
+                            </h5>
                         <% } else { %>
-                            <td class="admin-table__edit-stuffs">
-                                <a href="/admin/media-categories/edit-media-category/<%= cat._id %>">Edit</a>
-                            </td>
+                            <form class="admin-blocks__delete-stuffs" method="post" action="/admin/media-categories/delete-media-category/<%= cat._id %>?_method=DELETE">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <button type="submit">Delete</button>
+                            </form>
                         <% } %>
-                        <% if (cat.title == "General") { %>
-                            <td>
-                            </td>
-                        <% } else { %>
-                            <td class="admin-table__delete-stuffs">
-                                <form method="post" action="/admin/media-categories/delete-media-category/<%= cat._id %>?_method=DELETE">
-                                    <input type="hidden" name="_method" value="DELETE">
-                                    <button type="submit">Delete</button>
-                                </form>
-                            </td>
-                        <% } %>
-                    </tr>
+                        </a>
+                    </div>
                 <% }); %>
-            </tbody>
-        </table>
+            </div>
         <% } else { %>
             <h3 class="admin-page__none-of-something">There are no product categories, you should make one.</h3>
         <% } %>

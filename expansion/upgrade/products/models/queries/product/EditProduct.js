@@ -1,15 +1,16 @@
 const Product = require("../../product");
 // Aristos Logger Path
-const Logger = require("../../../../../../important/AristosStuff/AristosLogger/AristosLogger").Logger;
+const errorAddEvent = require("../../../../../../important/AristosStuff/AristosLogger/AristosLogger")
+  .addError;
 
 /**
- * Edits a single page in the Page collection
- * @param {string} _id - The ID of the page to edit.
- * @param {object} artistProps - An object with title, slug, content, parent, 100, description, keywords, author
- * @return {promise} A promise that resolves when the page is edited
+ * Edits a single product in the Product collection
+ * @param {string} _id - The ID of the product to edit.
+ * @param {object} artistProps - An object with title, slug, price, category, author, conbtent, description, keywords, image
+ * @return {promise} A promise that resolves when the product is edited
  */
 module.exports = (_id, productProps) => {
   return Product.findByIdAndUpdate({ _id }, productProps).catch(err => {
-    Logger.error(err);
+    errorAddEvent(err, "product query error");
   });
 };

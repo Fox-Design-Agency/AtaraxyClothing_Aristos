@@ -3,7 +3,7 @@
 
     display: flex;
     width: 100%;
-    border-bottom: 2px solid #05386b;
+    border-bottom: 2px solid $colorFive;
 
     &__redirect {
       height: 200px;
@@ -12,12 +12,12 @@
       font-size: 40px;
       font-weight: 900;
       text-align: center;
-      border: 1px solid #f0f8ff;
-      background: #05386b;
-      color: #edf5e1;
+      border: 1px solid $colorFour;
+      background: $colorFive;
+      color: $colorSix;
 
       &:hover {
-        background-color: $hoverSecondary;
+        background-color: $colorSeven;
         color: #eee;
         transition: 0.4s;
       }
@@ -32,19 +32,19 @@
       width: 100%;
     }
     &_note-box {
-      border: 10px solid #05386b;
+      border: 10px solid $colorFive;
       margin: 10px;
       padding: 20px;
-      color: #05386b;
+      color: $colorFive;
       width: 33%;
       text-align: center;
       overflow: hidden;
       transition: background 0.4s linear;
 
       &:hover {
-        border: 10px solid #f0f8ff;
-        background: #5cdb95;
-        color: #f0f8ff;
+        border: 10px solid $colorFour;
+        background: $colorOne;
+        color: $colorFour;
         transition: background 0.4s linear;
       }
 
@@ -62,8 +62,8 @@
       width: 100%;
       height: 90px;
       padding: 20px;
-      border-bottom: 2px solid #f0f8ff;
-      background: #379683;
+      border-bottom: 2px solid $colorFour;
+      background: $colorThree;
     }
   }
 }

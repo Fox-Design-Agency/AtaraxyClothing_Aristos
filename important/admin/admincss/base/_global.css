@@ -9,7 +9,7 @@ img {
 }
 
 a {
-  color: $linkColor;
+  color: $colorFive;
   text-decoration: none;
 }
 

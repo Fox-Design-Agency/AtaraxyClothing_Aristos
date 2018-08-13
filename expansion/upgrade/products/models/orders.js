@@ -3,7 +3,8 @@ const mongoose = require("mongoose");
 // Page Schema
 const OrdersSchema = new mongoose.Schema({
   user: {
-    type: String
+      type: mongoose.Schema.Types.ObjectId,
+    ref: "User"
   },
   total: {
     type: String
@@ -35,3 +36,5 @@ const OrdersSchema = new mongoose.Schema({
 });
 const Order = mongoose.model("Orders", OrdersSchema);
 module.exports = Order;
+
+

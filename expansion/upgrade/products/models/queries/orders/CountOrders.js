@@ -1,13 +1,17 @@
 const Order = require("../../orders");
 // Aristos Logger Path
-const Logger = require("../../../../../../important/AristosStuff/AristosLogger/AristosLogger").Logger;
+const errorAddEvent = require("../../../../../../important/AristosStuff/AristosLogger/AristosLogger")
+  .addError;
 /**
- * Finds a single page in the Page collection.
- * @param {object} pageProps - Object containing <change this>
- * @return {promise} A promise that resolves with the Page that was created
+ * Counts the orders in the Order collection.
+ * @return {promise} A promise that resolves with the ORder that was created
  */
 module.exports = () => {
-  return Order.count({}).then(c => {
-      return c
+  return Order.estimatedDocumentCount({})
+    .then(c => {
+      return c;
     })
+    .catch(err => {
+      errorAddEvent(err, "order query error");
+    });
 };

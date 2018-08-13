@@ -13,7 +13,7 @@
   label {
     font-size: 20px;
     font-weight: 600;
-    color: #05386b;
+    color: $colorFive;
     width: 250px;
     margin: 10px 0 0px 10px;
 
@@ -44,8 +44,8 @@
 
   &__form-options {
     width: 290px;
-    background: #8ee4af;
-    border: 1px solid #f0f8ff;
+    background: $colorTwo;
+    border: 1px solid $colorFour;
     margin: 10px;
     padding: 5px 5px 15px 5px;
 
@@ -76,7 +76,7 @@
       font-size: 12px;
       width: 40px;
       font-weight: 600;
-      color: #05386b;
+      color: $colorFive;
       margin: 10px;
     }
 
@@ -84,4 +84,4 @@
       margin: 0 auto;
     }
   }
-} 
+}  

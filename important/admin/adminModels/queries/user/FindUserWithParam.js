@@ -1,12 +1,14 @@
 const User = require("../../user");
 /* Aristos Logger Path */
-// const Logger = require("../../../../AristosStuff/AristosLogger/AristosLogger").Logger;
-
+const addErrorEvent = require("../../../../AristosStuff/AristosLogger/AristosLogger")
+  .addError;
 /**
- * Finds a single page in the Page collection.
- * @param {string} _id - The ID of the record to find.
- * @return {promise} A promise that resolves with the page that matches the id
+ * Finds all the users that match the param(s) in the User collection.
+ * @param {object} stuff - The object of the stuff to find.
+ * @return {promise} A promise that resolves with the user(s) that matches the stuff param
  */
 module.exports = stuff => {
-  return User.find(stuff);
+  return User.find(stuff).catch(err => {
+    addErrorEvent(err, "user query error");
+  });
 };

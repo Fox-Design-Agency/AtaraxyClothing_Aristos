@@ -12,16 +12,16 @@
     height: 22px;
     padding-left: 2px;
     align-items: center;
-    color: $titleColor;
+    color: $colorFour;
   }
   &__section-header {
     margin: 0;
     font-size: 0.8rem;
     font-variant: small-caps;
     text-align: left;
-    color: $subTitleColor;
-    border-top: 1px solid $borderOne;
-    border-bottom: 1px solid $borderOne;
+    color: $colorFive;
+    border-top: 1px solid $colorFour;
+    border-bottom: 1px solid $colorFour;
   }
 
   &__nav-item {
@@ -30,12 +30,12 @@
     margin: 2px;
     padding: 5px;
     position: relative;
-    color: $titleColor;
+    color: $colorFour;
     font-weight: 600;
     transition: background-color 0.4s ease-out;
 
     &:hover {
-      background: $hoverNorm;
+      background: $colorFive;
       transition: 0.4s;
       transition: background-color 0.4s ease-out;
     }
@@ -66,15 +66,15 @@
     visibility: hidden;
     position: absolute;
     right: -150px;
-    background-color: $main;
+    background-color: $colorOne;
     padding: 5px;
     min-width: 160px;
     display: flex;
     flex-direction: column;
     z-index: 1;
-    border-right: 2px solid $borderOne;
-    border-top: 2px solid $borderOne;
-    border-bottom: 2px solid $borderOne;
+    border-right: 2px solid $colorFour;
+    border-top: 2px solid $colorFour;
+    border-bottom: 2px solid $colorFour;
     opacity: 0;
     transition: opacity 0.4s ease-out;
   }

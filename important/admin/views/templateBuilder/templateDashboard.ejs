@@ -1,45 +1,44 @@
 <% include ../_layouts/adminheader %>
     <h2 class="admin-page__main-title">Template Dashboard</h2>
     <% include ../_layouts/messages/messages %>
-    <button class="admin-button admin-button--main">
-        <a href="/admin/template-builder/add-basic">Add Template</a>
+    <button class="admin-button admin-button--add-something admin-button--add-something--second">
+        <a href="/admin/template-builder/add-basic">+</a>
     </button>
-    <button class="admin-button admin-button--main">
-        <a href="/admin/template-builder/builder">Drag and Drop</a>
+    <button class="admin-button admin-button--add-something ">
+        <a href="/admin/template-builder/builder"><i class="fa fa-mouse-pointer"></i></a>
     </button>
     <% if(templates === 0){ %>
     <h3 class="admin-page__none-of-something">There are no templates...</h3>
     <% } else { %>
-    <table class="admin-table">
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>Path</th>
-                <th>Edit</th>
-                <th>Delete</th>
-            </tr>
-        </thead>
-        <tbody>
+    <div class="blocks-holder">
             <% templates.forEach(function(template) { %>
-                <tr id="id_<%= template._id %>" class="<%= template.title %>">
-                    <td>
+            <div id="id_<%= template._id %>" class="admin-blocks <%= template.title %>">
+                <a href="/admin/template-builder/edit-basic/<%= template._id %>">
+                    <h4>
+                        title:
+                    </h4>
+                    <h5>
                         <%= template.title %>
-                    </td>
-                    <td>
+                    </h5>
+                    <h4>
+                        path in view folder:
+                    </h4>
+                    <h5>
                         <%= template.path %>
-                    </td>
-                    <td class="admin-table__edit-stuffs">
-                        <a href="/admin/template-builder/edit-basic/<%= template._id %>">Edit</a>
-                    </td>
-                    <td class="admin-table__delete-stuffs">
-                        <form method="post" action="/admin/template-builder/delete-basic/<%= template._id %>?_method=DELETE">
-                            <input type="hidden" name="_method" value="DELETE">
-                            <button type="submit">Delete</button>
-                        </form>
-                    </td>   
-                </tr>
+                    </h5>
+                    <h4>
+                        description:
+                    </h4>
+                    <h5>
+                    <%= template.description %>
+                    </h5>
+                    <form method="post" class="admin-blocks__delete-stuffs" action="/admin/template-builder/delete-basic/<%= template._id %>?_method=DELETE">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button type="submit">Delete</button>
+                    </form>
+                </a>
+                </div>
             <% }); %>
-        </tbody>
-    </table>
+    </div>
     <% } %>
 <% include ../_layouts/adminfooter %>

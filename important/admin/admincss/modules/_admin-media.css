@@ -21,7 +21,7 @@
     right: 0;
     top: 0;
     visibility: hidden;
-    border: 4px groove #05386b;
+    border: 4px groove $colorFive;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -36,3 +36,5 @@
     }
   }
 }
+
+

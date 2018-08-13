@@ -6,6 +6,15 @@ const BlogCategorySchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  author:{
+    type: String
+  },
+  description:{
+    type: String
+  },
+  keywords:{
+    type: String
+  },
   slug: {
     type: String
   },
@@ -17,3 +26,4 @@ const BlogCategorySchema = new mongoose.Schema({
 
 /* end of blog category schema functions */
 module.exports = mongoose.model("BlogCategory", BlogCategorySchema);
+

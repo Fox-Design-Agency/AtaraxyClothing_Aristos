@@ -1,36 +1,36 @@
 .gjs-one-bg {
-  background-color: $lightMain;
+  background-color: $colorOne;
 }
 .gjs-one-color {
-  color: $titleColor;
+  color: $colorFour;
 }
 .gjs-one-color-h:hover {
-  color: $hoverNorm;
+  color: $colorFive;
 }
 .gjs-two-bg {
-  background-color: $borderOne;
+  background-color: $colorFour;
 }
 .gjs-two-color {
-  color: $subTitleColor;
+  color: $colorFive;
 }
 .gjs-two-color-h:hover {
-  color: $hoverNorm;
+  color: $colorFive;
 }
 .gjs-three-bg {
   background-color: #eee;
 }
 .gjs-three-color {
-  color: $titleColor;
+  color: $colorFour;
 }
 .gjs-three-color-h:hover {
-  color: $hoverNorm;
+  color: $colorFive;
 }
 .gjs-four-bg {
-  background-color: $borderOne;
+  background-color: $colorFour;
 }
 .gjs-four-color {
   color: #eee;
 }
 .gjs-four-color-h:hover {
-  color: $borderOne;
+  color: $colorFour;
 }

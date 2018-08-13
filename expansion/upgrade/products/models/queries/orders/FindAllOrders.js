@@ -1,12 +1,14 @@
 const Order = require("../../orders");
 // Aristos Logger Path
-// const Logger = require("../../../../../../important/AristosStuff/AristosLogger/AristosLogger").Logger;
-
+const errorAddEvent = require("../../../../../../important/AristosStuff/AristosLogger/AristosLogger")
+  .addError;
 /**
- * Finds a single page in the Page collection.
- * @param {string} _id - The ID of the record to find.
- * @return {promise} A promise that resolves with the page that matches the id
+ * Finds all the orders in the Order collection.
+ * @return {promise} A promise that resolves with all the orders
  */
 module.exports = () => {
-  return Order.find({});
+  return Order.find({}).catch(err => {
+    errorAddEvent(err, "order query error");
+  });
 };
+

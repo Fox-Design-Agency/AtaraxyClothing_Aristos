@@ -1,12 +1,16 @@
 const Product = require("../../product");
 // Aristos Logger Path
-const Logger = require("../../../../../../important/AristosStuff/AristosLogger/AristosLogger").Logger;
+const errorAddEvent = require("../../../../../../important/AristosStuff/AristosLogger/AristosLogger")
+  .addError;
 
 /**
- * Deletes a single page from the Page collection
- * @param {string} _id - The ID of the page to delete.
+ * Deletes a single product from the Product collection
+ * @param {string} _id - The ID of the product to delete.
  * @return {promise} A promise that resolves when the record is deleted
  */
 module.exports = _id => {
-    Product.findByIdAndRemove(_id).catch(err => Logger.error(err));
+  return Product.findByIdAndRemove(_id).catch(err => {
+    errorAddEvent(err, "product query error");
+  });
 };
+

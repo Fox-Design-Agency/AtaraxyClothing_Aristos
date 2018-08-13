@@ -1,5 +1,5 @@
-const Logger = require("../../../../important/AristosStuff/AristosLogger/AristosLogger")
-  .Logger;
+const errorAddEvent = require("../../../../important/AristosStuff/AristosLogger/AristosLogger")
+  .addError;
 /* task model Queries */
 const FindAllTasks = require("../models/queries/tasks/FindAllTasks");
 const DeleteTask = require("../models/queries/tasks/DeleteTasks");
@@ -167,21 +167,21 @@ module.exports = {
       }
     });
   } /* end of edit function */,
-
+/* need to change to query model */
   complete(req, res, next) {
     Tasks.findById(req.params.id, function(err, task) {
       if (err) {
-        Logger.error(err);
+        errorAddEvent(err);
       } else {
         task.completed = 1;
 
         task.save(function(err) {
           if (err) {
-            Logger.error(err);
+            errorAddEvent(err);
           } else {
             Tasks.find({}, function(err, tasks) {
               if (err) {
-                Logger.error(err);
+                errorAddEvent(err);
               }
               res.render(
                 "../../../expansion/upgrade/project-management/views/project-management",

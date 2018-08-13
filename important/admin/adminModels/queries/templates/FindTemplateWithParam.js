@@ -1,12 +1,14 @@
 const Template = require("../../templates");
 /* Aristos Logger Path */
-// const addErrorEvent = require("../../../../AristosStuff/AristosLogger/AristosLogger").addError;
-
+const addErrorEvent = require("../../../../AristosStuff/AristosLogger/AristosLogger")
+  .addError;
 /**
- * Finds a single page in the Page collection.
- * @param {string} _id - The ID of the record to find.
- * @return {promise} A promise that resolves with the page that matches the id
+ * Finds all the templates that match param in the Template collection.
+ * @param {object} stuff - The object of the stuff to find.
+ * @return {promise} A promise that resolves with the template that matches the stuff param
  */
 module.exports = stuff => {
-  return Template.find(stuff);
+  return Template.find(stuff).catch(err => {
+    addErrorEvent(err, "template query error");
+  });
 };

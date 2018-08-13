@@ -1,5 +1,5 @@
-const Logger = require("../../../../important/AristosStuff/AristosLogger/AristosLogger")
-  .Logger;
+const errorAddEvent = require("../../../../important/AristosStuff/AristosLogger/AristosLogger")
+  .addError;
 
 /* Blog Model Queries */
 const CountBlog = require("../models/queries/blog/CountBlog");
@@ -67,15 +67,22 @@ module.exports = {
         }
 
         let title = req.body.title;
-        let slug = req.body.slug.replace(/\s+/g, "-").toLowerCase();
+        let slug = req.body.slug.replace(/s+/g, "-").toLowerCase();
         if (slug == "") {
-          slug = title.replace(/\s+/g, "-").toLowerCase();
+          slug = title.replace(/s+/g, "-").toLowerCase();
         }
         let content = req.body.content;
         let category = req.body.category;
         let author = req.body.author;
         let description = req.body.description;
         let keywords = req.body.keywords;
+        let allowComments;
+        if(req.body.allowComments === "on"){
+          allowComments = true;
+        }else{
+          allowComments = false;
+
+        }
 
         if (errors.length > 0) {
           const AllBlogCategories = FindAllBlogCategories();
@@ -126,9 +133,10 @@ module.exports = {
                 content: content,
                 category: category,
                 author: author,
-                sorting: 100,
+                sorting: 0,
                 description: description,
-                keywords: keywords
+                keywords: keywords,
+                allowComments: allowComments
               };
               CreateBlog(BlogParams);
               req.flash("success_msg", "Blog added!");
@@ -157,7 +165,8 @@ module.exports = {
         author: result[2].author,
         description: result[2].description,
         keywords: result[2].keywords,
-        selectedCat: result[2].category
+        selectedCat: result[2].category,
+        allowComments: result[2].allowComments
       });
     });
   } /* end of edit index function */,
@@ -175,9 +184,9 @@ module.exports = {
         }
 
         let title = req.body.title;
-        let slug = req.body.slug.replace(/\s+/g, "-").toLowerCase();
+        let slug = req.body.slug.replace(/s+/g, "-").toLowerCase();
         if (slug == "") {
-          slug = title.replace(/\s+/g, "-").toLowerCase();
+          slug = title.replace(/s+/g, "-").toLowerCase();
         }
         let content = req.body.content;
         let id = req.params.id;
@@ -185,6 +194,13 @@ module.exports = {
         let author = req.body.author;
         let description = req.body.description;
         let keywords = req.body.keywords;
+
+        let allowComments;
+        if(typeof(req.body.allowComments) === "undefined"){
+          allowComments = false;
+        }else{
+          allowComments = true;
+        }
 
         if (errors.length > 0) {
           const AllBlogCategories = FindAllBlogCategories();
@@ -239,7 +255,8 @@ module.exports = {
                 category: category,
                 author: author,
                 description: description,
-                keywords: keywords
+                keywords: keywords,
+                allowComments: allowComments
               };
               EditBlog({ _id: id }, BlogParams);
 
@@ -272,3 +289,5 @@ module.exports = {
     });
   } /* end of reorder function */
 };
+        
+

@@ -1,0 +1,80 @@
+<%- include("../../../../important/admin/views/_layouts/adminheader") %>
+    <h2 class="admin-page__main-title">Products</h2>
+    <% include ../../../../important/admin/views/_layouts/messages/messages %>
+        <button class="admin-button admin-button--add-something">
+            <a href="/admin/products/add-product">+</a>
+        </button>
+        <br>
+        <br>
+ 
+    <% if (count > 0) { %>
+        <div class="button-row">
+
+            <button class="admin-button admin-button--main">
+                <a href="/admin/products/">All Categories</a>
+            </button>
+       
+        <% categories.forEach(function(category){ %>
+            
+                <button  class="admin-button admin-button--main">
+                    <a href="/admin/products/categories/<%= category.slug %>">
+                        <%= category.title %>
+                    </a>
+                </button>
+           
+            <% }) %> 
+        </div>
+        <div class="blocks-holder">
+                        <% products.forEach(function(product) { %>
+                        <div class="admin-blocks" id="id_<%= product._id %>" class="<%= product.slug %>">
+                        <a href="/admin/products/edit-product/<%= product._id %>">
+                        <h4>
+                            title:
+                        </h4>
+                                <h5>
+                                    <%= product.title %>
+                                </h5>
+                                <h4>
+                            price:
+                        </h4>
+                                <h5>
+                                    $<%= parseFloat(product.price).toFixed(2) %>
+                                </h5>
+                                <h4>
+                            category:
+                        </h4>
+                                <h5>
+                                    <%= product.category %>
+                                </h5>
+                                <h4>
+                            image:
+                        </h4>
+                                    <% if (product.image == "") { %>
+                                        <img class="admin-table__image-preview" id="noimage" src="/noimage.png" alt="">
+                                        <% } else { %>
+                                            <img class="admin-table__image-preview" id="noimage" src="/product_images/<%= product.id%>/<%= product.image %>" alt="">
+                                            <% } %>
+                                <form class="admin-blocks__delete-stuffs"  method="post" action="/admin/products/delete-product/<%= product._id %>?_method=DELETE">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <button type="submit">Delete</button>
+                            </form>
+                            </a>
+                                </div>
+                            <% }); %>
+                    </div>
+                <% } else { %>
+                    <h3 class="admin-page__none-of-something">There are no products...</h3>
+                    <% } %>
+                        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+                        <script>
+                            $('.blocks-holder').sortable({
+                                items: "div",
+                                update: function () {
+                                    let ids = $(".blocks-holder").sortable("serialize");
+                                    let url = "/admin/products/reorder-products";
+
+                                    $.post(url, ids);
+                                }
+                            }, "refresh");
+                        </script>
+                        <%- include("../../../../important/admin/views/_layouts/adminfooter") %>

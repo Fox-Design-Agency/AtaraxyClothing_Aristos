@@ -1,9 +1,13 @@
 <%- include("../../../../../important/admin/views/_layouts/adminheader") %>
     <h2 class="admin-page__main-title">Edit a Product Category</h2>
     <% include ../../../../../important/admin/views/_layouts/messages/errors %>
-    <button class="admin-button admin-button--main">
-        <a href="/admin/product-categories">Back to Product Categories</a>
+    <button class="admin-button admin-button--add-something">
+        <a href="/admin/product-categories">
+            <i class="fa fa-hand-point-left"></i>
+        </a>
     </button>
+    <br>
+    <br>
 
     <form method="post" action="/admin/product-categories/edit-product-category/<%= id %>" class="admin-form">
         <div class="admin-form__form-options--bottom-group">

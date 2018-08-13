@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const moment = require("moment");
 const Schema = mongoose.Schema;
 /* Blog Schema */
 const BlogSchema = new Schema({
@@ -11,8 +12,8 @@ const BlogSchema = new Schema({
     required: true
   },
   published: {
-    type: Date,
-    default: Date.now
+    type: String,
+    default: moment().format("dddd, MMM Do YYYY")
   },
   content: {
     type: String,
@@ -31,8 +32,7 @@ const BlogSchema = new Schema({
     type: String
   },
   allowComments: {
-    type: Boolean,
-    default: true
+    type: Boolean
   },
   status: {
     type: String,
@@ -46,3 +46,4 @@ const BlogSchema = new Schema({
 
 /* end of blog schema functions */
 module.exports = mongoose.model("Blog", BlogSchema);
+

@@ -1,12 +1,16 @@
 const Product = require("../../product");
 // Aristos Logger Path
-// const Logger = require("../../../AristosLogger/AristosStuff/AristosLogger").Logger;
-
+const errorAddEvent = require("../../../../../../important/AristosStuff/AristosLogger/AristosLogger")
+  .addError;
 /**
- * Finds a single page in the Page collection.
- * @param {string} _id - The ID of the record to find.
- * @return {promise} A promise that resolves with the page that matches the id
+ * Finds all the products sorted in the Product collection.
+ * @return {promise} A promise that resolves with all the sorted products
  */
 module.exports = () => {
-  return Product.find({}).sort({ sorting: 1 })
+  return Product.find({})
+    .sort({ sorting: 1 })
+    .catch(err => {
+      errorAddEvent(err, "product query error");
+    });
 };
+

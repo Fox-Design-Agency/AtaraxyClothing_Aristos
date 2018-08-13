@@ -7,3 +7,4 @@ const CouponSchema = new Schema({
 })
 
 module.exports = mongoose.model("Coupon", CouponSchema)
+

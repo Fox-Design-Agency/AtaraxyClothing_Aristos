@@ -13,20 +13,21 @@
       "link": "/admin/products/add-product"
     },
     {
-      "name": "add category",
-      "link": "/admin/product-categories/add-product-category"
-    },
-    {
-      "name": "see all categories",
-      "link": "/admin/product-categories"
-    },
-    {
       "name": "add coupon",
       "link": ""
     },
     {
+      "name": "add category",
+      "link": "/admin/product-categories/add-product-category"
+    },
+    {
       "name": "see all coupons",
       "link": ""
+    },
+    {
+      "name": "see all categories",
+      "link": "/admin/product-categories"
     }
   ]
 }
+

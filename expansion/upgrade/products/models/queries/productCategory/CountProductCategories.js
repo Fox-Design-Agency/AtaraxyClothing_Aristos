@@ -1,13 +1,17 @@
 const ProductCategory = require("../../productCategory");
 // Aristos Logger Path
-const Logger = require("../../../../../../important/AristosStuff/AristosLogger/AristosLogger").Logger;
+const errorAddEvent = require("../../../../../../important/AristosStuff/AristosLogger/AristosLogger")
+  .addError;
 /**
- * Finds a single page in the Page collection.
- * @param {object} pageProps - Object containing <change this>
- * @return {promise} A promise that resolves with the Page that was created
+ * Counts the product categories in the Product Category collection.
+ * @return {promise} A promise that resolves with the count
  */
 module.exports = () => {
-  return ProductCategory.count({}).then(c => {
-      return c
+  return ProductCategory.estimatedDocumentCount({})
+    .then(c => {
+      return c;
     })
+    .catch(err => {
+      errorAddEvent(err, "product category query error");
+    });
 };

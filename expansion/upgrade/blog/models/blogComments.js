@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+const moment = require("moment");
 /* Blog Comments Schema */
 const BlogComments = new mongoose.Schema({
   title: {
@@ -18,11 +18,12 @@ const BlogComments = new mongoose.Schema({
     ref: "User"
   },
   created: {
-    type: Date,
-    default: Date.now
+    type: String,
+    default: moment().format("dddd, MMM Do YYYY")
   }
 }); /* end of blof comments schema */
 /* start of blog comments functions */
 
 /* end of blog comments functions */
 module.exports = mongoose.model("BlogComments", BlogComments);
+

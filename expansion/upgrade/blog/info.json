@@ -8,7 +8,7 @@
         "link": "/admin/blogs/add-blog"
         },
         {
-            "name": "add category",
+        "name": "add category",
         "link": "/admin/blog-categories/add-blog-category"
         },
         {

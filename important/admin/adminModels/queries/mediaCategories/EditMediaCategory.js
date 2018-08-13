@@ -1,15 +1,18 @@
 const MediaCategory = require("../../mediaCategory");
 /* Aristos Logger Path */
-const Logger = require("../../../../AristosStuff/AristosLogger/AristosLogger").Logger;
+const addErrorEvent = require("../../../../AristosStuff/AristosLogger/AristosLogger")
+  .addError;
 
 /**
- * Edits a single page in the Page collection
- * @param {string} _id - The ID of the page to edit.
- * @param {object} artistProps - An object with title, slug, content, parent, 100, description, keywords, author
- * @return {promise} A promise that resolves when the page is edited
+ * Edits a single media category in the Media category collection
+ * @param {string} _id - The ID of the media category to edit.
+ * @param {object} mediaCategoryProps - An object with ??
+ * @return {promise} A promise that resolves when the media category is edited
  */
 module.exports = (_id, mediaCategoryProps) => {
-  return MediaCategory.findByIdAndUpdate({ _id }, mediaCategoryProps).catch(err => {
-    Logger.error(err);
-  });
+  return MediaCategory.findByIdAndUpdate({ _id }, mediaCategoryProps).catch(
+    err => {
+      addErrorEvent(err, "media category query error");
+    }
+  );
 };

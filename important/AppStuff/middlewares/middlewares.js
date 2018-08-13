@@ -30,6 +30,9 @@ module.exports = app => {
   /* Passport Config */
   require("../passport/passport")(passport);
   /* Passport Middleware */
+  /* Start of express sessions */
+require("./session/expressSession")(app);
+/* end of express sessions */
   app.use(passport.initialize());
   app.use(passport.session());
   /* end Passport Config */
@@ -45,4 +48,6 @@ module.exports = app => {
     res.locals.errors = [];
     next();
   });
+  require("./siteStats/siteStats")(app);
+  require("./siteStats/frontEndStats")(app);
 };

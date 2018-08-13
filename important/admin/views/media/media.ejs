@@ -4,14 +4,11 @@
     <% include ../_layouts/messages/messages %>
     <% include ../_layouts/messages/errors %>
     <div>
-        <button class="admin-button admin-button--main">
-            <a href="/admin/add-media/upload-image">Upload an Image</a>
+        <button class="admin-button admin-button--add-something admin-button--add-something--second">
+            <a href="/admin/add-media/upload-image"><i class="fa fa-image"></i></a>
         </button>
-        <button class="admin-button admin-button--main">
-            <a href="/admin/add-media/upload-video">Upload a Video</a>
-        </button>
-        <button class="admin-button admin-button--main">
-            <a href="/admin/media-categories/add-media-category">Add a Category</a>
+        <button class="admin-button admin-button--add-something">
+            <a href="/admin/add-media/upload-video"><i class="fa fa-video"></i></a>
         </button>
     </div>
     <form action="/admin/add-media" method="post" enctype="multipart/form-data" class="dropzone" id="dropzoneForm">

@@ -1,12 +1,16 @@
 const Order = require("../../orders");
 // Aristos Logger Path
-const Logger = require("../../../../../../important/AristosStuff/AristosLogger/AristosLogger").Logger;
+const errorAddEvent = require("../../../../../../important/AristosStuff/AristosLogger/AristosLogger")
+  .addError;
 /**
- * Finds a single page in the Page collection.
- * @param {object} pageProps - Object containing title, slug, content, parent, 100, description, keywords, author
- * @return {promise} A promise that resolves with the Page that was created
+ * Creates a single order in the Order collection.
+ * @param {object} pageProps - Object containing user, total, shipping, name, address, city, state, zip, status, items
+ * @return {promise} A promise that resolves with the order that was created
  */
 module.exports = orderProps => {
   const order = new Order(orderProps);
-  return order.save().catch(err => Logger.error(err));
+  return order.save().catch(err => {
+    errorAddEvent(err, "order query error");
+  });
 };
+
