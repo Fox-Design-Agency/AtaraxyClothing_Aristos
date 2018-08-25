@@ -22,8 +22,8 @@
         <h6 class="admin-page__sub-title-one">
         <%= category.title %> Images</h6>
         <div class="admin-media__viewer">
-            <% media.forEach((media)=>{ %>
-                <% if (media.category == category.title) { %>
+            <% media.forEach(media =>{ %>
+                <% if (media.category.title === category.title) { %>
                     <div>
                         <a href="/admin/add-media/edit-image/<%= media._id %>">
                             <img id="draggable-img" number="<%= media._id %>" class="admin-media__preview-image" src="<%= media.path %>" alt="<%= media.alt %>"></img>

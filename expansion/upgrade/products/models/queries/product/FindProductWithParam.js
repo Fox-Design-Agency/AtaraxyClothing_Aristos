@@ -8,8 +8,10 @@ const errorAddEvent = require("../../../../../../important/AristosStuff/AristosL
  * @return {promise} A promise that resolves with all the products that match the stuff param
  */
 module.exports = stuff => {
-  return Product.find(stuff).catch(err => {
-    errorAddEvent(err, "product query error");
-  });
+  return Product.find(stuff)
+    .populate("category")
+    .populate("author")
+    .catch(err => {
+      errorAddEvent(err, "product query error");
+    });
 };
-

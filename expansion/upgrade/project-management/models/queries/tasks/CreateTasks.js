@@ -13,4 +13,3 @@ module.exports = taskProps => {
     errorAddEvent(err, "tasks query error");
   });
 };
-

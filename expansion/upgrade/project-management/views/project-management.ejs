@@ -1,83 +1,97 @@
 <% include ../../../../important/admin/views/_layouts/adminheader %>
     <h2 class="admin-page__main-title">Project Management</h2>
     <% include ../../../../important/admin/views/_layouts/messages/messages %>
-    <div>
-        <button class="admin-button admin-button--main">
-            <a href="/admin/project-management/add-task">Add a New Task</a>
+    <button class="admin-button admin-button--add-something">
+            <a href="/admin/project-management/add-task">+</a>
         </button>
-        <button class="admin-button admin-button--main">
-            <a  href="/admin/project-management/add-task">Make a New Note</a>
-        </button>
-    </div>
-    <div class="admin-section__dashboard-row">
-        <div class="admin-section__dashboard-row__notepad">
-            <h3 class="admin-page__none-of-something">There are no notes...</h3>
-        </div>
-        <a class="admin-section__dashboard-row__redirect" href="#">See all Notes</a>
-    </div>
+        <br>
+        <br> 
+    <% if (count < 1){ %>
+        <h3 class="admin-page__none-of-something">There are no tasks right now...</h3>
+    <% } else { %>
     <h6 class="admin-page__sub-title-one" id="active-tasks">Active Tasks</h6>
-    <table class="admin-table">
-        <thead>
-            <tr class="home">
-                <th>task name</th>
-                <th>assigned</th>
-                <th>edit</th>
-                <th>complete</th>
-            </tr>
-        </thead>
-        <tbody>
-            <% tasks.forEach(function(task) { %>
-                <% if(task.completed != 1) { %>
-                    <tr id="id_<%= task._id %>">
-                        <td>
-                            <%= task.title %>
-                        </td>
-                        <td>
-                            <%= task.assigned %>
-                        </td>
-                        <td class="admin-table__edit-stuffs">
-                            <a href="/admin/project-management/edit-task/<%= task._id %>">Edit</a>
-                        </td>
-                        <td class="admin-table__complete-stuffs">
-                            <a href="/admin/project-management/complete-task/<%= task._id %>">Complete</a>
-                        </td>
-                    </tr>
-                    <% } %>
-                        <% }) %>
-        </tbody>
-        </tr>
-    </table>
+   
+    <div class="blocks-holder">
+        <% tasks.forEach(task=>{ %>
+            <% if(task.completed !== 1){ %>
+            <div class="admin-blocks admin-blocks--wide" id="id_<%= task._id %>" class="<%= task.slug %>">
+            <a href="/admin/project-management/edit-task/<%= task._id %>">
+                <h4>
+                    title:
+                </h4>
+                <h5>
+                    <%= task.title %>
+                </h5>
+                <h4>
+                    assigned:
+                </h4>
+                <h5>
+                    <%= task.assigned.username %>
+                </h5>
+                <h4>
+                    created:
+                </h4>
+                <h5>
+                    <%= task.published %>
+                </h5>
+                <h4>
+                    content:
+                </h4>
+                <h5>
+                    <%= task.content %>
+                </h5>
+                <a href="/admin/project-management/complete-task/<%= task._id %>" class="admin-blocks__complete-stuffs">Complete</a>
+                </a>
+            </div>
+            <% } %>
+        <% }) %>
+    </div>
+   
     <h6 class="admin-page__sub-title-one">Completed Tasks</h6>
-    <table class="admin-table">
-        <thead>
-            <tr class="home">
-                <th>task name</th>
-                <th>comments</th>
-                <th>completed by</th>
-                <th>date completed</th>
-                <th>archive</th>
-            </tr>
-        </thead>
-        <tbody>
-            <% tasks.forEach(function(task) { %>
-                <% if (task.completed == 1){ %>
-                    <tr>
-                        <td>
-                            <%= task.title %>
-                        </td>
-                        <td>
-                            <%- task.content %>
-                        </td>
-                        <td>Completed By</td>
-                        <td>Date Completed</td>
-                        <td class="admin-table__complete-stuffs">
-                            <a href="/admin/project-management/archive-task/<%= task._id %>">Archive</a>
-                        </td>
-                    </tr>
-                    <% } %>
-                        </tr>
-                        <% }) %>
-        </tbody>
-
-    </table>
+    <div class="blocks-holder">
+    <% tasks.forEach(task=>{ %>
+    <% if(task.completed === 1){ %>
+    <div class="admin-blocks" id="id_<%= task._id %>" class="<%= task.slug %>">
+    <a href="/admin/project-management/edit-task/<%= task._id %>">
+        <h4>
+            title:
+        </h4>
+        <h5>
+            <%= task.title %>
+        </h5>
+        <h4>
+            assigned:
+        </h4>
+        <h5>
+            <%= task.assigned.username %>
+        </h5>
+        <h4>
+            created:
+        </h4>
+        <h5>
+            <%= task.published %>
+        </h5>
+        <h4>
+            completed:
+        </h4>
+        <h5>
+            <%= task.finished %>
+        </h5>
+        <h4>
+            content:
+        </h4>
+        <h5>
+            <%= task.content %>
+        </h5>
+        <form class="admin-blocks__delete-stuffs" method="post" action="/admin/project-management/delete-task/<%= task._id %>?_method=DELETE">
+            <input type="hidden" name="_method" value="DELETE">
+            <button type="submit">Delete</button>
+        </form>
+        </a>
+    </div>
+    <% } %>
+    <% }) %>
+</div>
+   
+    <% } %>
     <% include ../../../../important/admin/views/_layouts/adminfooter %>

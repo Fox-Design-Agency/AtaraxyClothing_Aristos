@@ -16,6 +16,8 @@ const FindAllMedia = require("../../../../important/admin/adminModels/queries/me
 const FindAllMediaWithParam = require("../../../../important/admin/adminModels/queries/media/FindAllMediaWithParam");
 /* Blog Category Model Queries */
 const FindAllBlogCategories = require("../models/queries/blogCategory/FindAllBlogCategory");
+/* Blog Comment Model Queries */
+const DeleteBlogCommentsByBlog = require("../models/queries/blogComments/DeleteBlogCommentByBlog");
 /* User Model Queries */
 const FindOneUserByID = require("../../../../important/admin/adminModels/queries/user/FindOneUserWithID");
 
@@ -67,21 +69,21 @@ module.exports = {
         }
 
         let title = req.body.title;
-        let slug = req.body.slug.replace(/s+/g, "-").toLowerCase();
+        let slug = req.body.slug.replace(/\s+/g, "-").toLowerCase();
         if (slug == "") {
-          slug = title.replace(/s+/g, "-").toLowerCase();
+          slug = title.replace(/\s+/g, "-").toLowerCase();
         }
         let content = req.body.content;
         let category = req.body.category;
-        let author = req.body.author;
+        let author = req.session.passport.user;
         let description = req.body.description;
         let keywords = req.body.keywords;
         let allowComments;
-        if(req.body.allowComments === "on"){
-          allowComments = true;
-        }else{
-          allowComments = false;
 
+        if (req.body.allowComments === "on") {
+          allowComments = true;
+        } else {
+          allowComments = false;
         }
 
         if (errors.length > 0) {
@@ -162,10 +164,9 @@ module.exports = {
         categories: result[0],
         id: result[2]._id,
         media: result[1],
-        author: result[2].author,
         description: result[2].description,
         keywords: result[2].keywords,
-        selectedCat: result[2].category,
+        selectedCat: result[2].category.slug,
         allowComments: result[2].allowComments
       });
     });
@@ -184,21 +185,20 @@ module.exports = {
         }
 
         let title = req.body.title;
-        let slug = req.body.slug.replace(/s+/g, "-").toLowerCase();
+        let slug = req.body.slug.replace(/\s+/g, "-").toLowerCase();
         if (slug == "") {
-          slug = title.replace(/s+/g, "-").toLowerCase();
+          slug = title.replace(/\s+/g, "-").toLowerCase();
         }
         let content = req.body.content;
         let id = req.params.id;
         let category = req.body.category;
-        let author = req.body.author;
         let description = req.body.description;
         let keywords = req.body.keywords;
 
         let allowComments;
-        if(typeof(req.body.allowComments) === "undefined"){
+        if (typeof req.body.allowComments === "undefined") {
           allowComments = false;
-        }else{
+        } else {
           allowComments = true;
         }
 
@@ -216,7 +216,6 @@ module.exports = {
                 categories: result[0],
                 media: result[1],
                 id: id,
-                author: author,
                 description: description,
                 keywords: keywords,
                 selectedCat: category
@@ -230,7 +229,7 @@ module.exports = {
           });
           CheckIfExists.then(blog => {
             if (blog.length > 0) {
-              errors.push({text: "Blog slug exists, chooser another."});
+              errors.push({ text: "Blog slug exists, chooser another." });
               return res.render(
                 "../../../expansion/upgrade/blog/views/edit_blog",
                 {
@@ -241,7 +240,6 @@ module.exports = {
                   categories: result[0],
                   media: result[1],
                   id: id,
-                  author: author,
                   description: description,
                   keywords: keywords,
                   selectedCat: category
@@ -253,7 +251,6 @@ module.exports = {
                 slug: slug,
                 content: content,
                 category: category,
-                author: author,
                 description: description,
                 keywords: keywords,
                 allowComments: allowComments
@@ -272,9 +269,13 @@ module.exports = {
   } /* end of edit function */,
 
   delete(req, res, next) {
-    DeleteBlog(req.params.id);
-    req.flash("success_msg", "Blog deleted!");
-    res.redirect("/admin/blogs/");
+    Promise.all([
+      DeleteBlog(req.params.id),
+      DeleteBlogCommentsByBlog(req.params.id)
+    ]).then(result => {
+      req.flash("success_msg", "Blog deleted!");
+      res.redirect("/admin/blogs/");
+    });
   } /* end of delete function */,
 
   reorder(req, res, next) {
@@ -289,5 +290,3 @@ module.exports = {
     });
   } /* end of reorder function */
 };
-        
-

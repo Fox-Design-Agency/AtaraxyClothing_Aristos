@@ -1,11 +1,13 @@
 const errorAddEvent = require("../../../../important/AristosStuff/AristosLogger/AristosLogger")
   .addError;
 /* task model Queries */
+const CountTasks = require("../models/queries/tasks/CountTasks");
 const FindAllTasks = require("../models/queries/tasks/FindAllTasks");
 const DeleteTask = require("../models/queries/tasks/DeleteTasks");
 const CreateTask = require("../models/queries/tasks/CreateTasks");
 const EditTask = require("../models/queries/tasks/EditTasks");
 const FindOneTaskByID = require("../models/queries/tasks/FindOneTaskByID");
+const CompleteTask = require("../models/queries/tasks/CompleteTask");
 /* media model Queries */
 const FindAllMedia = require("../../../../important/admin/adminModels/queries/media/FindAllMedia");
 /* User Model Queries */
@@ -14,13 +16,13 @@ const FindUserByParams = require("../../../../important/admin/adminModels/querie
 
 module.exports = {
   index(req, res, next) {
-    const AllTasks = FindAllTasks();
-    AllTasks.then(tasks => {
+    Promise.all([FindAllTasks(), CountTasks()]).then(result => {
       res.render(
         "../../../expansion/upgrade/project-management/views/project-management",
         {
           content: "",
-          tasks: tasks
+          tasks: result[0],
+          count: result[1]
         }
       );
     });
@@ -100,10 +102,11 @@ module.exports = {
   } /* end of create function */,
 
   editIndex(req, res, next) {
-    const Admins = FindUSerByParams({ admin: 1 });
-    const FoundTask = FindOneTaskByID(req.params.id);
-    const AllMedia = FindAllMedia();
-    Promise.all([Admins, FoundTask, AllMedia]).then(result => {
+    Promise.all([
+      FindUserByParams({ admin: 1 }),
+      FindOneTaskByID(req.params.id),
+      FindAllMedia()
+    ]).then(result => {
       res.render(
         "../../../expansion/upgrade/project-management/views/tasks/edit_task",
         {
@@ -167,33 +170,11 @@ module.exports = {
       }
     });
   } /* end of edit function */,
-/* need to change to query model */
+  /* need to change to query model */
   complete(req, res, next) {
-    Tasks.findById(req.params.id, function(err, task) {
-      if (err) {
-        errorAddEvent(err);
-      } else {
-        task.completed = 1;
-
-        task.save(function(err) {
-          if (err) {
-            errorAddEvent(err);
-          } else {
-            Tasks.find({}, function(err, tasks) {
-              if (err) {
-                errorAddEvent(err);
-              }
-              res.render(
-                "../../../expansion/upgrade/project-management/views/project-management",
-                {
-                  content: "",
-                  tasks: tasks
-                }
-              );
-            });
-          }
-        });
-      }
+    CompleteTask(req.params.id).then(stuff => {
+      req.flash("success_msg", "Task Completed!");
+      res.redirect("/admin/project-management");
     });
   } /* end of complete function */,
 

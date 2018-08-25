@@ -24,6 +24,8 @@
     border: 1px solid $colorFour;
     background: $hoverSuccess;
     color: white;
+    text-align: center;
+    
 
     &:hover {
       background-color: $transitionSuccessHover;
@@ -34,9 +36,9 @@
 
   &--danger {
     height: 50px;
-    margin: 10px;
+    margin: 10px auto;
     cursor: pointer;
-    width: 210px;
+    width: 90%;
     border: 1px solid $borderThree;
     background: $hoverDanger;
     color: white;

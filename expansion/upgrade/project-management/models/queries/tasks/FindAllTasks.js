@@ -7,8 +7,7 @@ const errorAddEvent = require("../../../../../../important/AristosStuff/AristosL
  * @return {promise} A promise that resolves with all the tasks
  */
 module.exports = () => {
-  return Task.find({}).catch(err => {
+  return Task.find({}).populate("assigned").catch(err => {
     errorAddEvent(err, "tasks query error");
   });
 };
-

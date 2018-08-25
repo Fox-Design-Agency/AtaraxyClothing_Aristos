@@ -6,7 +6,7 @@ const errorAddEvent = require("../../../../../../important/AristosStuff/AristosL
 /**
  * Edits a single blog category in the Blog Category collection
  * @param {objectID} _id - The ID of the blog category to edit.
- * @param {object} artistProps - An object with title, slug, description, keywords, author
+ * @param {object} blogCategoryProps - An object with title, slug, description, keywords, author
  * @return {promise} A promise that resolves when the blog category is edited
  */
 module.exports = (_id, blogCategoryProps) => {
@@ -16,5 +16,3 @@ module.exports = (_id, blogCategoryProps) => {
     }
   );
 };
-
-

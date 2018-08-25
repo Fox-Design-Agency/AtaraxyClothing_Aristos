@@ -26,16 +26,11 @@
                         <label for="">Category</label>
                         <select name="category" class="form-control">
                             <% categories.forEach(function(category){ %>
-                                <option value="<%= category.slug %>">
+                                <option value="<%= category._id %>">
                                     <%= category.title %>
                                 </option>
                                 <% }); %>
                         </select>
-                    </div>
-                    <div class="admin-form__group">
-                        <label for="">Author</label>
-                        <input type="text" class="form-control" name="author" value="<%= author %>" placeholder="Author">
-
                     </div>
                     <div class="admin-form__group">
                 <label for="">Allow Comments</label>

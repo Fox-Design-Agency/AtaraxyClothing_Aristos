@@ -8,7 +8,9 @@ const addErrorEvent = require("../../../../AristosStuff/AristosLogger/AristosLog
  * @return {promise} A promise that resolves with all the media
  */
 module.exports = () => {
-  return Media.find({}).catch(err => {
-    addErrorEvent(err, "image media query error");
-  });
+  return Media.find({})
+    .populate("category")
+    .catch(err => {
+      addErrorEvent(err, "image media query error");
+    });
 };

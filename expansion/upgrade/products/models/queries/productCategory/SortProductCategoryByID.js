@@ -16,8 +16,8 @@ module.exports = ids => {
       });
   });
 }; /// end of exports
-// Sort pages function
-/* rebuild so that pages sort in category view use all pages id to not mess up ordering */
+// Sort products function
+/* rebuild so that products sort in category view use all products id to not mess up ordering */
 function sortProductCategories(ids, cb) {
   let count = 0;
 
@@ -37,5 +37,4 @@ function sortProductCategories(ids, cb) {
       });
     })(count);
   }
-} // end of sort pages function
-
+} /* end of sort products function */

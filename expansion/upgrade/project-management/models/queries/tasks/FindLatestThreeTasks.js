@@ -9,9 +9,9 @@ const errorAddEvent = require("../../../../../../important/AristosStuff/AristosL
 module.exports = () => {
   return Task.find({ completed: 0 })
     .sort({ _id: 1 })
+    .populate("assigned")
     .limit(3)
     .catch(err => {
       errorAddEvent(err, "tasks query error");
     });
 };
-

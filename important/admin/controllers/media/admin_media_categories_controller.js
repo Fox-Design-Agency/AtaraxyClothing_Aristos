@@ -118,7 +118,7 @@ module.exports = {
           errors.push({ text: "Title must have a value." });
         }
         let title = req.body.title;
-        let slug = title.replace(/\s+/g, "-").toLowerCase();
+        let slug = title.replace(/s+/g, "-").toLowerCase();
         let id = req.params.id;
 
         if (errors.length > 0) {
@@ -131,7 +131,7 @@ module.exports = {
             }
           );
         } else {
-          FindOneMediaCategoryByParam({
+          FindMediaCategoryByParam({
             slug: slug,
             _id: { $ne: id }
           }).then(category => {
@@ -163,7 +163,8 @@ module.exports = {
   } /* end of save edit function */,
 
   delete(req, res, next) {
-    //remove folder associated with category?
+    //remove folder associated with category??
+    //remove all associated images???
     DeleteMediaCategory(req.params.id);
     req.flash("success_msg", "Media Category Deleted!");
     res.redirect("back");

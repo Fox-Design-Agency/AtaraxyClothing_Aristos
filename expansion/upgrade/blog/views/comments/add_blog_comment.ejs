@@ -1,5 +1,15 @@
-<%- include("../../../../important/admin/views/_layouts/adminheader") %>
-    <h2 class="admin-page__main-title">Add New Blog Comment</h2>
+<%- include("../../../../../important/admin/views/_layouts/adminheader") %>
+    <h2 class="admin-page__main-title">Add Blog Comment</h2>
+    <% include ../../../../../important/admin/views/_layouts/messages/messages %>
+    <button class="admin-button admin-button--add-something">
+    <a  href="/admin/blogs"><i class="fa fa-hand-point-left"></i></a>
+</button>
+<br>
+<br>
 
+<form method="post" action="/admin/blog-comments/add-comment/<%= id %>" class="admin-form">
+    <%- include ../../../../../important/AristosStuff/AristosTextEditor/AristosTextEditor %>
+        <button class="admin-button admin-button--submit">Submit</button>
+</form>
 
-<%- include("../../../../important/admin/views/_layouts/adminfooter") %>
+<%- include("../../../../../important/admin/views/_layouts/adminfooter") %>

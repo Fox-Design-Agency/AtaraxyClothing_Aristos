@@ -13,4 +13,3 @@ module.exports = productCategoryProps => {
     errorAddEvent(err, "product category query error");
   });
 };
-

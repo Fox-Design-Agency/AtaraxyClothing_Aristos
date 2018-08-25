@@ -8,7 +8,7 @@ const addErrorEvent = require("../../../../AristosStuff/AristosLogger/AristosLog
  * @return {promise} A promise that resolves with the page that matches the id
  */
 module.exports = stuff => {
-  return Page.find(stuff).catch(err => {
+  return Page.find(stuff).populate("template").catch(err => {
     addErrorEvent(err, "page query error");
   });
 };

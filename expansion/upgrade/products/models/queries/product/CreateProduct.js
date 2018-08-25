@@ -4,7 +4,7 @@ const errorAddEvent = require("../../../../../../important/AristosStuff/AristosL
   .addError;
 /**
  * Creates a single product in the Product collection.
- * @param {object} pageProps - Object containing title, slug, price, category, author, conbtent, description, keywords, image
+ * @param {object} productProps - Object containing title, slug, price, category, author, conbtent, description, keywords, image
  * @return {promise} A promise that resolves with the Product that was created
  */
 module.exports = productProps => {

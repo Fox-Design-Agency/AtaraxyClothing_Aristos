@@ -8,8 +8,8 @@ const BlogSchema = new Schema({
     required: true
   },
   category: {
-    type: String,
-    required: true
+    type: Schema.Types.ObjectId,
+    ref: "BlogCategory"
   },
   published: {
     type: String,
@@ -29,10 +29,15 @@ const BlogSchema = new Schema({
     type: String
   },
   author: {
-    type: String
+    type: Schema.Types.ObjectId,
+    ref: "User"
   },
   allowComments: {
     type: Boolean
+  },
+  comments:{
+    type: Schema.Types.ObjectId,
+    ref: "BlogComments"
   },
   status: {
     type: String,
@@ -46,4 +51,3 @@ const BlogSchema = new Schema({
 
 /* end of blog schema functions */
 module.exports = mongoose.model("Blog", BlogSchema);
-

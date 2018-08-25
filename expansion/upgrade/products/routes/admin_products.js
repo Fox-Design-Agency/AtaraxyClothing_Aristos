@@ -8,6 +8,7 @@ const productsController = require("../controller/admin_products_controller");
 * GET Product index
 */
 router.get("/", isAdmin, productsController.index);
+
 /*
 * GET Product index
 */
@@ -36,7 +37,7 @@ router.post("/product-gallery/:id", productsController.createGallery);
 /*
 * GET delete image
 */
-router.delete("/delete-image/:image", isAdmin, productsController.deleteImage);
+router.get("/delete-image/:image", isAdmin, productsController.deleteImage);
 
 /*
 * GET delete Product
@@ -48,6 +49,4 @@ router.delete("/delete-product/:id", isAdmin, productsController.deleteProduct);
 */
 router.post("/reorder-products", productsController.reorder);
 
-//Exports
 module.exports = router;
-

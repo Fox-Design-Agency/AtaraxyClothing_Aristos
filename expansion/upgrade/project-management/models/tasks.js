@@ -1,20 +1,25 @@
 const mongoose = require("mongoose");
-
+const moment = require("moment");
+const Schema = mongoose.Schema;
 /* Task Schema */
-const TaskSchema = new mongoose.Schema({
+const TaskSchema = new Schema({
   title: {
     type: String,
     required: true
   },
   assigned: {
-    type: String
+    type: Schema.Types.ObjectId,
+    ref: "User"
   },
   published:{
-      type: Date,
-      default: Date.now
+    type: String,
+    default: moment().format("dddd, MMM Do YYYY")
+  },
+  finished:{
+    type: String
   },
   completed: {
-    type: Date
+    type: Number
   },
   content: {
     type: String,

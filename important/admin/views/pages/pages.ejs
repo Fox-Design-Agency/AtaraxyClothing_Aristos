@@ -1,9 +1,12 @@
-<%- include("../_layouts/adminheader") %>
+<% include ../_layouts/adminheader %>
     <h2 class="admin-page__main-title">Pages</h2>
-    <% include ../_layouts/messages/messages %>
+<% include ../_layouts/messages/messages %>
     <button class="admin-button admin-button--add-something">
         <a href="/admin/pages/add-page">+</a>
     </button>
+    <% if(count < 1){ %>
+        <h3 class="admin-page__none-of-something">There are no pages right now...</h3>
+        <% } else { %>
     <div class="blocks-holder">
         <% pages.forEach(function(page) { %>
             <div id="id_<%= page._id %>" class="admin-blocks <%= page.slug %>">
@@ -24,7 +27,7 @@
                         Template:
                     </h4>
                     <h5>
-                        <%= page.template %>
+                        <%= page.template.title %>
                     </h5>
                     <h4>
                         Description:
@@ -32,6 +35,12 @@
                     <h5>
                         <%= page.description %>
                     </h5>
+                    <h4>
+                    Keywords:
+                </h4>
+                <h5>
+                    <%= page.keywords %>
+                </h5>
                     <form class="admin-blocks__delete-stuffs" method="post" action="/admin/pages/delete-page/<%= page._id %>?_method=DELETE">
                         <input type="hidden" name="_method" value="DELETE">
                         <button type="submit">Delete</button>
@@ -41,6 +50,7 @@
             
             <% }); %>
     </div>
+    <% } %>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <script>
         $('.blocks-holder').sortable({

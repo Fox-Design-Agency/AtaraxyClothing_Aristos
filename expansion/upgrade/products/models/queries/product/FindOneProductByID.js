@@ -8,8 +8,10 @@ const errorAddEvent = require("../../../../../../important/AristosStuff/AristosL
  * @return {promise} A promise that resolves with the product that matches the id
  */
 module.exports = _id => {
-  return Product.findById(_id).catch(err => {
-    errorAddEvent(err, "product query error");
-  });
+  return Product.findById(_id)
+    .populate("category")
+    .populate("author")
+    .catch(err => {
+      errorAddEvent(err, "product query error");
+    });
 };
-

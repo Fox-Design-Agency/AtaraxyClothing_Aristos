@@ -19,7 +19,7 @@
                 <label for="">Category</label>
                 <select name="category" class="form-control">
                     <% categories.forEach(function(category){ %>
-                        <option value="<%= category.title %>">
+                    <option value="<%= category._id %>">
                             <%= category.title %>
                         </option>
                     <% }); %>

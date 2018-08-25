@@ -19,7 +19,7 @@
                 <label for="">Category</label>
                 <select name="category" class="form-control">
                     <% categories.forEach((category)=>{ %>
-                        <option value="<%= category.title %>">
+                        <option value="<%= category._id %>">
                             <%= category.title %>
                         </option>
                     <% }); %>
@@ -29,4 +29,3 @@
         <button class="admin-button admin-button--submit">Submit</button>
     </form>
 <% include ../_layouts/adminfooter %>
-        

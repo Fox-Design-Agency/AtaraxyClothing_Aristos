@@ -20,7 +20,7 @@
                     <label for="">Category</label>
                     <select name="category" class="form-control">
                         <% categories.forEach((category)=>{ %>
-                            <option value="<%= category.title %>" <% if (category.title === selectedCat) { %>
+                            <option value="<%= category._id %>" <% if (category.title === selectedCat) { %>
                                 selected = "selected"
                                 <% } %>
                                     >

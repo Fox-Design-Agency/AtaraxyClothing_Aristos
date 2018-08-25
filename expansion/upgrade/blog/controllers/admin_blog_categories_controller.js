@@ -68,7 +68,7 @@ module.exports = {
         }
 
         let title = req.body.title;
-        let slug = title.replace(/s+/g, "-").toLowerCase();
+        let slug = title.replace(/\s+/g, "-").toLowerCase();
         let description = req.body.description;
         let author = req.body.author;
         let keywords = req.body.keywords;
@@ -145,7 +145,7 @@ module.exports = {
         }
 
         let title = req.body.title;
-        let slug = title.replace(/s+/g, "-").toLowerCase();
+        let slug = title.replace(/\s+/g, "-").toLowerCase();
         let id = req.params.id;
 
         let author = req.body.author;
@@ -223,4 +223,3 @@ module.exports = {
     });
   } /* end of reorder function */
 };
-

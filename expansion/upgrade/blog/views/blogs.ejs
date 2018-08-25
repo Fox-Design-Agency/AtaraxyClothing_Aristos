@@ -22,13 +22,19 @@
                             category:
                         </h4>
                         <h5>
-                            <%= blog.category %>
+                            <%= blog.category.title %>
                         </h5>
                         <h4>
                             published:
                         </h4>
                         <h5>
                             <%= blog.published %>
+                        </h5>
+                        <h4>
+                            author:
+                        </h4>
+                        <h5>
+                            <%= blog.author.username %>
                         </h5>
                         <h4>
                             allow comments:
@@ -39,7 +45,7 @@
                         
                     </a><% if(blog.allowComments){ %>
                         <h5 class="admin-table__edit-stuffs">
-                            <a href="/admin/blog-comments/<%= blog.id %>">See Comments</a>
+                            <a href="/admin/blog-comments/by-post/<%= blog.id %>">See Comments</a>
                         </h5>
                         <% } %>
                         <form class="admin-blocks__delete-stuffs" method="post" action="/admin/blogs/delete-blog/<%= blog._id %>?_method=DELETE">

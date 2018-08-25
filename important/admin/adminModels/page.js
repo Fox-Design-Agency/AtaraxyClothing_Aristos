@@ -29,7 +29,8 @@ const PageSchema = new Schema({
     type: String
   },
   template: {
-    type: String
+    type: Schema.Types.ObjectId,
+    ref: "Template"
   }
 });
 

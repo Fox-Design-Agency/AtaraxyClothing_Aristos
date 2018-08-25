@@ -3,7 +3,7 @@ const errorAddEvent = require("../../../../important/AristosStuff/AristosLogger/
 const fs = require("fs-extra");
 const resizeImg = require("resize-img");
 
-// Product model Queries
+/* Product model Queries */
 const CountProducts = require("../models/queries/product/CountProducts");
 const CreateProduct = require("../models/queries/product/CreateProduct");
 const DeleteProduct = require("../models/queries/product/DeleteProduct");
@@ -14,36 +14,38 @@ const FindProductWithParams = require("../models/queries/product/FindProductWith
 const FindAllSortedProducts = require("../models/queries/product/FindAllSortedProducts");
 const FindSortedByParam = require("../models/queries/product/FindSortedByParam");
 const sortProducts = require("../models/queries/product/SortProductByID");
-// Product Category model Queries
+/* Product Category model Queries */
 const FindAllProductCategories = require("../models/queries/productCategory/FindAllProductCategories");
 
-//media queries
+/* media queries */
 const FindAllMedia = require("../../../../important/admin/adminModels/queries/media/FindAllMedia");
-// media categories Queries
+/* media categories Queries */
 // const FindAllMediaCategories = require("../../../../important/adminModels/queries/mediaCategories/FindAllMediaCategories");
 
-//User Model Queries
+/* User Model Queries */
 const FindOneUserByID = require("../../../../important/admin/adminModels/queries/user/FindOneUserWithID");
 
 module.exports = {
   index(req, res, next) {
-    const Count = CountProducts();
-    const SortedProducts = FindAllSortedProducts();
-    const AllProductCategories = FindAllProductCategories();
-    Promise.all([Count, SortedProducts, AllProductCategories]).then(result => {
+    Promise.all([
+      CountProducts(),
+      FindAllSortedProducts(),
+      FindAllProductCategories()
+    ]).then(result => {
       res.render("../../../expansion/upgrade/products/views/products", {
         products: result[1],
         categories: result[2],
         count: result[0]
       });
     });
-  }, // end of index function
+  } /* end of index function */,
 
   catIndex(req, res, next) {
-    const Count = CountProducts();
-    const SortedProducts = FindSortedByParam({ category: req.params.category });
-    const AllProductCategories = FindAllProductCategories();
-    Promise.all([Count, SortedProducts, AllProductCategories]).then(result => {
+    Promise.all([
+      CountProducts(),
+      FindSortedByParam({ category: req.params.category }),
+      FindAllProductCategories()
+    ]).then(result => {
       res.render("../../../expansion/upgrade/products/views/products", {
         products: result[1],
         categories: result[2],
@@ -58,45 +60,26 @@ module.exports = {
       price,
       keywords,
       description,
-      author = "";
-    /* start of printful plug in code */
-    /* move to its own file?? , or integrate plugin potential */
-    if (req.app.locals.printfulPluginExists) {
-      let printfile = "";
+      inventory,
+      sku = "";
 
-      const AllProductCategories = FindAllProductCategories();
-      const AllMedia = FindAllMedia();
-      Promise.all([AllProductCategories, AllMedia]).then(result => {
-        res.render("../../../expansion/upgrade/products/views/add_product", {
-          title: title,
-          content: content,
-          categories: result[0],
-          price: price,
-          media: result[1],
-          description: description,
-          keywords: keywords,
-          author: author,
-          printfile: printfile
-        });
+    Promise.all([
+      (AllProductCategories = FindAllProductCategories()),
+      (AllMedia = FindAllMedia())
+    ]).then(result => {
+      res.render("../../../expansion/upgrade/products/views/add_product", {
+        title: title,
+        content: content,
+        categories: result[0],
+        price: price,
+        media: result[1],
+        description: description,
+        keywords: keywords,
+        inventory: inventory,
+        sku: sku
       });
-      /* end of printful plug in code */
-    } else {
-      const AllProductCategories = FindAllProductCategories();
-      const AllMedia = FindAllMedia();
-      Promise.all([AllProductCategories, AllMedia]).then(result => {
-        res.render("../../../expansion/upgrade/products/views/add_product", {
-          title: title,
-          content: content,
-          categories: result[0],
-          price: price,
-          media: result[1],
-          description: description,
-          keywords: keywords,
-          author: author
-        });
-      });
-    }
-  }, // end of add index function
+    });
+  } /* end of add index function */,
   create(req, res, next) {
     const User = FindOneUserByID(req.session.passport.user);
     User.then(user => {
@@ -113,234 +96,137 @@ module.exports = {
         if (!req.body.price) {
           errors.push({ title: "Price must have a value." });
         }
-        if (!imageFile) {
-          errors.push({ title: "You must upload an image." });
-        }
 
         let title = req.body.title;
-        let slug = title.replace(/s+/g, "-").toLowerCase();
+        let slug = title.replace(/\s+/g, "-").toLowerCase();
         let content = req.body.content;
         let price = req.body.price;
         let category = req.body.category;
         let keywords = req.body.keywords;
         let description = req.body.description;
-        let author = req.body.author;
-
-        //Start of Printful Code
-        // move to own file, or integrate plugin potential
-        if (req.app.locals.printfulPluginExists) {
-          let sizes = req.body.sizes;
-          let color = req.body.color;
-          let printfile = req.body.printfile;
-          let productType = req.body.productType;
-          if (errors.length > 0) {
-            const AllProductCategories = FindAllProductCategories();
-            const AllMedia = FindAllMedia();
-            Promise.all([AllProductCategories, AllMedia]).then(result => {
-              res.render("../../upgrade/products/views/add_product", {
-                errors: errors,
-                title: title,
-                content: content,
-                categories: result[0],
-                price: price,
-                media: result[1],
-                description: description,
-                keywords: keywords,
-                author: author,
-                printfile: printfile
-              });
-            });
-          } else {
-            const CheckIfExists = FindProductWithParams({ slug: slug });
-            CheckIfExists.then(product => {
-              if (product.length > 0) {
-                errors.push({ text: "Product title exists, chooser another." });
-                const AllProductCategories = FindAllProductCategories();
-                const AllMedia = FindAllMedia();
-                Promise.all([AllProductCategories, AllMedia]).then(result => {
-                  res.render("../../upgrade/products/views/add_product", {
-                    errors: errors,
-                    title: title,
-                    content: content,
-                    categories: result[0],
-                    price: price,
-                    media: result[1],
-                    description: description,
-                    keywords: keywords,
-                    author: author,
-                    printfile: printfile
-                  });
-                });
-              } else {
-                let price2 = parseFloat(price).toFixed(2);
-                const productProps = {
-                  title: title,
-                  slug: slug,
-                  content: content,
-                  price: price2,
-                  category: category,
-                  image: imageFile,
-                  description: description,
-                  keywords: keywords,
-                  sorting: 100,
-                  author: author,
-                  printfile: printfile,
-                  productType: productType,
-                  color: color,
-                  sizes: sizes
-                };
-                CreateProduct(productProps).then(product => {
-                  fs.ensureDirSync(
-                    "content/public/images/product_images/" + product._id,
-                    err => {
-                      if (err) {
-                        errorAddEvent(err);
-                      }
-                    }
-                  );
-                  fs.ensureDirSync(
-                    "content/public/images/product_images/" +
-                      product._id +
-                      "/gallery",
-                    err => {
-                      if (err) {
-                        errorAddEvent(err);
-                      }
-                    }
-                  );
-                  fs.ensureDirSync(
-                    "content/public/images/product_images/" +
-                      product._id +
-                      "/gallery/thumbs",
-                    err => {
-                      if (err) {
-                        errorAddEvent(err);
-                      }
-                    }
-                  );
-
-                  if (imageFile !== "") {
-                    let productImage = req.files.image;
-                    let path =
-                      "content/public/images/product_images/" +
-                      product._id +
-                      "/" +
-                      imageFile;
-
-                    productImage.mv(path, function(err) {
-                      if (err) {
-                        errorAddEvent(err);
-                      }
-                    });
-                  }
-                });
-              }
-              req.flash("success_msg", "Product added!");
-              res.redirect("/admin/products");
-            });
-          }
-          //End of Printful Code
+        let author = req.session.passport.user;
+        let inventory;
+        if (!req.body.inventory) {
+          inventory = "-1";
         } else {
-          if (errors.length > 0) {
-            const AllProductCategories = FindAllProductCategories();
-            const AllMedia = FindAllMedia();
-            Promise.all([AllProductCategories, AllMedia]).then(result => {
-              res.render("../../upgrade/products/views/add_product", {
-                errors: errors,
-                title: title,
-                content: content,
-                categories: result[0],
-                price: price,
-                media: result[1],
-                description: description,
-                keywords: keywords,
-                author: author
-              });
-            });
-          } else {
-            const CheckIfExists = FindProductWithParams({ slug: slug });
-            CheckIfExists.then(product => {
-              if (product.length > 0) {
-                errors.push({ text: "Product title exists, chooser another." });
-                const AllProductCategories = FindAllProductCategories();
-                const AllMedia = FindAllMedia();
-                Promise.all([AllProductCategories, AllMedia]).then(result => {
-                  res.render("../../upgrade/products/views/add_product", {
-                    title: title,
-                    content: content,
-                    categories: result[0],
-                    price: price,
-                    media: result[1],
-                    description: description,
-                    keywords: keywords,
-                    author: author
-                  });
-                });
-              } else {
-                let price2 = parseFloat(price).toFixed(2);
-                const productProps = {
+          inventory = req.body.inventory;
+        }
+        let sku = req.body.sku;
+        let allowReviews;
+        if (req.body.allowReviews === "on") {
+          allowReviews = true;
+        } else {
+          allowReviews = false;
+        }
+        if (errors.length > 0) {
+          Promise.all([FindAllProductCategories(), FindAllMedia()]).then(
+            result => {
+              res.render(
+                "../../../expansion/upgrade/products/views/add_product",
+                {
+                  errors: errors,
                   title: title,
-                  slug: slug,
                   content: content,
-                  price: price2,
-                  category: category,
-                  image: imageFile,
+                  categories: result[0],
+                  price: price,
+                  media: result[1],
                   description: description,
                   keywords: keywords,
-                  sorting: 100,
-                  author: author
-                };
-
-                CreateProduct(productProps).then(product => {
-                  fs.ensureDirSync(
-                    "content/public/images/product_images/" + product._id,
-                    err => {
-                      if (err) {
-                        errorAddEvent(err);
-                      }
+                  inventory: inventory,
+                  sku: sku
+                }
+              );
+            }
+          );
+        } else {
+          const CheckIfExists = FindProductWithParams({ slug: slug });
+          CheckIfExists.then(product => {
+            if (product.length > 0) {
+              errors.push({ text: "Product title exists, choose another." });
+              Promise.all([FindAllProductCategories(), FindAllMedia()]).then(
+                result => {
+                  res.render(
+                    "../../../expansion/upgrade/products/views/add_product",
+                    {
+                      title: title,
+                      content: content,
+                      categories: result[0],
+                      price: price,
+                      media: result[1],
+                      description: description,
+                      keywords: keywords,
+                      inventory: inventory,
+                      sku: sku
                     }
                   );
-                  fs.ensureDirSync(
-                    "content/public/images/product_images/" +
-                      product._id +
-                      "/gallery",
-                    err => {
-                      if (err) {
-                        errorAddEvent(err);
-                      }
+                }
+              );
+            } else {
+              let price2 = parseFloat(price).toFixed(2);
+              const productProps = {
+                title: title,
+                slug: slug,
+                content: content,
+                price: price2,
+                category: category,
+                image: imageFile,
+                description: description,
+                keywords: keywords,
+                sorting: 100,
+                author: author,
+                inventory: inventory,
+                sku: sku,
+                allowReviews: allowReviews
+              };
+              CreateProduct(productProps).then(product => {
+                fs.ensureDirSync(
+                  "content/public/images/product_images/" + product._id,
+                  err => {
+                    if (err) {
+                      errorAddEvent(err);
                     }
-                  );
-                  fs.ensureDirSync(
-                    "content/public/images/product_images/" +
-                      product._id +
-                      "/gallery/thumbs",
-                    err => {
-                      if (err) {
-                        errorAddEvent(err);
-                      }
-                    }
-                  );
-
-                  if (imageFile !== "") {
-                    let productImage = req.files.image;
-                    let path =
-                      "content/public/images/product_images/" +
-                      product._id +
-                      "/" +
-                      imageFile;
-
-                    productImage.mv(path, function(err) {
-                      if (err) {
-                        errorAddEvent(err);
-                      }
-                    });
                   }
-                });
-              }
-              req.flash("success_msg", "Product added!");
-              res.redirect("/admin/products");
-            });
-          }
+                );
+                fs.ensureDirSync(
+                  "content/public/images/product_images/" +
+                    product._id +
+                    "/gallery",
+                  err => {
+                    if (err) {
+                      errorAddEvent(err);
+                    }
+                  }
+                );
+                fs.ensureDirSync(
+                  "content/public/images/product_images/" +
+                    product._id +
+                    "/gallery/thumbs",
+                  err => {
+                    if (err) {
+                      errorAddEvent(err);
+                    }
+                  }
+                );
+
+                if (imageFile !== "") {
+                  let productImage = req.files.image;
+                  let path =
+                    "content/public/images/product_images/" +
+                    product._id +
+                    "/" +
+                    imageFile;
+
+                  productImage.mv(path, function(err) {
+                    if (err) {
+                      errorAddEvent(err);
+                    }
+                  });
+                }
+              });
+            }
+            req.flash("success_msg", "Product added!");
+            res.redirect("/admin/products");
+          });
         }
       } else {
         res.redirect("/users/login");
@@ -348,59 +234,35 @@ module.exports = {
     });
   }, // end of create function
   editIndex(req, res, next) {
-    const AllProductCategories = FindAllProductCategories();
-    const AllMedia = FindAllMedia();
-    const FoundProduct = FindOneProductByID(req.params.id);
-    Promise.all([AllProductCategories, FoundProduct, AllMedia]).then(result => {
+    Promise.all([
+      FindAllProductCategories(),
+      FindOneProductByID(req.params.id),
+      FindAllMedia()
+    ]).then(result => {
       let galleryDir =
         "content/public/images/product_images/" + result[1]._id + "/gallery";
       let galleryImages = null;
-
-      fs.readdir(galleryDir, function(err, files) {
+      fs.readdir(galleryDir, (err, files) => {
         if (err) {
           Logger.error(err);
         } else {
           galleryImages = files;
-
-          //printful specific code
-          if (req.app.locals.printfulPluginExists) {
-            res.render(
-              "../../../expansion/upgrade/products/views/edit_product",
-              {
-                title: result[1].title,
-                content: result[1].content,
-                categories: result[0],
-                selectedCat: result[1].category,
-                price: parseFloat(result[1].price).toFixed(2),
-                image: result[1].image,
-                galleryImages: galleryImages,
-                id: result[1]._id,
-                media: result[2],
-                author: result[1].author,
-                description: result[1].description,
-                keywords: result[1].keywords,
-                sizes: result[1].sizes,
-                color: result[1].color,
-                printfile: result[1].printfile
-              }
-            );
-          } else {
-            res.render("../../upgrade/products/views/edit_product", {
-              title: result[1].title,
-              errors: errors,
-              content: result[1].content,
-              categories: result[0],
-              selectedCat: result[1].category,
-              price: parseFloat(result[1].price).toFixed(2),
-              image: result[1].image,
-              galleryImages: galleryImages,
-              id: result[1]._id,
-              media: result[2],
-              author: result[1].author,
-              description: result[1].description,
-              keywords: result[1].keywords
-            });
-          }
+          res.render("../../../expansion/upgrade/products/views/edit_product", {
+            title: result[1].title,
+            content: result[1].content,
+            categories: result[0],
+            selectedCat: result[1].category,
+            price: parseFloat(result[1].price).toFixed(2),
+            image: result[1].image,
+            galleryImages: galleryImages,
+            id: result[1]._id,
+            media: result[2],
+            description: result[1].description,
+            keywords: result[1].keywords,
+            sku: result[1].printfile,
+            inventory: result[1].inventory,
+            allowReviews: result[1].allowReviews
+          });
         }
       });
     });
@@ -423,15 +285,28 @@ module.exports = {
         }
 
         let title = req.body.title;
-        let slug = title.replace(/s+/g, "-").toLowerCase();
+        let slug = title.replace(/\s+/g, "-").toLowerCase();
         let content = req.body.content;
         let price = req.body.price;
         let category = req.body.category;
         let pimage = req.body.pimage;
         let id = req.params.id;
         let description = req.body.description;
-        let author = req.body.author;
         let keywords = req.body.keywords;
+
+        let inventory;
+        if (!req.body.inventory) {
+          inventory = "-1";
+        } else {
+          inventory = req.body.inventory;
+        }
+        let sku = req.body.sku;
+        let allowReviews;
+        if (req.body.allowReviews === "on") {
+          allowReviews = true;
+        } else {
+          allowReviews = false;
+        }
 
         if (errors.length > 0) {
           req.flash("error_msg", "errors are present");
@@ -458,7 +333,9 @@ module.exports = {
                 image: pimage,
                 description: description,
                 keywords: keywords,
-                author: author
+                inventory: inventory,
+                sku: sku,
+                allowReviews: allowReviews
               };
               EditProduct(id, productProps);
 
@@ -519,7 +396,6 @@ module.exports = {
           if (err) {
             errorAddEvent(err);
           }
-
           resizeImg(fs.readFileSync(path), { width: 100, height: 100 }).then(
             function(buf) {
               fs.writeFileSync(thumbsPath, buf);
@@ -531,7 +407,7 @@ module.exports = {
         res.redirect("/users/login");
       }
     });
-  }, // end fo create gallery function
+  } /* end of create gallery function */,
   deleteImage(req, res, next) {
     let originalImage =
       "content/public/images/product_images/" +
@@ -553,17 +429,16 @@ module.exports = {
             errorAddEvent(err);
           } else {
             req.flash("success_msg", "Image deleted!");
-            res.redirect("/admin/products/edit-product/" + req.query.id);
+            res.redirect("/admin/products/edit-product/" + req.query.id + "#gallery");
           }
         });
       }
     });
-  }, // end of delete image function
+  }, /* end of delete image function */
 
   deleteProduct(req, res, next) {
     let id = req.params.id;
     let path = "content/public/images/product_images/" + id;
-
     fs.remove(path, err => {
       if (err) {
         errorAddEvent(err);
@@ -581,13 +456,10 @@ module.exports = {
     User.then(user => {
       if (user.admin === 1) {
         let ids = req.body["id[]"];
-        sortProducts(ids)
-        
+        sortProducts(ids);
       } else {
         res.redirect("/users/login");
       }
     });
   }
 };
-
-

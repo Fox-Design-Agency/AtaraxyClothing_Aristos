@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+const moment = require("moment");
 /* Conatct Message Schema */
 const contactMessageSchema = mongoose.Schema({
   name: {
@@ -9,6 +9,10 @@ const contactMessageSchema = mongoose.Schema({
   subject: {
     type: String,
     required: true
+  },
+  submitted:{
+    type: String,
+    default: moment().format("dddd, MMM Do YYYY")
   },
   content: {
     type: String,

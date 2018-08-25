@@ -3,14 +3,12 @@ const BlogCategory = require("../../blogCategory");
 const errorAddEvent = require("../../../../../../important/AristosStuff/AristosLogger/AristosLogger")
   .addError;
 /**
- * Finds all the blog categories that match the params in the Blog Category collection.
- * @param {object} stuff - The object containing the stuff to find.
- * @return {promise} A promise that resolves with the blog category that matches the stuff param
+ * Finds a single blog category in the Blog Category collection.
+ * @param {objectID} _id - The ID of the record to find.
+ * @return {promise} A promise that resolves with the blog category that matches the id
  */
-module.exports = stuff => {
-  return BlogCategory.find(stuff).catch(err => {
+module.exports = _id => {
+  return BlogCategory.findById(_id).catch(err => {
     errorAddEvent(err, "blog category query error");
   });
 };
-
-

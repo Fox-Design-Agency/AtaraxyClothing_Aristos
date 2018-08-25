@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const moment = require("moment");
 const Schema = mongoose.Schema;
 
 // Product Schema
@@ -15,7 +16,8 @@ const ProductSchema = new Schema({
     required: true
   },
   category: {
-    type: String
+    type: Schema.Types.ObjectId,
+    ref: "ProductCategory"
   },
   price: {
     type: Number,
@@ -31,7 +33,8 @@ const ProductSchema = new Schema({
     type: String
   },
   author: {
-    type: String
+    type: Schema.Types.ObjectId,
+    ref: "User"
   },
   sorting: {
     type: Number
@@ -59,6 +62,9 @@ const ProductSchema = new Schema({
   allowReviews: {
     type: Boolean,
     default: true
+  },
+  inventory:{
+    type: Number
   }
 });
 const Product = mongoose.model("Product", ProductSchema);

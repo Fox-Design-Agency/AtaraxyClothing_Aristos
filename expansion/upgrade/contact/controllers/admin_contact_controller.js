@@ -2,20 +2,22 @@ const errorAddEvent = require("../../../../important/AristosStuff/AristosLogger/
   .addError;
 
 /* contact Message Queries */
+const CountContactMessage = require("../models/queries/CountMessages");
 const CreateContactMessage = require("../models/queries/CreateMessage");
+const DeleteContactMessage = require("../models/queries/DeleteMessage");
+const GetAllMessages = require("../models/queries/FindAllMessages");
 /* User Model Queries */
 // const FindOneUserByID = require("../../../../important/adminModels/queries/user/FindOneUserWithID");
 module.exports = {
   index(req, res, next) {
-    res.render("../../../expansion/upgrade/contact/views/contact"),
+    Promise.all([CountContactMessage(), GetAllMessages()]).then(result=>{
+      res.render("../../../expansion/upgrade/contact/views/contact",
       {
-        title: "tile",
-        slug: "slug",
-        content: "content",
-        author: "author",
-        description: "description",
-        keywords: "keywords"
-      };
+        messages: result[1],
+        count: result[0]
+      });
+    })
+    
   } /* end of index function */,
 
   create(req, res, next) {
@@ -52,7 +54,14 @@ module.exports = {
       CreateContactMessage(messageParams);
 
       req.flash("success_msg", "Message sent!");
-      res.redirect("/contact");
+      res.redirect("back");
     }
-  } /* end of create function */
+  } /* end of create function */,
+
+  delete(req, res, next){
+    DeleteContactMessage(req.params.id)
+    req.flash("success_msg", "Message Deleted!");
+      res.redirect("back");
+
+  }/* end of delete function */
 };

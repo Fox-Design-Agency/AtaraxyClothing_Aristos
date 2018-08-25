@@ -28,7 +28,7 @@
             <label for="">Category</label>
             <select name="category" class="form-control">
                 <% categories.forEach(function(category){ %>
-                    <option value="<%= category.slug %>" <% if (category.slug === selectedCat) { %>
+                    <option value="<%= category._id %>" <% if (category.slug === selectedCat) { %>
                         selected = "selected"
                         <% } %>
                             >
@@ -61,27 +61,47 @@
         <input type="hidden" name="pimage" value="<%= image %>">
         </div>
         <div class="admin-form__form-options admin-form__form-options--second-group">
-                <div class="admin-form__group">
-                    <label for="">Meta Description</label>
-                    <textarea class="admin-form--disabled-resize" rows="4" name="description" placeholder="Place a brief description of this blog. Max of 320 characters including spaces."
-                        maxlength="320"><%= description %></textarea>
+                    <div class="admin-form__group">
+                        <label for="">Meta Description</label>
+                        <textarea class="admin-form--disabled-resize" rows="4" name="description" placeholder="Place a brief description of this blog. Max of 320 characters including spaces." maxlength="320"><%= description %></textarea>
+                    </div>
+                    <div class="admin-form__group">
+                        <label for="">Meta Keywords</label>
+                        <textarea class="admin-form--disabled-resize" rows="4" name="keywords" placeholder="Place your keywords seperated by a comma. Max of 300 characters. EX. neat blog, neater topic, neatest person"
+                            maxlength="300"><%= keywords %></textarea>
+                    </div>
                 </div>
-                <div class="admin-form__group">
-                    <label for="">Meta Keywords</label>
-                    <textarea class="admin-form--disabled-resize" rows="4" name="keywords" placeholder="Place your keywords seperated by a comma. Max of 300 characters. EX. neat blog, neater topic, neatest person"
-                        maxlength="300"><%= keywords %></textarea>
+            </div>
+            <div class="admin-form__form-options--bottom-group">
+                <div class="admin-form__form-options">
+                    <div class="admin-form__group">
+                        <label for="">Inventory</label>
+                        <input type="number" class="form-control" name="inventory" value="<%= inventory %>" min="-1" placeholder="Inventory amount, -1 = unlimited">
+                    </div>
+                    <div class="admin-form__group">
+                        <label for="">SKU</label>
+                        <input type="text" class="form-control" name="sku" value="<%= sku %>" placeholder="optional sku">
+                    </div>
+                    <div class="admin-form__group">
+                        <label for="">Allow Reviews</label>
+                        <input type="checkbox" class="form-control" name="allowReviews"
+                        <% if(allowReviews){ %>
+                            checked
+                        <% } %>
+                        >
+                    </div>
                 </div>
-
-            
-        </div>
-</div>
+                <div class="admin-form__form-options admin-form__form-options--second-group">
+                    plugin placeholder
+                </div>
+            </div>
    
 
         <button class="admin-button admin-button--submit">Submit</button>
    
     </form>
 
-    <h3 class="page-header">Gallery</h3>
+    <h3 class="admin-page__sub-title-one" id="gallery">Gallery</h3>
     <ul class="gallery">
         <% galleryImages.forEach(function(image){ %>
             <% if (image !== "thumbs") { %>

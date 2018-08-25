@@ -3,12 +3,14 @@ const Task = require("../../tasks");
 const errorAddEvent = require("../../../../../../important/AristosStuff/AristosLogger/AristosLogger")
   .addError;
 /**
- * Finds a single task in the Task collection.
- * @param {string} _id - The ID of the record to find.
- * @return {promise} A promise that resolves with the task that matches the id
+ * Finds all tasks that match stuff param in the Task collection.
+ * @param {object} stuff - The object of the stuff to find.
+ * @return {promise} A promise that resolves with all the tasks that matches the stuff param
  */
-module.exports = _id => {
-  return Task.findById(_id).catch(err => {
-    errorAddEvent(err, "tasks query error");
-  });
+module.exports = stuff => {
+  return Task.findById(stuff)
+    .populate("assigned")
+    .catch(err => {
+      errorAddEvent(err, "tasks query error");
+    });
 };

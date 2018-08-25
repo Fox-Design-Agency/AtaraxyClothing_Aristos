@@ -35,7 +35,7 @@
                 <label for="">Template</label>
                 <select name="template" class="form-control">
                 <% templates.forEach(function(template){ %>
-                    <option value="<%= template.path %>" <% if (template.title === template) { %>
+                    <option value="<%= template._id %>" <% if (template.title === selectedTemplate) { %>
                         selected = "selected"
                         <% } %>
                         >

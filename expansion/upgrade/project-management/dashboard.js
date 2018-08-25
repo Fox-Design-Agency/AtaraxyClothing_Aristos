@@ -1,25 +1,22 @@
-// const getNotesCount = require("./models/queries/notes/CountNotes");
+const getAllCompletedTask = require("./models/queries/tasks/FindAllCompletedTasks");
+const getAllOpenTask = require("./models/queries/tasks/FindAllOpenTasks");
 module.exports = {
   name: "project management",
-  async theFunction(name, blogCount) {
-    let notesCount, selfTasks, OpenTasks, CompletedTasks;
-    await Promise.all([]).then(result => {
-      notesCount = "-";
-      selfTasks = "-";
-      OpenTasks = "-";
-      CompletedTasks = "-";
+  async theFunction(name) {
+    let selfTasks, OpenTasks, CompletedTasks;
+    await Promise.all([
+      getAllOpenTask(),
+      getAllCompletedTask()
+    ]).then(result => {
+      selfTasks ="-";
+      OpenTasks = result[0].length;
+      CompletedTasks = result[1].length;
     });
     return `
     <div class="admin-blocks">
     <a href="/admin/project-management">
         <h5>
             ${name}
-        </h5>
-        <h4>
-           notes: 
-        </h4>
-        <h5>
-            ${notesCount}
         </h5>
         <h4>
             tasks for you: 
@@ -41,6 +38,6 @@ module.exports = {
         </h5>
         </a>
     </div>
-        `;
+         `;
   }
 };

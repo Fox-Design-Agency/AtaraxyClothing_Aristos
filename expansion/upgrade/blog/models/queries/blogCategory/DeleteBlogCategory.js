@@ -4,8 +4,8 @@ const errorAddEvent = require("../../../../../../important/AristosStuff/AristosL
   .addError;
 
 /**
- * Deletes a single blog collection from the Page collection
- * @param {string} _id - The ID of the page to delete.
+ * Deletes a single blog collection from the Blog Category collection
+ * @param {string} _id - The ID of the category to delete.
  * @return {promise} A promise that resolves when the record is deleted
  */
 module.exports = _id => {
@@ -13,5 +13,3 @@ module.exports = _id => {
     errorAddEvent(err, "blog category query error");
   });
 };
-
-

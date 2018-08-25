@@ -4,27 +4,36 @@ const createPage = require("../../../important/admin/adminModels/queries/page/Cr
 //GET media model
 const findMediaWithParam = require("../../../important/admin/adminModels/queries/media/FindAllMediaWithParam");
 const findAllMedia = require("../../../important/admin/adminModels/queries/media/FindAllMedia");
+/* media cats queries */
+const FindAllMediaCategories = require("../../../important/admin/adminModels/queries/mediaCategories/FindAllMediaCategories");
 
 module.exports = {
   about(req, res, next) {
+    let team;
+    FindAllMediaCategories().then(cats=>{
+      cats.forEach(cat=>{
+        if(cat.title == "team"){
+          team = cat._id
+        }
+      })
+
     const foundPage = findPageWithParam({ slug: "about" });
-    const slider = findMediaWithParam({ category: "main_slider" });
-    const teamMedia = findMediaWithParam({ category: "team" });
-    Promise.all([foundPage, slider, teamMedia]).then(result => {
+    const teamMedia = findMediaWithParam({ category: team });
+    Promise.all([foundPage, teamMedia]).then(result => {
       if (result[0].length < 1) {
         res.redirect("/");
       } else {
-        res.render(`${result[0][0].template}`, {
+        res.render(`${result[0][0].template.path}`, {
           title: result[0][0].title,
           content: result[0][0].content,
           keywords: result[0][0].keywords,
           description: result[0][0].description,
           author: result[0][0].author,
-          media: result[1][0],
-          team: result[2]
+          team: result[1]
         });
       }
     });
+  })
   },
   home(req, res, next) {
     const homePage = findPageWithParam({ slug: "home" });
@@ -50,7 +59,7 @@ module.exports = {
           });
         });
       } else {
-        res.render(`${result[0][0].template}`, {
+        res.render(`${result[0][0].template.path}`, {
           title: result[0][0].title,
           content: result[0][0].content,
           keywords: result[0][0].keywords,
@@ -67,7 +76,7 @@ module.exports = {
         res.redirect("/");
       } else {
         if (typeof page.template !== "undefined") {
-          res.render(`${page.template}`, {
+          res.render(`${page.template.path}`, {
             title: page.title,
             content: page.content,
             keywords: page.keywords,
@@ -91,7 +100,7 @@ module.exports = {
       if (page.length < 1) {
         res.redirect("/");
       } else {
-        res.render(`${page.template}`, {
+        res.render(`${page.template.path}`, {
           title: page.title,
           content: page.content,
           keywords: page.keywords,

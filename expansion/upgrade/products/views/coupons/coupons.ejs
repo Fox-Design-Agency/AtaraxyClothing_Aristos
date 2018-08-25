@@ -1,0 +1,46 @@
+<%- include("../../../../../important/admin/views/_layouts/adminheader") %>
+    <h2 class="admin-page__main-title">Coupons</h2>
+    <% include ../../../../../important/admin/views/_layouts/messages/messages %>
+        <button class="admin-button admin-button--add-something">
+            <a href="/admin/products/coupons/add-coupon">+</a>
+        </button>
+    <br>
+    <br>
+    <% if(count < 1){ %>
+        <h3 class="admin-page__none-of-something">There are no coupons...</h3>
+    <% }else{ %>
+    <div class="blocks-holder">
+    <% coupons.forEach(function(coupon) { %>
+    <div class="admin-blocks" id="id_<%= coupon._id %>" class="<%= coupon.slug %>">
+    <a href="/admin/products/coupons/edit-coupon/<%= coupon._id %>">
+        <h4>
+            title:
+        </h4>
+            <h5>
+                <%= coupon.title %>
+            </h5>
+            <h4>
+            started:
+        </h4>
+        <h5>
+           <%= coupon.start %>
+        </h5>
+           <h4>
+            description:
+        </h4>
+        <h5>
+            <%= coupon.description %>
+        </h5>
+                    <form class="admin-blocks__delete-stuffs" method="post" action="/admin/products/coupons/delete-coupon/<%= coupon._id %>?_method=DELETE">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button type="submit">Delete</button>
+                </form>
+        
+                    </a>
+       </div>
+        <% }); %>
+</div>
+   <% } %>
+
+
+<%- include("../../../../../important/admin/views/_layouts/adminfooter") %>

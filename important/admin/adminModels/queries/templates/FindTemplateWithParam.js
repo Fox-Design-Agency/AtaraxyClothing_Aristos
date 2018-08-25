@@ -8,7 +8,9 @@ const addErrorEvent = require("../../../../AristosStuff/AristosLogger/AristosLog
  * @return {promise} A promise that resolves with the template that matches the stuff param
  */
 module.exports = stuff => {
-  return Template.find(stuff).catch(err => {
-    addErrorEvent(err, "template query error");
-  });
+  return Template.find(stuff)
+    .populate("author")
+    .catch(err => {
+      addErrorEvent(err, "template query error");
+    });
 };

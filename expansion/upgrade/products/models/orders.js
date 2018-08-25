@@ -1,21 +1,29 @@
 const mongoose = require("mongoose");
-
+const moment = require("moment");
+const Schema = mongoose.Schema;
 // Page Schema
-const OrdersSchema = new mongoose.Schema({
+const OrdersSchema = new Schema({
   user: {
-      type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: "User"
   },
+  orderPlace:{
+    type: String,
+    default: moment().format("dddd, MMM Do YYYY")
+  },
   total: {
-    type: String
+    type: Number
   },
   shipping: {
-    type: String
+    type: Number
+  },
+  tax:{
+    type: Number
   },
   name: {
     type: String
   },
-  address: {
+  streetAddress: {
     type: String
   },
   city: {
@@ -36,5 +44,3 @@ const OrdersSchema = new mongoose.Schema({
 });
 const Order = mongoose.model("Orders", OrdersSchema);
 module.exports = Order;
-
-

@@ -1,5 +1,5 @@
 .admin-blocks {
-  width: 250px;
+  width: 300px;
   border: 3px solid $colorFive;
   margin: 20px;
   padding: 10px;
@@ -9,10 +9,22 @@
   transition: box-shadow 0.3s linear;
   border-radius: 0 50px 0 0;
 
+  &--wide {
+    width: 600px;
+    margin: 20px auto;
+  }
+
+  &--medium {
+    width: 350px;
+  }
+
   &:hover {
-    box-shadow: 2px 5px 10px black; 
+    box-shadow: 2px 5px 10px black;
     cursor: pointer;
     .admin-blocks__delete-stuffs {
+      visibility: visible;
+    }
+    .admin-blocks__complete-stuffs {
       visibility: visible;
     }
   }
@@ -27,6 +39,32 @@
     font-size: 20px;
     margin-top: 0;
     padding-left: 10px;
+  }
+
+  & p {
+    font-size: 16px;
+  }
+
+  &__complete-stuffs {
+    visibility: hidden;
+    display: flex;
+    justify-content: center;
+    transition: background 0.4s linear;
+    border: 2px solid $colorFive;
+      padding: 10px;
+      background: transparent;
+      border: none;
+      display: flex;
+      cursor: pointer;
+      flex: 1;
+      justify-content: center;
+      background: $hoverSuccess;
+
+      &:hover {
+        background: $transitionSuccessHover;
+        transition: background 0.4s linear;
+      }
+
   }
 
   &__delete-stuffs {
@@ -47,11 +85,9 @@
       background: $hoverDanger;
 
       &:hover {
-       
         background: $transitionDangerHover;
         transition: background 0.4s linear;
       }
     }
   }
 }
-

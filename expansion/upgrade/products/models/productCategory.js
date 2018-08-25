@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
 // Product Category Schema
-const ProductCategorySchema = new mongoose.Schema({
+const ProductCategorySchema = new Schema({
   title: {
     type: String,
     required: true
@@ -16,7 +17,8 @@ const ProductCategorySchema = new mongoose.Schema({
     type: String
   },
   author: {
-    type: String
+    type: Schema.Types.ObjectId,
+    ref: "User"
   },
   imagepath: {
     type: String
@@ -27,4 +29,3 @@ const ProductCategorySchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model("ProductCategory", ProductCategorySchema);
-

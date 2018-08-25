@@ -10,8 +10,9 @@ const errorAddEvent = require("../../../../../../important/AristosStuff/AristosL
 module.exports = stuffs => {
   return Product.find(stuffs)
     .sort({ sorting: 1 })
+    .populate("category")
+    .populate("author")
     .catch(err => {
       errorAddEvent(err, "product query error");
     });
 };
-

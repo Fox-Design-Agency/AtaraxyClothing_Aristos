@@ -7,10 +7,6 @@
     {
       "name": "add new task",
       "link": "/admin/project-management/add-task"
-    },
-    {
-      "name": "add new note",
-      "link": ""
     }
   ]
 }

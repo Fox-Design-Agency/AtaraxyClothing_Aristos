@@ -1,11 +1,8 @@
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 const moment = require("moment");
 /* Blog Comments Schema */
-const BlogComments = new mongoose.Schema({
-  title: {
-    type: String,
-    required: true
-  },
+const BlogComments = new Schema({
   content: {
     type: String
   },
@@ -26,4 +23,3 @@ const BlogComments = new mongoose.Schema({
 
 /* end of blog comments functions */
 module.exports = mongoose.model("BlogComments", BlogComments);
-

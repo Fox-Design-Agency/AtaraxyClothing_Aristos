@@ -1,39 +1,30 @@
-const express = require("express");
-const router = express.Router();
-const auth = require("../../../../important/AppStuff/authorization/auth");
+<%- include("../../../../../important/admin/views/_layouts/adminheader") %>
+    <h2 class="admin-page__main-title">Blog Comments</h2>
+	<% include ../../../../../important/admin/views/_layouts/messages/messages %>
+	<div class="button-row">
+        <button class="admin-button admin-button--add-something admin-button admin-button--add-something--second"">
+            <a href="/admin/blog-comments/add-comment/<%= id %>">+</a>
+        </button>
+        <button class="admin-button admin-button--add-something">
+    <a  href="/admin/blogs"><i class="fa fa-hand-point-left"></i></a>
+</button>
+    </div>
+    <% if(count < 1){ %>
+    <h3 class="admin-page__none-of-something">There are no comments...</h3>
+    <% } else{ %>
+       
+        <% comments.forEach(comment=>{ %> 
+        <div class="admin-blocks admin-blocks--wide">
+            <h4><%= comment.created %></h4>
+            <h5><%= comment.user.username %></h5>
+            <p><%= comment.content %></p>
+            <form class="admin-blocks__delete-stuffs" method="post" action="/admin/blog-comments/delete-comment/<%= comment._id %>?_method=DELETE">
+                <input type="hidden" name="_method" value="DELETE">
+                <button type="submit">Delete</button>
+            </form>
+        </div>
+		<% }) %>
+        
+    <% } %>
 
-const isAdmin = auth.isAdmin;
-const blogController = require("../controllers/admin_blog_controller");
-
-/*
-* GET blog index
-*/
-router.get("/", isAdmin, blogController.index);
-
-/*
-* GET, POST add blog
-*/
-router
-  .route("/add-blog")
-  .get(isAdmin, blogController.addIndex)
-  .post(blogController.create);
-
-/*
-* GET, POST edit blog
-*/
-router
-  .route("/edit-blog/:id")
-  .get(isAdmin, blogController.editIndex)
-  .post(blogController.edit);
-
-/*
-* GET delete blog
-*/
-router.delete("/delete-blog/:id", isAdmin, blogController.delete);
-/* 
-* POST reorder blogs
-*/
-router.post("/reorder-blogs", blogController.reorder);
-
-/* Exports */
-module.exports = router;
+<%- include("../../../../../important/admin/views/_layouts/adminfooter") %>

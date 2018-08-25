@@ -1,19 +1,24 @@
 const adminProductCategories = require("./routes/admin_product_categories");
-const adminProducts = require("./routes/admin_products");
-module.exports = app => {
-  if (app.locals.printfulPluginExists) {
-    const printfulPlugin = require("../../plugins/printful/colors_sizes");
-    app.use("/admin/printful", printfulPlugin);
-  }
+const adminProductCoupons = require("./routes/admin_product_coupons");
+const adminProductOrders = require("./routes/admin_product_orders");
+require("./routes/admin_products_routes_checker").theFunction();
 
+const fs = require("fs-extra");
+const adminProduct = fs.readJSONSync(
+  "./expansion/upgrade/products/routes/productRoutes.json"
+).route;
+const adminProducts = require(adminProduct);
+
+module.exports = app => {
   /* set global cart on session */
   app.get("*", function(req, res, next) {
     res.locals.cart = req.session.cart;
     next();
   });
   /* end of global cart on session */
-
   app.use("/admin/product-categories", adminProductCategories);
+  app.use("/admin/products/coupons", adminProductCoupons);
+  app.use("/admin/products/orders", adminProductOrders);
+
   app.use("/admin/products", adminProducts);
 };
-

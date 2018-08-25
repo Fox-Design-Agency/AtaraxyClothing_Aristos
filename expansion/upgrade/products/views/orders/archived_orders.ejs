@@ -1,0 +1,43 @@
+<%- include("../../../../../important/admin/views/_layouts/adminheader") %>
+    <h2 class="admin-page__main-title">Archived Orders</h2>
+    <% include ../../../../../important/admin/views/_layouts/messages/messages %>
+
+        <button class="admin-button admin-button--add-something">
+            <a href="/admin/products/orders/archive"><i class="far fa-eye"></i></a>
+        </button>
+   <br>
+   <br>
+   <% if(count < 1){ %>
+        <h3 class="admin-page__none-of-something">There are no orders...</h3>
+   <% }else{ %>
+   <div class="blocks-holder">
+        <% orders.forEach(order=>{ %>
+        <div class="admin-blocks admin-blocks--wide" id="id_<%= order._id %>" class="<%= order.slug %>">
+        <a href="/admin/products/orders/see-orders/<%= order._id %>">
+            <h4>
+                ordered:
+            </h4>
+            <h5>
+                <%= order.orderPlace %>
+            </h5>
+            <h4>
+                total:
+            </h4>
+            <h5>
+                <%= order.total %>
+            </h5>
+            <h4>
+                items:
+            </h4>
+            <h5>
+                <%= order.items %>
+            </h5>
+            <a href="/admin/products/orders/complete-order/<%= order._id %>" class="admin-blocks__complete-stuffs">Complete</a>
+            </a>
+        </div>
+        <% }) %>
+    </div>
+   <% } %>
+
+
+<%- include("../../../../../important/admin/views/_layouts/adminfooter") %>

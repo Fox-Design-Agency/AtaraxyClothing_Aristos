@@ -18,15 +18,10 @@
 
                 </div>
                 <div class="admin-form__group">
-                    <label for="">Author</label>
-                    <input type="text" class="form-control" name="author" value="<%= author %>" placeholder="Author">
-
-                </div>
-                <div class="admin-form__group">
                     <label for="">Image</label>
                     <select name="imagepath">
                             <% media.forEach(function(media){ %>
-                                <% if(media.category == "product_categories"){ %>
+                                <% if(media.category.title == "product_categories"){ %>
                                     <option value="<%= media.path %>">
                                         <%= media.title %>
                                     </option>
@@ -37,16 +32,16 @@
                 </div>
             </div>
             <div class="admin-form__form-options admin-form__form-options--second-group">
-                <div class="admin-form__group">
-                    <label for="">Meta Description</label>
-                    <textarea class="admin-form--disabled-resize" rows="4" name="description" placeholder="Place a brief description of this product category. Max of 320 characters including spaces."
-                        maxlength="320"></textarea>
-                </div>
-                <div class="admin-form__group">
-                    <label for="">Meta Keywords</label>
-                    <textarea class="admin-form--disabled-resize" rows="4" name="keywords" placeholder="Place your keywords seperated by a comma. Max of 300 characters. EX. neat product, neater category, neatest person"
-                        maxlength="300"></textarea>
-                </div>
+            <div class="admin-form__group">
+            <label for="">Meta Description</label>
+            <textarea class="admin-form--disabled-resize" rows="4" name="description" placeholder="Place a brief description of this product category. Max of 320 characters including spaces."
+                maxlength="320"><%= description %></textarea>
+        </div>
+        <div class="admin-form__group">
+            <label for="">Meta Keywords</label>
+            <textarea class="admin-form--disabled-resize" rows="4" name="keywords" placeholder="Place your keywords seperated by a comma. Max of 300 characters. EX. neat product, neater category, neatest person"
+                maxlength="300"><%= keywords %></textarea>
+        </div>
 
             </div>
         </div>

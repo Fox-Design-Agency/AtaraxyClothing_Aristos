@@ -6,7 +6,7 @@
   "dropdownCategories": [
     {
       "name": "see orders",
-      "link": ""
+      "link": "/admin/products/orders"
     },
     {
       "name": "add product",
@@ -14,7 +14,7 @@
     },
     {
       "name": "add coupon",
-      "link": ""
+      "link": "/admin/products/coupons/add-coupon"
     },
     {
       "name": "add category",
@@ -22,7 +22,7 @@
     },
     {
       "name": "see all coupons",
-      "link": ""
+      "link": "/admin/products/coupons"
     },
     {
       "name": "see all categories",
@@ -30,4 +30,3 @@
     }
   ]
 }
-

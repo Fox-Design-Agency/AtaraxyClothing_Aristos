@@ -4,7 +4,7 @@ const errorAddEvent = require("../../../../../../important/AristosStuff/AristosL
   .addError;
 /**
  * counts the blog category in the Blog Category collection.
- * @return {promise} A promise that resolves with the Page that was created
+ * @return {promise} A promise that resolves with the Bog Category that was created
  */
 module.exports = () => {
   return BlogCategory.estimatedDocumentCount({})
@@ -15,5 +15,4 @@ module.exports = () => {
       errorAddEvent(err, "blog category query error");
     });
 };
-
 

@@ -1,49 +1,48 @@
 <% include ../../../../important/admin/views/_layouts/adminheader %>
     <h2 class="admin-page__main-title">Contact</h2>
     <% include ../../../../important/admin/views/_layouts/messages/messages %>
-    <div>
-        <!-- <button class="admin-button admin-button--main">
-            <a class="btn-text" href="/admin/project-management/add-task">Add a new task</a>
-        </button> -->
+    <% if (count < 1){ %>
+        <h3 class="admin-page__none-of-something">There are no messages right now...</h3>
+    <% } else { %>
+    <div class="blocks-holder">
+        <% messages.forEach(message=>{ %>
+            <div class="admin-blocks admin-blocks--medium" id="id_<%= message._id %>" class="<%= message.slug %>">
+                <h4>
+                    subject:
+                </h4>
+                <h5>
+                    <%= message.subject %>
+                </h5>
+                <h4>
+                    name:
+                </h4>
+                <h5>
+                    <%= message.name %>
+                </h5>
+                <h4>
+                    email:
+                </h4>
+                <h5>
+                    <%= message.email %>
+                </h5>
+                <h4>
+                    sent:
+                </h4>
+                <h5>
+                    <%= message.submitted %>
+                </h5>
+                <h4>
+                    message:
+                </h4>
+                <h5>
+                    <%= message.content %>
+                </h5>
+                <form class="admin-blocks__delete-stuffs" method="post" action="/admin/contact/delete-message/<%= message._id %>?_method=DELETE">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button type="submit">Delete</button>
+                </form>
+            </div>
+        <% }) %>
     </div>
-
-    <h6 class="admin-page__sub-title-one" id="active-tasks">Unread Messages</h6>
-    <table class="admin-table">
-        <thead>
-            <tr class="home">
-                <th>Subject</th>
-                <th>Email</th>
-                <th>Content</th>
-                <th>View</th>
-                <th>Delete</th>
-            </tr>
-        </thead>
-        <tbody>
-            
-
-
-        </tbody>
-        </tr>
-    </table>
-    <br>
-    <br>
-    <h6 class="admin-page__sub-title-one" id="active-tasks">Read Messages</h6>
-    <table class="admin-table">
-        <thead>
-            <tr class="home">
-                <th>Subject</th>
-                <th>Email</th>
-                <th>Content</th>
-                <th>View</th>
-                <th>Archive</th>
-                <th>Delete</th>
-            </tr>
-        </thead>
-        <tbody>
-            
-
-
-        </tbody>
-        </tr>
-    </table>
-    <% include ../../../../important/admin/views/_layouts/adminfooter %>
+    <% } %>
+<% include ../../../../important/admin/views/_layouts/adminfooter %>

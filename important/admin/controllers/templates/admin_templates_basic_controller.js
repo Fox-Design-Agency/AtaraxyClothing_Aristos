@@ -6,6 +6,7 @@ const FindAllMedia = require("../../adminModels/queries/media/FindAllMedia");
 /* User Model Queries */
 const FindOneUserByID = require("../../adminModels/queries/user/FindOneUserWithID");
 /* Template Model Queries */
+const CountTemplayes = require("../../adminModels/queries/templates/CountTemplates");
 const FindAllTemplates = require("../../adminModels/queries/templates/FindAllTemplates");
 const CreateTemplate = require("../../adminModels/queries/templates/CreateTemplate");
 const FindTemplateWithParam = require("../../adminModels/queries/templates/FindTemplateWithParam");
@@ -15,15 +16,12 @@ const DeleteTemplate = require("../../adminModels/queries/templates/DeleteTempla
 
 module.exports = {
   index(req, res, next) {
-    FindAllTemplates().then(templates => {
+    Promise.all([FindAllTemplates(), CountTemplayes()]).then(result => {
       res.render(
         "../../../important/admin/views/templateBuilder/templateDashboard",
         {
-          content: "",
-          title: "",
-          author: "",
-          keywords: "",
-          templates: templates
+          templates: result[0],
+          count: result[1]
         }
       );
     });
@@ -35,7 +33,6 @@ module.exports = {
       {
         content: "",
         title: "",
-        author: "",
         description: "",
         path: ""
       }
@@ -57,7 +54,7 @@ module.exports = {
         let content = req.body.content;
         let viewPath = req.body.path;
         let description = req.body.description;
-        let author = req.body.author;
+        let author = req.session.passport.user;
 
         if (errors.length > 0) {
           return res.render(
@@ -67,8 +64,7 @@ module.exports = {
               title: title,
               path: viewPath,
               content: content,
-              description: description,
-              author: author
+              description: description
             }
           );
         } else {
@@ -93,13 +89,11 @@ module.exports = {
 
   editIndex(req, res, next) {
     FindOneTemplate(req.params.id).then(template => {
-      console.log(template.description);
       res.render(
         "../../../important/admin/views/templateBuilder/editBasicTemplate",
         {
           content: template.content,
           title: template.title,
-          author: template.author,
           path: template.path,
           description: template.description,
           id: template._id
@@ -123,7 +117,6 @@ module.exports = {
         let content = req.body.content;
         let viewPath = req.body.path;
         let description = req.body.description;
-        let author = req.body.author;
         let id = req.params.id;
 
         if (errors.length > 0) {
@@ -134,8 +127,7 @@ module.exports = {
               title: title,
               path: viewPath,
               content: content,
-              description: description,
-              author: author
+              description: description
             }
           );
         } else {
@@ -143,8 +135,7 @@ module.exports = {
             title: title,
             content: content,
             path: viewPath,
-            description: description,
-            author: author
+            description: description
           };
           EditTemplate(id, templateProps);
           FindAllTemplates().then(templates => {
@@ -159,6 +150,7 @@ module.exports = {
   } /* end of basic update function */,
 
   basicDelete(req, res, next) {
+    //remove all associated pages??
     DeleteTemplate(req.params.id).then(() => {
       FindAllTemplates().then(templates => {
         req.flash("success_msg", "Template deleted!");

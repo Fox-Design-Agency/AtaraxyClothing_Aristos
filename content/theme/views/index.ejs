@@ -1,7 +1,7 @@
 <% include _layouts/header %>
     <div class="page__main-slider">
         <% media.forEach(function(media){ %>
-            <% if(media.category == "main_slider"){ %>
+            <% if(media.category.title == "main_slider"){ %>
                 <img src="<%= media.path %>" alt="<%= media.alt %>">
             <% } %>
         <% }) %>
@@ -25,7 +25,7 @@
     </div>
     <div class="page__main-slider">
         <% media.forEach(function(media){ %>
-            <% if(media.category == "bottom_img"){ %>
+            <% if(media.category.title == "bottom_img"){ %>
                 <img class="page__full-width-img" src="<%= media.path %>" alt="<%= media.alt %>">
             <% } %>
         <% }) %>

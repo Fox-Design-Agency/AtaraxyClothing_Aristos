@@ -1,9 +1,15 @@
+/* contact queries */
+const totalMessagesQuery = require("./models/queries/FindAllMessages");
+
 module.exports = {
   name: "Contact",
   async theFunction(name, blogCount) {
     let unreadMessages = "-",
       readMessages = "-",
       totalMessages = "-";
+    await totalMessagesQuery().then(total => {
+      totalMessages = total.length;
+    });
     return `
     <div class="admin-blocks">
     <a href="/admin/contact">

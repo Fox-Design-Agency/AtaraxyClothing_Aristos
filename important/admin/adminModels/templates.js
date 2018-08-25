@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-/* Page Schema */
+/* Template Schema */
 const templateSchema = new Schema({
   title: {
     type: String,
@@ -17,7 +17,8 @@ const templateSchema = new Schema({
     type: String
   },
   author: {
-    type: String
+    type: Schema.Types.ObjectId,
+    ref: "User"
   }
 });
 

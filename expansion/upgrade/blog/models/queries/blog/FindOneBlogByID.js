@@ -1,6 +1,7 @@
 const Blog = require("../../blog");
 /* Aristos Logger Path */
-const errorAddEvent = require("../../../../../../important/AristosStuff/AristosLogger/AristosLogger").addError;
+const errorAddEvent = require("../../../../../../important/AristosStuff/AristosLogger/AristosLogger")
+  .addError;
 
 /**
  * Finds a single blog in the Blog collection.
@@ -8,9 +9,10 @@ const errorAddEvent = require("../../../../../../important/AristosStuff/AristosL
  * @return {promise} A promise that resolves with the blog that matches the _id
  */
 module.exports = _id => {
-  return Blog.findById(_id).catch(err=>{
-    errorAddEvent(err, "blog query error")
-  });
+  return Blog.findById(_id)
+    .populate("author")
+    .populate("category")
+    .catch(err => {
+      errorAddEvent(err, "blog query error");
+    });
 };
-
-

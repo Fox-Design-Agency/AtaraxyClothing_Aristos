@@ -12,4 +12,3 @@ module.exports = stuff => {
     errorAddEvent(err, "product category query error");
   });
 };
-

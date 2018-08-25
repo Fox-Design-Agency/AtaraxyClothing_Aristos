@@ -18,30 +18,17 @@ const FindAllMedia = require("../../../../important/admin/adminModels/queries/me
 const FindOneUserByID = require("../../../../important/admin/adminModels/queries/user/FindOneUserWithID");
 module.exports = {
   index(req, res, next) {
-    const Count = CountProductCategory();
-    Count.then(count => {
-      if (count < 1) {
-        const CategoryProps = {
-          title: "General",
-          slug: "general",
-          author: "",
-          description: "",
-          keywords: "",
-          imagePath: ""
-        };
-        CreateProductCategory(CategoryProps);
-      }
-      const SortedCategories = FindAllSortedCategories();
-      SortedCategories.then(categories => {
+    Promise.all([CountProductCategory(), FindAllSortedCategories()]).then(
+      result => {
         res.render(
           "../../../expansion/upgrade/products/views/categories/product_categories",
           {
-            categories: categories,
-            count: count
+            categories: result[1],
+            count: result[0]
           }
         );
-      });
-    });
+      }
+    );
   }, // end of index function
   addIndex(req, res, next) {
     let title,
@@ -74,8 +61,8 @@ module.exports = {
           errors.push({ text: "Title must have a value." });
         }
         let title = req.body.title;
-        let slug = title.replace(/s+/g, "-").toLowerCase();
-        let author = req.body.author;
+        let slug = title.replace(/\s+/g, "-").toLowerCase();
+        let author = req.session.passport.user;
         let description = req.body.description;
         let keywords = req.body.keywords;
         let imagePath = req.body.imagepath;
@@ -135,9 +122,7 @@ module.exports = {
     });
   }, // end of create function
   editIndex(req, res, next) {
-    const FoundCategory = FindOneProductCategoryByID(req.params.id);
-    const AllMedia = FindAllMedia();
-    Promise.all([FoundCategory, AllMedia]).then(result => {
+    Promise.all([FindOneProductCategoryByID(req.params.id), FindAllMedia()]).then(result => {
       res.render(
         "../../../expansion/upgrade/products/views/categories/edit_product_category",
         {
@@ -161,9 +146,8 @@ module.exports = {
           errors.push({ text: "Title must have a value." });
         }
         let title = req.body.title;
-        let slug = title.replace(/s+/g, "-").toLowerCase();
+        let slug = title.replace(/\s+/g, "-").toLowerCase();
         let id = req.params.id;
-        let author = req.body.author;
         let description = req.body.description;
         let keywords = req.body.keywords;
         let imagepath = req.body.imagepath;
@@ -178,7 +162,6 @@ module.exports = {
                 title: title,
                 id: id,
                 media: media,
-                author: author,
                 description: description,
                 keywords: keywords
               }
@@ -200,7 +183,6 @@ module.exports = {
                     errors: errors,
                     title: "",
                     id: id,
-                    author: author,
                     description: description,
                     keywords: keywords,
                     media: media
@@ -211,7 +193,6 @@ module.exports = {
               const CategoryProps = {
                 title: title,
                 slug: slug,
-                author: author,
                 description: description,
                 keywords: keywords,
                 imagepath: imagepath
@@ -229,6 +210,7 @@ module.exports = {
     });
   }, // end of edit function
   delete(req, res, next) {
+    //should also delete associated products
     DeleteProductCategory(req.params.id);
     req.flash("success_msg", "Product Category deleted!");
     res.redirect("/admin/product-categories");
@@ -247,5 +229,3 @@ module.exports = {
     });
   } //end of reorder function
 };
-
-

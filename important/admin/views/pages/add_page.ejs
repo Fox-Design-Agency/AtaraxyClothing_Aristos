@@ -7,6 +7,8 @@
         </button>
 
     </div>
+    <br>
+    <br>
 
     <form method="post" action="/admin/pages/add-page" class="admin-form" class="admin-form">
         <%- include("../../../AristosStuff/AristosTextEditor/AristosTextEditor") %>
@@ -40,7 +42,7 @@
                                 
                             </option>
                             <% templates.forEach(function(template){ %>
-                                <option value="<%= template.path %>">
+                                <option value="<%= template._id %>">
                                     <%= template.title %>
                                 </option>
                                 <% }); %>
@@ -49,10 +51,7 @@
                     <div class="admin-form__group">
                         <label for="">Author</label>
                         <input type="text" class="form-control" name="author" value="<%= author %>" placeholder="Author">
-
                     </div>
-                    
-
                 </div>
                 <div class="admin-form__form-options admin-form__form-options--second-group">
                     <div class="admin-form__group">

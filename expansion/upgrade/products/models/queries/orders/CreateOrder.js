@@ -4,7 +4,7 @@ const errorAddEvent = require("../../../../../../important/AristosStuff/AristosL
   .addError;
 /**
  * Creates a single order in the Order collection.
- * @param {object} pageProps - Object containing user, total, shipping, name, address, city, state, zip, status, items
+ * @param {object} orderProps - Object containing user, total, shipping, name, address, city, state, zip, status, items
  * @return {promise} A promise that resolves with the order that was created
  */
 module.exports = orderProps => {
@@ -13,4 +13,3 @@ module.exports = orderProps => {
     errorAddEvent(err, "order query error");
   });
 };
-

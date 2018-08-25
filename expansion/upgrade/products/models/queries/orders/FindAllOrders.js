@@ -11,4 +11,3 @@ module.exports = () => {
     errorAddEvent(err, "order query error");
   });
 };
-

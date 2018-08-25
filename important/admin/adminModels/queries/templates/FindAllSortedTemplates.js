@@ -9,6 +9,7 @@ const addErrorEvent = require("../../../../AristosStuff/AristosLogger/AristosLog
  */
 module.exports = () => {
   return Template.find({})
+    .populate("author")
     .sort({ sorting: 1 })
     .catch(err => {
       addErrorEvent(err, "template query error");
