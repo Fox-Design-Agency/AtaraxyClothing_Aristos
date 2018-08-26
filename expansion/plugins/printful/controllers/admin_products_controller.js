@@ -332,7 +332,6 @@ module.exports = {
         for (let i = 0; i < colorIDs.length; i++) {
           colors.push({ name: colorNames[i], fileID: colorIDs[i] });
         }
-        console.log(colors);
 
         if (errors.length > 0) {
           req.flash("error_msg", "errors are present");

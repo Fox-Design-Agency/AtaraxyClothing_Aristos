@@ -8,5 +8,8 @@ const Product = require("../../product");
  * @return {promise} A promise that resolves with the page that matches the id
  */
 module.exports = stuff => {
-  return Product.find(stuff).sort({ sorting: 1 });
+  return Product.find(stuff)
+    .sort({ sorting: 1 })
+    .populate("category")
+    .populate("author");
 };
