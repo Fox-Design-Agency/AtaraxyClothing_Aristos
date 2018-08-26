@@ -1,0 +1,9 @@
+<div class="admin-form__form-options admin-form__form-options--second-group">
+    <% colors.forEach(color=>{ %>
+        <div>
+            <label for=""><%= color.name %></label>
+            <input type="text" class="checkbox" value="<%= color.fileID %>" name="colors" placeholder="Print File ID">
+            <input type="hidden" value="<%= color.name %>" name="colorNames">
+        </div>
+    <% }) %>
+</div>

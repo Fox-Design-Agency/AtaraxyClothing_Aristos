@@ -28,7 +28,7 @@
                                 <option value="<%= category._id %>">
                                     <%= category.title %>
                                 </option>
-                                <% }); %>
+                            <% }); %>
                         </select>
                     </div>
                     <div class="admin-form__group">
@@ -64,9 +64,7 @@
                         <input type="checkbox" class="form-control" name="allowReviews" >
                     </div>
                 </div>
-                <div class="admin-form__form-options admin-form__form-options--second-group">
-                    plugin placeholder
-                </div>
+                <%- include(pluginView) %>
             </div>
         <button class="admin-button admin-button--submit">Submit</button>   
     </form>
@@ -86,4 +84,4 @@
             readURL(this);
         })
     </script>
-    <%- include("../../../../important/admin/views/_layouts/adminfooter") %>
+<%- include("../../../../important/admin/views/_layouts/adminfooter") %>

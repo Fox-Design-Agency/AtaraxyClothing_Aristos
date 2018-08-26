@@ -1,4 +1,4 @@
-const variants = require("../../../expansion/plugins/printful/product_variants");
+const variants = require("../../../expansion/plugins/printful/product_variants/product_variants");
 
 // GET product model
 const findProductWithParam = require("../../../expansion/upgrade/products/models/queries/product/FindProductWithParam");

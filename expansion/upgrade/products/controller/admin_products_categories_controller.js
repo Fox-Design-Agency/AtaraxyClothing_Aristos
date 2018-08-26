@@ -31,12 +31,12 @@ module.exports = {
     );
   }, // end of index function
   addIndex(req, res, next) {
+  
     let title,
       author,
       description,
       keywords,
       imagePath = "";
-
     const AllMedia = FindAllMedia();
     AllMedia.then(media => {
       res.render(
@@ -47,7 +47,7 @@ module.exports = {
           description: description,
           keywords: keywords,
           imagePath: imagePath,
-          media: media
+          media: media,
         }
       );
     });

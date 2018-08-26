@@ -4,23 +4,23 @@ const fs = require("fs-extra");
 const resizeImg = require("resize-img");
 
 /* Product model Queries */
-const CountProducts = require("../models/queries/product/CountProducts");
-const CreateProduct = require("../models/queries/product/CreateProduct");
-const DeleteProduct = require("../models/queries/product/DeleteProduct");
-const EditProduct = require("../models/queries/product/EditProduct");
-const FindAllProducts = require("../models/queries/product/FindAllProducts");
-const FindOneProductByID = require("../models/queries/product/FindOneProductByID");
-const FindProductWithParams = require("../models/queries/product/FindProductWithParam");
-const FindAllSortedProducts = require("../models/queries/product/FindAllSortedProducts");
-const FindSortedByParam = require("../models/queries/product/FindSortedByParam");
-const sortProducts = require("../models/queries/product/SortProductByID");
+const CountProducts = require("../../../upgrade/products/models/queries/product/CountProducts");
+const CreateProduct = require("../../../upgrade/products/models/queries/product/CreateProduct");
+const DeleteProduct = require("../../../upgrade/products/models/queries/product/DeleteProduct");
+const EditProduct = require("../../../upgrade/products/models/queries/product/EditProduct");
+const FindAllProducts = require("../../../upgrade/products/models/queries/product/FindAllProducts");
+const FindOneProductByID = require("../../../upgrade/products/models/queries/product/FindOneProductByID");
+const FindProductWithParams = require("../../../upgrade/products/models/queries/product/FindProductWithParam");
+const FindAllSortedProducts = require("../../../upgrade/products/models/queries/product/FindAllSortedProducts");
+const FindSortedByParam = require("../../../upgrade/products/models/queries/product/FindSortedByParam");
+const sortProducts = require("../../../upgrade/products/models/queries/product/SortProductByID");
 /* Product Category model Queries */
-const FindAllProductCategories = require("../models/queries/productCategory/FindAllProductCategories");
+const FindAllProductCategories = require("../../../upgrade/products/models/queries/productCategory/FindAllProductCategories");
 
 /* media queries */
 const FindAllMedia = require("../../../../important/admin/adminModels/queries/media/FindAllMedia");
 /* media categories Queries */
-// const FindAllMediaCategories = require("../../../../important/adminModels/queries/mediaCategories/FindAllMediaCategories");
+// const FindAllMediaCategories = require("../../../../../important/adminModels/queries/mediaCategories/FindAllMediaCategories");
 
 /* User Model Queries */
 const FindOneUserByID = require("../../../../important/admin/adminModels/queries/user/FindOneUserWithID");
@@ -64,12 +64,9 @@ module.exports = {
       keywords,
       description,
       inventory,
-      sku = "";
-
-    Promise.all([
-      (AllProductCategories = FindAllProductCategories()),
-      (AllMedia = FindAllMedia())
-    ]).then(result => {
+      sku,
+      printfile = "";
+    Promise.all([FindAllProductCategories(), FindAllMedia()]).then(result => {
       res.render("../../../expansion/upgrade/products/views/add_product", {
         title: title,
         content: content,
@@ -80,7 +77,8 @@ module.exports = {
         keywords: keywords,
         inventory: inventory,
         sku: sku,
-        pluginView: addProduct
+        pluginView: addProduct,
+        printfile: printfile
       });
     });
   } /* end of add index function */,
@@ -100,7 +98,6 @@ module.exports = {
         if (!req.body.price) {
           errors.push({ title: "Price must have a value." });
         }
-
         let title = req.body.title;
         let slug = title.replace(/\s+/g, "-").toLowerCase();
         let content = req.body.content;
@@ -122,6 +119,14 @@ module.exports = {
         } else {
           allowReviews = false;
         }
+        let sizes = req.body.sizes;
+        let color = req.body.color;
+        let printfile = req.body.printfile;
+        let productType = req.body.productType;
+        let colors = [];
+        color.forEach(col => {
+          colors.push({ name: col, fileID: "" });
+        });
         if (errors.length > 0) {
           Promise.all([FindAllProductCategories(), FindAllMedia()]).then(
             result => {
@@ -180,7 +185,11 @@ module.exports = {
                 author: author,
                 inventory: inventory,
                 sku: sku,
-                allowReviews: allowReviews
+                allowReviews: allowReviews,
+                printfile: printfile,
+                productType: productType,
+                color: colors,
+                sizes: sizes
               };
               CreateProduct(productProps).then(product => {
                 fs.ensureDirSync(
@@ -269,7 +278,8 @@ module.exports = {
             sku: result[1].printfile,
             inventory: result[1].inventory,
             allowReviews: result[1].allowReviews,
-            pluginView: editProduct
+            pluginView: editProduct,
+            colors: result[1].color
           });
         }
       });
@@ -316,6 +326,14 @@ module.exports = {
           allowReviews = false;
         }
 
+        let colorIDs = req.body.colors;
+        let colorNames = req.body.colorNames;
+        let colors = [];
+        for (let i = 0; i < colorIDs.length; i++) {
+          colors.push({ name: colorNames[i], fileID: colorIDs[i] });
+        }
+        console.log(colors);
+
         if (errors.length > 0) {
           req.flash("error_msg", "errors are present");
           res.redirect("/admin/products/edit-products/" + id);
@@ -343,7 +361,8 @@ module.exports = {
                 keywords: keywords,
                 inventory: inventory,
                 sku: sku,
-                allowReviews: allowReviews
+                allowReviews: allowReviews,
+                color: colors
               };
               EditProduct(id, productProps);
 

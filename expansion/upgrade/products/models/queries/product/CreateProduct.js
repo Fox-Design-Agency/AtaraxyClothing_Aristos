@@ -10,6 +10,7 @@ const errorAddEvent = require("../../../../../../important/AristosStuff/AristosL
 module.exports = productProps => {
   const product = new Product(productProps);
   return product.save().catch(err => {
+    console.log(err)
     errorAddEvent(err, "product query error");
   });
 };

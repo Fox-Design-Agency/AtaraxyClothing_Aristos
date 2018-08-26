@@ -41,7 +41,8 @@ const ProductSchema = new Schema({
   },
   color: [
     {
-      type: String
+      name: String,
+      fileID:String
     }
   ],
   sizes: [
@@ -63,7 +64,7 @@ const ProductSchema = new Schema({
     type: Boolean,
     default: true
   },
-  inventory:{
+  inventory: {
     type: Number
   }
 });

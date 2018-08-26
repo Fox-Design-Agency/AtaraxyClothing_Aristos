@@ -17,6 +17,7 @@ module.exports = app => {
   plugins.then(res => {
     res.forEach(files => {
       app.locals[files.variable] = true;
+      require("./plugins/" + files.folder)(app)
     });
   });
 };
