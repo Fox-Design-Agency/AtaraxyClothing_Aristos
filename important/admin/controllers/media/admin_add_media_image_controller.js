@@ -46,13 +46,13 @@ module.exports = {
     FindOneUserByID(req.session.passport.user).then(user => {
       if (user.admin === 1) {
         let newMedia = req.files.file;
-        let path = "/General/" + req.files.file.name;
+        let path = "/images/General/" + req.files.file.name;
         fs.ensureDir("content/public/images/General", err => {
           if (err) {
             addErrorEvent(err, "media create error");
           }
         });
-        newMedia.mv("content/public/images" + path, err => {
+        newMedia.mv("content/public" + path, err => {
           if (err) {
             addErrorEvent(err, "media create error");
           }
@@ -65,6 +65,7 @@ module.exports = {
             path: path
           };
           CreateMedia(mediaProps);
+          req.flash("success_msg", "Media added!");
           res.redirect("/admin/add-media");
         });
       } else {
@@ -99,7 +100,7 @@ module.exports = {
               categoryTitle = cat.title;
             }
           });
-          let path = "/" + categoryTitle + "/" + imageFile;
+          let path = "/images/" + categoryTitle + "/" + imageFile;
           let description = req.body.description;
           let keywords = req.body.keywords;
           let link = req.body.link;
@@ -122,7 +123,7 @@ module.exports = {
             });
             if (imageFile !== "") {
               let newMedia = req.files.image;
-              newMedia.mv("content/public/images/" + path, err => {
+              newMedia.mv("content/public" + path, err => {
                 if (err) {
                   addErrorEvent(err, "media uploadCreate error");
                 }
@@ -255,7 +256,7 @@ module.exports = {
   trashDelete(req, res, next) {
     let id = req.params.id;
     FindMediaByID(id).then(media => {
-      let path = "content/public/images" + media.path;
+      let path = "content/public" + media.path;
       fs.remove(path, function(err) {
         if (err) {
           addErrorEvent(err, "media trash delete error");

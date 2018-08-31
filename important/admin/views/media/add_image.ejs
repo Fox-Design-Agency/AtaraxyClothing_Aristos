@@ -17,10 +17,9 @@
                     <input type="text" class="form-control" name="alt" value="<%= alt %>" placeholder="Alt Tag">
                 </div>
                 <div class="admin-form__group">
-                
                     <label for="">Category</label>
                     <select name="category" class="form-control">
-                        <% categories.forEach(function(category){ %> 
+                        <% categories.forEach(function(category){ %>
                             <option value="<%= category._id %>">
                                 <%= category.title %>
                             </option>

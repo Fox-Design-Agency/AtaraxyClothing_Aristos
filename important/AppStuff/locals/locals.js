@@ -17,9 +17,6 @@ module.exports = app => {
     app.locals.appTitle = title;
   }
   /* end title name for app */
-  /* start of switched */
-  app.locals.mediaSwitch = true;
-  /* end switches */
   /* read Aristos Version Number */
   app.locals.aristosVersion = config.read("aristosVersion");
   /* end of Aristos version Number */

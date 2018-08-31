@@ -2,13 +2,11 @@ const express = require("express");
 const router = express.Router();
 const auth = require("../../../AppStuff/authorization/auth");
 const isAdmin = auth.isAdmin;
-
-//update log
+/* update log */
 const getAllUpdatesLog = require("../../../AristosStuff/AristosLogger/AristosLogger")
   .readAllUpdates;
-
-//controller
-
+/* controller */
+/* no controller right now */
 /* GET updater page  */
 router.get("/", (req, res, next) => {
   res.render("../../../important/admin/views/updater/updater", {
@@ -45,4 +43,3 @@ router.get("/make-update/:update", (req, res, next) => {
 
 /* Exports */
 module.exports = router;
-

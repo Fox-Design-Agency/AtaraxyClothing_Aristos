@@ -5,7 +5,7 @@ const errorAddEvent = require("../../AristosStuff/AristosLogger/AristosLogger")
 module.exports = () => {
   /* this sets mongoose promise handling to the native js promise */
   mongoose.Promise = global.Promise;
-  /* Satrt Connect to db */
+  /* Start Connect to db */
   mongoose
     .connect(
       config.read("database"),

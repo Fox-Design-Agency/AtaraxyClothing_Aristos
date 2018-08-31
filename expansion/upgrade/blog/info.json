@@ -14,10 +14,6 @@
         {
             "name": "see all categories",
         "link": "/admin/blog-categories"
-        },
-        {
-            "name": "see all comments",
-        "link": "/admin/blog-categories"
         }
     ]
 }

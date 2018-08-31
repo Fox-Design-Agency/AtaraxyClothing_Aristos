@@ -5,7 +5,7 @@ module.exports = {
     main: "./content/public/scripts/index.js"
   },
   output: {
-    path: path.resolve(__dirname, "./content/temp/scripts"),
+    path: path.resolve(__dirname, "./content/public/temp/scripts"),
     filename: "[name].js"
   },
 

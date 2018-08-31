@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const moment = require("moment");
 const Schema = mongoose.Schema;
 
-// Product Schema
+/* Product Schema */
 const ProductSchema = new Schema({
   title: {
     type: String,

@@ -3,8 +3,6 @@ const router = express.Router();
 const auth = require("../../../AppStuff/authorization/auth");
 const isAdmin = auth.isAdmin;
 const userControlsController = require("../../controllers/userControls/admin_user_controls_controller");
-
-require("mongoose").model("User");
 /*
 * GET user controls index
 */

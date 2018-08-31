@@ -6,24 +6,14 @@ const path = require("path");
 const passport = require("passport");
 /* needs more cleanup */
 module.exports = app => {
-  /* don't know if this should be a thing just yet */
   /* Set admin css folder */
-  app.use(express.static(path.join(__dirname, "../../temp")));
-  /* Set temp folder */
   if (process.env.NODE_ENV === "production") {
-    app.use(express.static(path.join(__dirname, "../../../content/public")));
+    app.use(
+      express.static(path.join(__dirname, "../../../dist/content/public"))
+    );
   } else {
-    app.use(express.static(path.join(__dirname, "../../../content/temp")));
+    app.use(express.static(path.join(__dirname, "../../../content/public")));
   }
-  /* Set public folder for images (should be removed) */
-  app.use(
-    express.static(path.join(__dirname, "../../../content/public/images/"))
-  );
-  /* testing grapesjs */
-  app.use(
-    express.static(path.join(__dirname, "../../../important/AristosStuff/"))
-  );
-  /* need to set to dist for production */
   /* Express fileUpload middleware */
   app.use(fileUpload());
   /* end Express fileUpload middleware */
@@ -31,8 +21,8 @@ module.exports = app => {
   require("../passport/passport")(passport);
   /* Passport Middleware */
   /* Start of express sessions */
-require("./session/expressSession")(app);
-/* end of express sessions */
+  require("./session/expressSession")(app);
+  /* end of express sessions */
   app.use(passport.initialize());
   app.use(passport.session());
   /* end Passport Config */

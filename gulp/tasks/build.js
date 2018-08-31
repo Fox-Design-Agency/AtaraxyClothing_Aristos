@@ -29,8 +29,8 @@ gulp.task("copyGeneralFiles", ["deleteDistFolder"], () => {
     "!./content/public/css/**",
     "!./content/public/scripts",
     "!./content/public/scripts/**",
-    "!./content/temp",
-    "!./content/temp/**"
+    "!./content/public/temp",
+    "!./content/public/temp/**"
   ];
   return gulp.src(pathsToCopy).pipe(gulp.dest("./dist/content"));
 }); /* end of copy general files */

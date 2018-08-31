@@ -23,9 +23,7 @@ const FindOneUserByID = require("../../../../important/admin/adminModels/queries
 
 module.exports = {
   index(req, res, next) {
-    const Count = CountBlog();
-    const AllSortedBlogs = FindAllSortedBlogs();
-    Promise.all([Count, AllSortedBlogs]).then(result => {
+    Promise.all([CountBlog(), FindAllSortedBlogs()]).then(result => {
       res.render("../../../expansion/upgrade/blog/views/blogs", {
         blogs: result[1],
         count: result[0]
@@ -40,9 +38,7 @@ module.exports = {
       author,
       description,
       keywords = "";
-    const AllBlogCategories = FindAllBlogCategories();
-    const AllMedia = FindAllMedia();
-    Promise.all([AllBlogCategories, AllMedia]).then(result => {
+    Promise.all([FindAllBlogCategories(), FindAllMedia()]).then(result => {
       res.render("../../../expansion/upgrade/blog/views/add_blog", {
         title: title,
         slug: slug,
@@ -87,9 +83,7 @@ module.exports = {
         }
 
         if (errors.length > 0) {
-          const AllBlogCategories = FindAllBlogCategories();
-          const AllMedia = FindAllMedia();
-          Promise.all([AllBlogCategories, AllMedia]).then(result => {
+          Promise.all([FindAllBlogCategories(), FindAllMedia()]).then(result => {
             return res.render(
               "../../../expansion/upgrade/blog/views/add_blog",
               {
@@ -110,9 +104,7 @@ module.exports = {
           CheckIfExists.then(blog => {
             if (blog.length > 0) {
               errors.push({ text: "Blog slug exists, choose another." });
-              const AllBlogCategories = FindAllBlogCategories();
-              const AllMedia = FindAllMedia();
-              Promise.all([AllBlogCategories, AllMedia]).then(result => {
+              Promise.all([FindAllBlogCategories(), FindAllMedia()]).then(result => {
                 return res.render(
                   "../../../expansion/upgrade/blog/views/add_blog",
                   {
@@ -153,10 +145,7 @@ module.exports = {
   } /* end of create function */,
 
   editIndex(req, res, next) {
-    const AllBlogCategories = FindAllBlogCategories();
-    const AllMedia = FindAllMedia();
-    const OneBlog = FindBlogByID(req.params.id);
-    Promise.all([AllBlogCategories, AllMedia, OneBlog]).then(result => {
+    Promise.all([FindAllBlogCategories(), FindAllMedia(), FindBlogByID(req.params.id)]).then(result => {
       res.render("../../../expansion/upgrade/blog/views/edit_blog", {
         title: result[2].title,
         slug: result[2].slug,
@@ -203,9 +192,7 @@ module.exports = {
         }
 
         if (errors.length > 0) {
-          const AllBlogCategories = FindAllBlogCategories();
-          const AllMedia = FindAllMedia();
-          Promise.all([AllBlogCategories, AllMedia]).then(result => {
+          Promise.all([FindAllBlogCategories(), FindAllMedia()]).then(result => {
             return res.render(
               "../../../expansion/upgrade/blog/views/edit_blog",
               {

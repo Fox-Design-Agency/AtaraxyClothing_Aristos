@@ -29,15 +29,15 @@ gulp.task(
 
     /* watch admin */
    
-    // watch("./important/admin/views/**/*.ejs", () => {
-    //   browserSync.reload();
-    // });
-    // watch("./content/public/scripts/**/*.js", () => {
-    //   gulp.start("scriptsRefresh");
-    // });
-    // watch("./important/admin/admincss/**/*.css", () => {
-    //   gulp.start("adminCssInject");
-    // });
+    watch("./important/admin/views/**/*.ejs", () => {
+      browserSync.reload();
+    });
+    watch("./content/public/scripts/**/*.js", () => {
+      gulp.start("scriptsRefresh");
+    });
+    watch("./important/admin/admincss/**/*.css", () => {
+      gulp.start("adminCssInject");
+    });
     
   }
 ); /* end of watch task */
@@ -60,7 +60,7 @@ gulp.task("nodemon", function(cb) {
 }); /* end of nodemon task */
 
 gulp.task("cssInject", ["styles"], () => {
-  return gulp.src("./content/temp/styles/theme.css").pipe(browserSync.stream());
+  return gulp.src("./content/public/temp/styles/theme.css").pipe(browserSync.stream());
 }); /* end of css inject task */
 
 gulp.task("scriptsRefresh", ["scripts"], () => {
@@ -69,6 +69,6 @@ gulp.task("scriptsRefresh", ["scripts"], () => {
 
 gulp.task("adminCssInject", ["adminStyles"], () => {
   return gulp
-    .src("./important/temp/styles/main.css")
+    .src("./important/public/temp/styles/main.css")
     .pipe(browserSync.stream());
 }); /* end of css inject task */

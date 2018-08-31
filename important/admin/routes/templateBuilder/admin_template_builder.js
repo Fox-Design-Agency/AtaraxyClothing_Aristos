@@ -2,11 +2,8 @@ const express = require("express");
 const router = express.Router();
 const auth = require("../../../AppStuff/authorization/auth");
 const isAdmin = auth.isAdmin;
-
 const templateBasicController = require("../../controllers/templates/admin_templates_basic_controller");
-
 /* GET index template builder */
-
 router.get("/", templateBasicController.index);
 
 /* GET add basic template  */

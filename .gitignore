@@ -6,6 +6,7 @@
 # Temp directory will be ignored as it is just a holding place during production between the modules and the dist
 /content/temp
 /important/temp
+/content/public/temp
 content/public/css/modules/_sprite.css
 content/public/images/sprites
 

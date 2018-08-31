@@ -1,4 +1,13 @@
-const Blog = require("../../blog");
+const fs = require("fs-extra");
+let Blog;
+try {
+  const Blogs = fs.readJSONSync(
+    "./expansion/upgrade/blog/routes/checkers/blogModelMainRoute.json"
+  ).route;
+  Blog = require(Blogs);
+} catch (err) {
+  Blog = require("../../blog");
+}
 /* Aristos Logger Path */
 const errorAddEvent = require("../../../../../../important/AristosStuff/AristosLogger/AristosLogger")
   .addError;
@@ -11,4 +20,3 @@ module.exports = blogProps => {
   const blog = new Blog(blogProps);
   return blog.save().catch(err => errorAddEvent(err, "blog query error"));
 };
-

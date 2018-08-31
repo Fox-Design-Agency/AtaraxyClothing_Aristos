@@ -133,14 +133,14 @@ module.exports = {
               res.redirect("/admin/user-controls/add-users");
             } else {
               bcrypt.genSalt(10, (err, salt) => {
-                bcrypt.hash(password, salt, (err, hash) => {
+                bcrypt.hash(req.body.password, salt, (err, hash) => {
                   if (err) {
                     addErrorEvent(err, "user create admin error");
                   }
                   const UserProps = {
-                    name: name,
-                    email: email,
-                    username: username,
+                    name: req.body.name,
+                    email: req.body.email,
+                    username: req.body.username,
                     password: hash,
                     admin: admin
                   };

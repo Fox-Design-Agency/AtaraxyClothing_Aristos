@@ -52,7 +52,7 @@ module.exports = {
         count: result[0]
       });
     });
-  }, // end of cat index function
+  } /* end of cat index function */,
 
   addIndex(req, res, next) {
     const addProduct = fs.readJSONSync(
@@ -66,10 +66,7 @@ module.exports = {
       inventory,
       sku = "";
 
-    Promise.all([
-      (AllProductCategories = FindAllProductCategories()),
-      (AllMedia = FindAllMedia())
-    ]).then(result => {
+    Promise.all([FindAllProductCategories(), FindAllMedia()]).then(result => {
       res.render("../../../expansion/upgrade/products/views/add_product", {
         title: title,
         content: content,
@@ -143,8 +140,7 @@ module.exports = {
             }
           );
         } else {
-          const CheckIfExists = FindProductWithParams({ slug: slug });
-          CheckIfExists.then(product => {
+          FindProductWithParams({ slug: slug }).then(product => {
             if (product.length > 0) {
               errors.push({ text: "Product title exists, choose another." });
               Promise.all([FindAllProductCategories(), FindAllMedia()]).then(
@@ -236,7 +232,7 @@ module.exports = {
         res.redirect("/users/login");
       }
     });
-  }, // end of create function
+  } /* end of create function */,
   editIndex(req, res, next) {
     const editProduct = fs.readJSONSync(
       "./expansion/upgrade/products/routes/checkers/productRoutes.json"
@@ -274,7 +270,7 @@ module.exports = {
         }
       });
     });
-  }, // end of edit index function
+  } /* end of edit index function */,
   edit(req, res, next) {
     const User = FindOneUserByID(req.session.passport.user);
     User.then(user => {
@@ -320,11 +316,10 @@ module.exports = {
           req.flash("error_msg", "errors are present");
           res.redirect("/admin/products/edit-products/" + id);
         } else {
-          const CheckIfExists = FindProductWithParams({
+          FindProductWithParams({
             slug: slug,
             _id: { $ne: id }
-          });
-          CheckIfExists.then(product => {
+          }).then(product => {
             if (product.length > 0) {
               req.flash("danger", "Product title exists, choose another.");
               res.redirect("/admin/products/edit-product" + id);
@@ -382,7 +377,7 @@ module.exports = {
         res.redirect("/users/login");
       }
     });
-  }, // end of edit function
+  } /* end of edit function */,
   createGallery(req, res, next) {
     const User = FindOneUserByID(req.session.passport.user);
     User.then(user => {
@@ -459,7 +454,7 @@ module.exports = {
         res.redirect("/admin/products");
       }
     });
-  }, // end of delete product function
+  } /* end of delete product function */,
 
   reorder(req, res, next) {
     const User = FindOneUserByID(req.session.passport.user);
@@ -471,5 +466,5 @@ module.exports = {
         res.redirect("/users/login");
       }
     });
-  }
+  } /* end of reorder function */
 };

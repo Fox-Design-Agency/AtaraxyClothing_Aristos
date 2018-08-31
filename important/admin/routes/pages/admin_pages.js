@@ -1,10 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const auth = require("../../../AppStuff/authorization/auth");
-
 const isAdmin = auth.isAdmin;
-
-// grab controller
+/* grab controller */
 const simplePagesControler = require("../../controllers/pages/admin_pages_simple_controller");
 /*
 * GET pages index

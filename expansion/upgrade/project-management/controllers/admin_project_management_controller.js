@@ -33,22 +33,22 @@ module.exports = {
       content,
       assigned = "";
     let completed = 0;
-    const adminUsers = FindUserByParams({ admin: 1 });
-    const AllMedia = FindAllMedia();
-    Promise.all([adminUsers, AllMedia]).then(result => {
-      res.render(
-        "../../../expansion/upgrade/project-management/views/tasks/add_task",
-        {
-          content: "",
-          taskName: taskName,
-          content: content,
-          assigned: assigned,
-          completed: completed,
-          user: result[0],
-          media: result[1]
-        }
-      );
-    });
+    Promise.all([FindUserByParams({ admin: 1 }), FindAllMedia()]).then(
+      result => {
+        res.render(
+          "../../../expansion/upgrade/project-management/views/tasks/add_task",
+          {
+            content: "",
+            taskName: taskName,
+            content: content,
+            assigned: assigned,
+            completed: completed,
+            user: result[0],
+            media: result[1]
+          }
+        );
+      }
+    );
   } /* end of add index function */,
 
   create(req, res, next) {
@@ -69,21 +69,21 @@ module.exports = {
         let assigned = req.body.assigned;
 
         if (errors.length > 0) {
-          const adminUsers = FindUserByParams({ admin: 1 });
-          const AllMedia = FindAllMedia();
-          Promise.all([adminUsers, AllMedia]).then(result => {
-            return res.render(
-              "../../../expansion/upgrade/project-management/views/tasks/add_task",
-              {
-                errors: errors,
-                taskName: taskName,
-                assigned: assigned,
-                content: content,
-                user: result[0],
-                media: result[1]
-              }
-            );
-          });
+          Promise.all([FindUserByParams({ admin: 1 }), FindAllMedia()]).then(
+            result => {
+              return res.render(
+                "../../../expansion/upgrade/project-management/views/tasks/add_task",
+                {
+                  errors: errors,
+                  taskName: taskName,
+                  assigned: assigned,
+                  content: content,
+                  user: result[0],
+                  media: result[1]
+                }
+              );
+            }
+          );
         } else {
           const TaskProps = {
             title: taskName,
@@ -140,21 +140,21 @@ module.exports = {
         let id = req.params.id;
 
         if (errors.length > 0) {
-          const Admins = FindUSerByParams({ admin: 1 });
-          const AllMedia = FindAllMedia();
-          Promise.all([Admins, AllMedia]).then(result => {
-            return res.render(
-              "../../../expansion/upgrade/project-management/views/tasks/add_task",
-              {
-                errors: errors,
-                taskName: taskName,
-                assigned: assigned,
-                content: content,
-                user: result[0],
-                media: result[2]
-              }
-            );
-          });
+          Promise.all([FindUSerByParams({ admin: 1 }), FindAllMedia()]).then(
+            result => {
+              return res.render(
+                "../../../expansion/upgrade/project-management/views/tasks/add_task",
+                {
+                  errors: errors,
+                  taskName: taskName,
+                  assigned: assigned,
+                  content: content,
+                  user: result[0],
+                  media: result[2]
+                }
+              );
+            }
+          );
         } else {
           const TaskProps = {
             title: taskName,

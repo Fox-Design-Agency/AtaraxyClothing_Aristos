@@ -1,6 +1,6 @@
 const errorAddEvent = require("../../../../important/AristosStuff/AristosLogger/AristosLogger")
   .addError;
-//  Product category model Queries
+/*  Product category model Queries */
 const CountProductCategory = require("../models/queries/productCategory/CountProductCategories");
 const FindAllProductCategories = require("../models/queries/productCategory/FindAllProductCategories");
 const CreateProductCategory = require("../models/queries/productCategory/CreateProductCategory");
@@ -10,11 +10,11 @@ const FindProductCategoryWithParam = require("../models/queries/productCategory/
 const FindOneProductCategoryByID = require("../models/queries/productCategory/FindOneProductCategoryByID");
 const SortProductCategories = require("../models/queries/productCategory/SortProductCategoryByID");
 const FindAllSortedCategories = require("../models/queries/productCategory/FindAllSortedProductCategories");
-// media queries
+/* media queries */
 const FindAllMedia = require("../../../../important/admin/adminModels/queries/media/FindAllMedia");
-// media categories Queries
+/* media categories Queries */
 // const FindAllMediaCategories = require("../../../../important/adminModels/queries/mediaCategories/FindAllMediaCategories");
-//User Model Queries
+/* User Model Queries */
 const FindOneUserByID = require("../../../../important/admin/adminModels/queries/user/FindOneUserWithID");
 module.exports = {
   index(req, res, next) {
@@ -29,16 +29,14 @@ module.exports = {
         );
       }
     );
-  }, // end of index function
+  } /* end of index function */,
   addIndex(req, res, next) {
-  
     let title,
       author,
       description,
       keywords,
       imagePath = "";
-    const AllMedia = FindAllMedia();
-    AllMedia.then(media => {
+    FindAllMedia().then(media => {
       res.render(
         "../../../expansion/upgrade/products/views/categories/add_product_category",
         {
@@ -47,11 +45,11 @@ module.exports = {
           description: description,
           keywords: keywords,
           imagePath: imagePath,
-          media: media,
+          media: media
         }
       );
     });
-  }, // end of add index function
+  } /* end of add index function */,
   create(req, res, next) {
     const User = FindOneUserByID(req.session.passport.user);
     User.then(user => {
@@ -68,8 +66,7 @@ module.exports = {
         let imagePath = req.body.imagepath;
 
         if (errors.length > 0) {
-          const AllMedia = FindAllMedia();
-          AllMedia.then(media => {
+          FindAllMedia().then(media => {
             return res.render(
               "../../../expansion/upgrade/products/views/categories/add_product_category",
               {
@@ -83,12 +80,10 @@ module.exports = {
             );
           });
         } else {
-          const CheckIfExists = FindProductCategoryWithParam({ slug: slug });
-          CheckIfExists.then(category => {
+          FindProductCategoryWithParam({ slug: slug }).then(category => {
             if (category.length > 0) {
               errors.push({ text: "Category title exists, choose another." });
-              const AllMedia = FindAllMedia();
-              AllMedia.then(media => {
+              FindAllMedia().then(media => {
                 return res.render(
                   "../../../expansion/upgrade/products/views/categories/add_product_category",
                   {
@@ -120,9 +115,12 @@ module.exports = {
         res.redirect("/users/login");
       }
     });
-  }, // end of create function
+  } /* end of create function */,
   editIndex(req, res, next) {
-    Promise.all([FindOneProductCategoryByID(req.params.id), FindAllMedia()]).then(result => {
+    Promise.all([
+      FindOneProductCategoryByID(req.params.id),
+      FindAllMedia()
+    ]).then(result => {
       res.render(
         "../../../expansion/upgrade/products/views/categories/edit_product_category",
         {
@@ -136,7 +134,7 @@ module.exports = {
         }
       );
     });
-  }, // end of edit index function
+  } /* end of edit index function */,
   edit(req, res, next) {
     const User = FindOneUserByID(req.session.passport.user);
     User.then(user => {
@@ -153,8 +151,7 @@ module.exports = {
         let imagepath = req.body.imagepath;
 
         if (errors.length > 0) {
-          const AllMedia = FindAllMedia();
-          AllMedia.then(media => {
+          FindAllMedia().then(media => {
             return res.render(
               "../../../expansion/upgrade/products/views/categories/edit_product_category",
               {
@@ -168,15 +165,13 @@ module.exports = {
             );
           });
         } else {
-          const CheckIfExists = FindProductCategoryWithParam({
+          FindProductCategoryWithParam({
             slug: slug,
             _id: { $ne: id }
-          });
-          CheckIfExists.then(category => {
+          }).then(category => {
             if (category.length > 0) {
               errors.push({ text: "Category title exists, chooser another." });
-              const AllMedia = FindAllMedia();
-              AllMedia.then(media => {
+              FindAllMedia().then(media => {
                 return res.render(
                   "../../../expansion/upgrade/products/views/categories/edit_product_category",
                   {
@@ -208,24 +203,22 @@ module.exports = {
         res.redirect("/users/login");
       }
     });
-  }, // end of edit function
+  } /* end of edit function */,
   delete(req, res, next) {
     //should also delete associated products
     DeleteProductCategory(req.params.id);
     req.flash("success_msg", "Product Category deleted!");
     res.redirect("/admin/product-categories");
-  }, // end of delete function
+  } /* end of delete function */,
   reorder(req, res, next) {
     const User = FindOneUserByID(req.session.passport.user);
     User.then(user => {
       if (user.admin === 1) {
         let ids = req.body["id[]"];
         SortProductCategories(ids);
-        /* look into this more */
-        //   req.app.locals.pages = sortedRes;
       } else {
         res.redirect("/users/login");
       }
     });
-  } //end of reorder function
+  } /* end of reorder function */
 };

@@ -1,5 +1,5 @@
 const ProductCategory = require("../../productCategory");
-// Aristos Logger Path
+/* Aristos Logger Path */
 const errorAddEvent = require("../../../../../../important/AristosStuff/AristosLogger/AristosLogger")
   .addError;
 

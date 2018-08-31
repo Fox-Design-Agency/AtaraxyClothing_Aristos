@@ -56,8 +56,7 @@ module.exports = {
     let id = req.params.id;
 
     if (errors.length > 0) {
-      const AllMedia = FindAllMedia();
-      Promise.all([AllMedia]).then(result => {
+      Promise.all([FindAllMedia()]).then(result => {
         return res.render(
           "../../../expansion/upgrade/blog/views/comments/add_blog_comment",
           {

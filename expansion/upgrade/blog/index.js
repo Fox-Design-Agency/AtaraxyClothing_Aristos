@@ -1,12 +1,15 @@
-require("./routes/admin_blog_routes_checker").theFunction();
+require("./routes/checkers/admin_blog_routes_checker").theFunction();
 const adminBlogCategories = require("./routes/admin_blog_categories");
-const adminBlogComments = require("./routes/admin_blog_comments")
 
 const fs = require("fs-extra");
 const adminBlog = fs.readJSONSync(
-  "./expansion/upgrade/blog/routes/blogRoutes.json"
+  "./expansion/upgrade/blog/routes/checkers/blogRoutes.json"
+).route;
+const adminBlogComment = fs.readJSONSync(
+  "./expansion/upgrade/blog/routes/checkers/blogCommentRoutes.json"
 ).route;
 const adminBlogs = require(adminBlog);
+const adminBlogComments = require(adminBlogComment)
 
 module.exports = app => {
   app.use("/admin/blogs", adminBlogs);

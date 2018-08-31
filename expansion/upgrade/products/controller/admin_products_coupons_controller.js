@@ -10,9 +10,9 @@ const FindCouponWithParams = require("../models/queries/coupons/FindCouponWithPa
 /* product category queries */
 const GetAllProductCats = require("../models/queries/productCategory/FindAllProductCategories");
 
-// media queries
+/* media queries */
 const FindAllMedia = require("../../../../important/admin/adminModels/queries/media/FindAllMedia");
-//User Model Queries
+/* User Model Queries */
 const FindOneUserByID = require("../../../../important/admin/adminModels/queries/user/FindOneUserWithID");
 module.exports = {
   index(req, res, next) {
@@ -44,7 +44,7 @@ module.exports = {
         }
       );
     });
-  }, // end of add index function
+  }, /* end of add index function */
   create(req, res, next) {
     const User = FindOneUserByID(req.session.passport.user);
     User.then(user => {
@@ -112,7 +112,7 @@ module.exports = {
         res.redirect("/users/login");
       }
     });
-  }, // end of create function
+  }, /* end of create function */
   editIndex(req, res, next) {
     Promise.all([FindOneCouponsByID(req.params.id), FindAllMedia()]).then(
       result => {
@@ -130,7 +130,7 @@ module.exports = {
         );
       }
     );
-  }, // end of edit index function
+  }, /* end of edit index function */
   edit(req, res, next) {
     /* not working */
     const User = FindOneUserByID(req.session.passport.user);
@@ -203,7 +203,7 @@ module.exports = {
         res.redirect("/users/login");
       }
     });
-  }, // end of edit function
+  }, /* end of edit function */
   delete(req, res, next) {
     DeleteCoupon(req.params.id);
     req.flash("success_msg", "Coupon deleted!");

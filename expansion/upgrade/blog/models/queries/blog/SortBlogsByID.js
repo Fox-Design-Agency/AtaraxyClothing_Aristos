@@ -1,6 +1,16 @@
-const Blog = require("../../blog");
+const fs = require("fs-extra");
+let Blog;
+try {
+  const Blogs = fs.readJSONSync(
+    "./expansion/upgrade/blog/routes/checkers/blogModelMainRoute.json"
+  ).route;
+  Blog = require(Blogs);
+} catch (err) {
+  Blog = require("../../blog");
+}
 /* Aristos Logger Path */
-const errorAddEvent = require("../../../../../../important/AristosStuff/AristosLogger/AristosLogger").addError;
+const errorAddEvent = require("../../../../../../important/AristosStuff/AristosLogger/AristosLogger")
+  .addError;
 /**
  * Sorts blogs by ids.
  * @param {string} ids - The id's available to sort with
@@ -8,9 +18,11 @@ const errorAddEvent = require("../../../../../../important/AristosStuff/AristosL
  */
 module.exports = ids => {
   return sortBlogs(ids, function() {
-    Blog.find({}).sort({ sorting: 1 }).catch(err=>{
-      errorAddEvent(err, "blog query error")
-    });
+    Blog.find({})
+      .sort({ sorting: 1 })
+      .catch(err => {
+        errorAddEvent(err, "blog query error");
+      });
   });
 }; /* end of exports */
 /* Sort blogs function */
@@ -34,4 +46,4 @@ function sortBlogs(ids, cb) {
       });
     })(count);
   }
-} /*end of sort pages function */
+} /*end of sort blogs function */
